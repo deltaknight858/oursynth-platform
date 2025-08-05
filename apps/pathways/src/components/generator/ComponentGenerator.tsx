@@ -158,25 +158,15 @@ export default function ComponentGenerator() {
   };
 
   return (
-    <Box sx={{ maxWidth: 1200, mx: 'auto', p: 3, space: 3 }}>
+    <Box sx={{ maxWidth: 1200, mx: 'auto', p: 3, space: 3, position: 'relative', zIndex: 1 }}>
       {/* Generator Section */}
       <Paper 
         className="glass-card" 
         sx={{ 
-          p: 3, 
+          p: 4, 
           mb: 3,
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          backdropFilter: 'blur(20px)',
-          borderRadius: '16px',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
         }}
       >
-        <Typography variant="h4" component="h1" gutterBottom sx={{ color: 'white' }}>
-          AI Component Generator
-        </Typography>
-        <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 3 }}>
-          Describe the React component you want to create, and AI will generate it for you.
-        </Typography>
 
         {/* AI Provider Selector */}
         <ProviderSelector
@@ -194,9 +184,10 @@ export default function ComponentGenerator() {
             rows={3}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="Describe your component... (e.g., 'A modern card component with hover effects and an image')"
+            placeholder="Describe your component... (e.g., 'A modern card component with electric purple energy and glass morphism')"
             disabled={loading}
             variant="outlined"
+            className="electric-input"
             sx={{
               '& .MuiOutlinedInput-root': {
                 backgroundColor: 'rgba(255, 255, 255, 0.9)',
@@ -226,7 +217,8 @@ export default function ComponentGenerator() {
             onClick={handleGenerate}
             disabled={loading || !prompt.trim()}
             startIcon={loading ? <CircularProgress size={20} /> : <Send />}
-            sx={{ minWidth: 120, height: 'fit-content' }}
+            className="electric-button"
+            sx={{ minWidth: 140, height: 'fit-content', py: 2 }}
           >
             {loading ? 'Generating...' : 'Generate'}
           </Button>

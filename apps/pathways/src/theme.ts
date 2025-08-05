@@ -3,26 +3,41 @@ import { createTheme, ThemeOptions } from '@mui/material/styles';
 // Define the custom theme
 const themeOptions: ThemeOptions = {
   palette: {
-    mode: 'light',
+    mode: 'dark',
     background: {
-      default: '#ffffff',
-      paper: 'rgba(255, 255, 255, 0.2)',
+      default: '#0a0a0f', // Deep dark base
+      paper: 'rgba(160, 32, 240, 0.05)', // Subtle purple tint
     },
     primary: {
-      main: '#000000',
-      light: '#333333',
-      dark: '#000000',
+      main: '#a020f0', // Electric purple
+      light: '#d946ef', // Bright electric purple
+      dark: '#7c1fa8', // Deep purple
       contrastText: '#ffffff',
     },
     secondary: {
-      main: '#a020f0', // Purple accent
-      light: '#c166f5',
-      dark: '#7016a8',
+      main: '#e879f9', // Bright purple accent
+      light: '#f3e8ff', // Light purple glow
+      dark: '#a21caf', // Deep electric purple
       contrastText: '#ffffff',
     },
     text: {
-      primary: '#000000',
-      secondary: '#666666',
+      primary: '#ffffff', // Sharp white text
+      secondary: '#c4b5fd', // Purple-tinted secondary text
+    },
+    error: {
+      main: '#ff4757', // Electric red
+      light: '#ff6b7a',
+      dark: '#c44569',
+    },
+    warning: {
+      main: '#ffa502', // Electric orange
+      light: '#ffb84d',
+      dark: '#cc8400',
+    },
+    success: {
+      main: '#7bed9f', // Electric green
+      light: '#95e1a3',
+      dark: '#5fbf7f',
     },
   },
   typography: {
