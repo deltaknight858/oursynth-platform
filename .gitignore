@@ -68,6 +68,17 @@ web_modules/
 .env.test.local
 .env.production.local
 
+# Rasa specific files
+models/
+.rasa/
+rasa_core.log
+rasa_nlu.log
+*.db
+*.db-journal
+*.tar.gz
+story_graph.dot
+story_graph.html
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache

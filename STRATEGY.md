@@ -2,7 +2,11 @@
 
 ## 🎯 Vision: AI-First Application Factory
 
-Transform OurSynth from a traditional visual builder into an **AI-orchestrated application generation platform** that creates entire applications, not just components.
+Transform ### Phase 3: C5. **Integration**: Seamless from idea → code → deployment → domain
+6. **Personalization**: OurSynth AI knows your style and preferencesss-App Intelligence (1-2 months)
+- OurSynth AI learns from all user interactions
+- Predictive suggestions across all platforms
+- Automated optimization recommendationsynth from a traditional visual builder into an **AI-orchestrated application generation platform** that creates entire applications, not just components.
 
 ## 🏗️ Architectural Evolution
 
@@ -19,18 +23,19 @@ Instead of building UIs piece by piece, users describe what they want and get:
 3. **Deployment-ready code** with Azure integration
 4. **Cross-app intelligence** via Rossabod chatbot
 
-## 🤖 Rossabod - Universal AI Assistant
+## 🤖 OurSynth AI - Universal AI Assistant
 
 ### Core Capabilities
 - **Context Awareness**: Understands projects across Studio, Pathways, Deploy, Domains
 - **Code Generation**: Creates components, pages, and entire app structures
 - **Deployment Intelligence**: Configures Azure resources automatically
 - **Learning System**: Improves suggestions based on user patterns
+- **Conversational Interface**: Built with Rasa Pro/Calm for natural interactions
 
 ### Implementation Strategy
 ```typescript
-// Rossabod Integration Points
-interface RossabodContext {
+// OurSynth AI Integration Points
+interface OurSynthAIContext {
   currentApp: 'studio' | 'pathways' | 'deploy' | 'domains'
   projectState: ProjectState
   userPreferences: UserPreferences
@@ -38,6 +43,12 @@ interface RossabodContext {
   deploymentHistory: Deployment[]
 }
 ```
+
+### Rasa Bot Integration
+- **Rasa Pro/Calm**: Advanced conversational AI capabilities
+- **Multi-turn Conversations**: Complex project discussions
+- **Intent Recognition**: Understand development requests
+- **Action Server**: Execute code generation and deployment tasks
 
 ## 🎨 Enhanced AI Generation System
 
@@ -128,14 +139,14 @@ interface TemplateIntelligence {
 ### Immediate Actions (This Week)
 1. **Load your 12 apps** into the platform for analysis
 2. **Enhance Pathways AI prompts** with richer Material UI instructions
-3. **Create Rossabod chat interface** in Studio app
+3. **Create OurSynth AI chat interface** in Studio app
 4. **Set up Azure deployment pipeline** (infrastructure already created)
 
 ### Questions for You
 1. **Which of your 12 apps** would make the best starting templates?
 2. **What specific UI patterns** do you want the AI to master first?
 3. **How complex** should the initial app generation be? (Single page vs multi-page)
-4. **Integration priorities**: Which existing functionality should Rossabod connect to first?
+4. **Integration priorities**: Which existing functionality should OurSynth AI connect to first?
 
 ---
 
