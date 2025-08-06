@@ -125,7 +125,7 @@ export default function StepOverview({ wizardState, updateState }: StepOverviewP
             WebkitTextFillColor: 'transparent',
           }}
         >
-          What's Your Vision?
+          What&apos;s Your Vision?
         </Typography>
         <Typography 
           variant="h6" 
@@ -136,7 +136,7 @@ export default function StepOverview({ wizardState, updateState }: StepOverviewP
             mx: 'auto'
           }}
         >
-          Describe your app idea in one sentence. Don't worry about technical details—just tell me what you want to build.
+          Describe your app idea in one sentence. Don&apos;t worry about technical details—just tell me what you want to build.
         </Typography>
       </Box>
 
@@ -145,7 +145,7 @@ export default function StepOverview({ wizardState, updateState }: StepOverviewP
         <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 3 }}>
           <Chat sx={{ color: '#a020f0', mt: 1 }} />
           <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.9)', fontWeight: 500 }}>
-            Hi there! I'm OurSynth AI, your personal app creation assistant. Let's start with the basics—what would you like to build today?
+            Hi there! I&apos;m OurSynth AI, your personal app creation assistant. Let&apos;s start with the basics—what would you like to build today?
           </Typography>
         </Box>
         
@@ -219,7 +219,7 @@ export default function StepOverview({ wizardState, updateState }: StepOverviewP
             }}
             key={currentExample} // Force re-render for animation
           >
-            "{examplePrompts[currentExample]}"
+            &quot;{examplePrompts[currentExample]}&quot;
           </Typography>
         </Box>
         
@@ -256,7 +256,7 @@ export default function StepOverview({ wizardState, updateState }: StepOverviewP
             variant="body2"
             sx={{ color: '#a020f0', fontWeight: 600, textAlign: 'center' }}
           >
-            ✨ Great! Ready to choose your app's vibe?
+            ✨ Great! Ready to choose your app&apos;s vibe?
           </Typography>
         </Box>
       )}

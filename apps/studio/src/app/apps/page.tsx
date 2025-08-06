@@ -422,7 +422,7 @@ export default function AppsPage() {
               {filteredApps.length} app{filteredApps.length !== 1 ? 's' : ''} found
             </span>
             {searchTerm && (
-              <span>Results for "{searchTerm}"</span>
+              <span>Results for &quot;{searchTerm}&quot;</span>
             )}
           </StatsBar>
 

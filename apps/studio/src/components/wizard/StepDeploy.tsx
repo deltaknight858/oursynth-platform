@@ -137,7 +137,7 @@ export default function StepDeploy({ wizardState, updateState }: StepDeployProps
             mx: 'auto'
           }}
         >
-          Choose where to deploy your application. We'll handle the deployment configuration!
+          Choose where to deploy your application. We&apos;ll handle the deployment configuration!
         </Typography>
       </Box>
 

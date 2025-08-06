@@ -177,7 +177,7 @@ export default function StepVibe({ wizardState, updateState }: StepVibeProps) {
             mx: 'auto'
           }}
         >
-          Pick a theme that matches your app's personality. You can always customize it later!
+          Pick a theme that matches your app&apos;s personality. You can always customize it later!
         </Typography>
       </Box>
 
