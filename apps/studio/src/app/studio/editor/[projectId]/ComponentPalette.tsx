@@ -35,7 +35,7 @@ export default function ComponentPalette() {
     if (!search.trim()) return COMPONENTS;
     return COMPONENTS.filter(c =>
       (c.displayName ?? '').toLowerCase().includes(search.toLowerCase()) ||
-      (c.keywords ?? []).some(k => k.toLowerCase().includes(search.toLowerCase()))
+      (c.keywords ?? []).some((k: string) => k.toLowerCase().includes(search.toLowerCase()))
     );
   }, [search]);
 

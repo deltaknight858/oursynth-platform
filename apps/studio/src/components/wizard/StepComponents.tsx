@@ -464,21 +464,25 @@ export default function StepComponents({ wizardState, updateState }: StepCompone
       )}
 
       {/* Components Grid */}
-      <Grid container spacing={3}>
+      <Box sx={{
+        display: 'grid',
+        gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr' },
+        gap: 3
+      }}>
         {filteredComponents.map((component, index) => {
           const IconComponent = component.icon;
           const isSelected = wizardState.selectedComponents?.includes(component.id) || false;
           
           return (
-            <Grid item xs={12} sm={6} md={4} key={component.id}>
-              <ComponentCard
-                selected={isSelected}
-                onClick={() => handleComponentToggle(component.id)}
-                sx={{ 
-                  animationDelay: `${index * 0.05}s`,
-                  animationFillMode: 'both'
-                }}
-              >
+            <ComponentCard
+              key={component.id}
+              selected={isSelected}
+              onClick={() => handleComponentToggle(component.id)}
+              sx={{ 
+                animationDelay: `${index * 0.05}s`,
+                animationFillMode: 'both'
+              }}
+            >
                 <CardContent sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column' }}>
                   {/* Header */}
                   <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: 2 }}>
@@ -560,10 +564,9 @@ export default function StepComponents({ wizardState, updateState }: StepCompone
                   </Typography>
                 </CardContent>
               </ComponentCard>
-            </Grid>
           );
         })}
-      </Grid>
+      </Box>
 
       {/* Empty State */}
       {filteredComponents.length === 0 && (

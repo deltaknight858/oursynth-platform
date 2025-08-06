@@ -1,4 +1,4 @@
 export {
   ComponentDefinition,
   DraggableComponentProps
-} from "@oursynth/shared-types";
+} from "./component-types";
