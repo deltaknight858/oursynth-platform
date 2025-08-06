@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@oursynth/shared-config": "file:../../packages/shared-config",
     "@oursynth/shared-types": "file:../../packages/shared-types",
     "@oursynth/shared-utils": "file:../../packages/shared-utils",
     "@hookform/resolvers": "^3.10.0",
