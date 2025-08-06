@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@oursynth/shared-types": "file:../../packages/shared-types",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@monaco-editor/react": "^4.7.0",
