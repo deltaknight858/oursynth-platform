@@ -13,10 +13,10 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "incremental": true,
-        "jsx": "react-jsx",
+    "plugins": [
+      {
         "name": "next"
       }
     ],
@@ -29,7 +29,8 @@
       "jest",
       "@testing-library/jest-dom"
     ],
-    "target": "ES2017"
+    "target": "ES2017",
+    "isolatedModules": true
   },
   "include": [
     "next-env.d.ts",

@@ -1,11 +1,4 @@
 
-export interface Service {
-  name: string;
-  url: string;
-  status?: string;
-  logs?: string[];
-}
-
 import React, { useState } from 'react';
 import styles from './ServiceList.module.css';
 
