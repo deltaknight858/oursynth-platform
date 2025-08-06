@@ -2,15 +2,15 @@ import { spawn, ChildProcess } from 'child_process';
 
 const serviceCommands: Record<string, { start: string[]; cwd: string }> = {
   'Studio': {
-    start: ['npm', ['run', 'dev:studio']],
+    start: ['npm', 'run', 'dev:studio'],
     cwd: process.cwd(),
   },
   'Sentient Developer': {
-    start: ['npm', ['run', 'dev:deploy']],
+    start: ['npm', 'run', 'dev:deploy'],
     cwd: process.cwd(),
   },
   'Pathways': {
-    start: ['npm', ['run', 'dev:pathways']],
+    start: ['npm', 'run', 'dev:pathways'],
     cwd: process.cwd(),
   },
 };
@@ -30,7 +30,7 @@ export async function orchestrateService(action: string, name: string, user: { i
       if (runningProcesses[name]) {
         throw new Error(`${name} is already running.`);
       }
-      const [cmd, args] = config.start;
+      const [cmd, ...args] = config.start;
       const proc = spawn(cmd, args, { cwd: config.cwd, shell: true });
       runningProcesses[name] = proc;
       proc.on('exit', () => {
@@ -51,7 +51,7 @@ export async function orchestrateService(action: string, name: string, user: { i
         proc.kill();
         runningProcesses[name] = null;
       }
-      const [cmd, args] = config.start;
+      const [cmd, ...args] = config.start;
       const newProc = spawn(cmd, args, { cwd: config.cwd, shell: true });
       runningProcesses[name] = newProc;
       newProc.on('exit', () => {

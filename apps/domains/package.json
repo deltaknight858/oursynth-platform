@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@oursynth/shared-types": "file:../../packages/shared-types",
+    "@oursynth/shared-utils": "file:../../packages/shared-utils",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "^1.2.2",
     "@radix-ui/react-alert-dialog": "^1.1.5",

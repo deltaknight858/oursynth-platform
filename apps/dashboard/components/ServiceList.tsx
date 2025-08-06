@@ -80,4 +80,3 @@ export const ServiceList: React.FC<{ services: Service[] }> = ({ services }) => 
     </ul>
   );
 };
-import styles from './ServiceList.module.css';
