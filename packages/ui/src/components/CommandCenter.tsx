@@ -1,5 +1,6 @@
+"use client";
+
 import React, { useState, useRef, useEffect } from 'react';
-import { Box, Typography, TextField, Paper, Fade, List, ListItem, ListItemText, IconButton, Chip } from '@mui/material';
 import { Box, Typography, TextField, Paper, Fade, List, ListItem, ListItemText, IconButton, Chip, ListItemButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import StarIcon from '@mui/icons-material/Star';
@@ -80,7 +81,7 @@ const actionsByContext: Record<string, string[]> = {
   ],
 };
 
-export const CommandCenter: React.FC<{ appContext?: string }> = ({ appContext = 'studio' }) => {
+export const CommandCenter = ({ appContext = 'studio' }: { appContext?: string }) => {
   const { sendMessage } = useOurSynthAI();
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');

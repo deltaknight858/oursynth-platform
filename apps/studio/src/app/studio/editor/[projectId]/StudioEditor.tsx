@@ -170,7 +170,7 @@ export default function StudioEditor() {
               <div className="flex items-center justify-center h-full">
                 <div className="text-center text-gray-500">
                   <p className="text-lg mb-2">Empty Canvas</p>
-                  <p className="text-sm">Click "Add Button" to add your first component</p>
+                  <p className="text-sm">Click &quot;Add Button&quot; to add your first component</p>
                 </div>
               </div>
             )}

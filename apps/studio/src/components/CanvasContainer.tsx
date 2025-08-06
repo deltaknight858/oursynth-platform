@@ -153,7 +153,21 @@ const BODY_LAYOUTS = [
   { key: 'list', label: 'List', preview: '📋 List of items or features', help: 'Display items or features in a list.' },
 ];
 
-function DraggableSection({ id, index, moveSection, selected, label, children, onClick, tooltip, onContextMenu, onDropComponent, isOver }) {
+interface DraggableSectionProps {
+  id: string;
+  index: number;
+  moveSection: (dragIndex: number, hoverIndex: number) => void;
+  selected: boolean;
+  label: string;
+  children: React.ReactNode;
+  onClick: () => void;
+  tooltip: string;
+  onContextMenu?: (e: React.MouseEvent) => void;
+  onDropComponent?: (item: any, index: number) => void;
+  isOver: boolean;
+}
+
+function DraggableSection({ id, index, moveSection, selected, label, children, onClick, tooltip, onContextMenu, onDropComponent, isOver }: DraggableSectionProps) {
   const [{ isDragging }, drag] = useDrag({
     type: 'section',
     item: { index },
@@ -164,8 +178,14 @@ function DraggableSection({ id, index, moveSection, selected, label, children, o
     drop: (item) => onDropComponent && onDropComponent(item, index),
     collect: monitor => ({ isOver: monitor.isOver() })
   });
+  
+  const dragDropRef = (el: HTMLDivElement | null) => {
+    drag(el);
+    drop(el);
+  };
+  
   return (
-    <div ref={node => drag(drop(node))} style={{ opacity: isDragging ? 0.5 : 1, position: 'relative', boxShadow: isOver ? '0 0 0 4px #22c55e' : undefined }}>
+    <div ref={dragDropRef} style={{ opacity: isDragging ? 0.5 : 1, position: 'relative', boxShadow: isOver ? '0 0 0 4px #22c55e' : undefined }}>
       <DragHandle title="Drag to reorder">☰</DragHandle>
       <Section selected={selected} onClick={onClick} title={tooltip} onContextMenu={onContextMenu}>
         <SectionLabel>{label}</SectionLabel>
@@ -176,7 +196,14 @@ function DraggableSection({ id, index, moveSection, selected, label, children, o
   );
 }
 
-export default function CanvasContainer({ selectedSection, setSelectedSection, setBodyLayout, bodyLayout }) {
+interface CanvasContainerProps {
+  selectedSection: any;
+  setSelectedSection: (section: any) => void;
+  setBodyLayout: (layout: any) => void;
+  bodyLayout: any;
+}
+
+export default function CanvasContainer({ selectedSection, setSelectedSection, setBodyLayout, bodyLayout }: CanvasContainerProps) {
   const [sections, setSections] = useState([
     { id: 'header', label: 'Header', type: 'header' },
     { id: 'body', label: 'Body', type: 'body', layout: bodyLayout || null },
@@ -190,7 +217,7 @@ export default function CanvasContainer({ selectedSection, setSelectedSection, s
   const contextMenuRef = useRef<HTMLDivElement>(null);
 
   // Reorder sections
-  const moveSection = (from, to) => {
+  const moveSection = (from: number, to: number) => {
     const updated = [...sections];
     const [moved] = updated.splice(from, 1);
     updated.splice(to, 0, moved);
@@ -204,13 +231,13 @@ export default function CanvasContainer({ selectedSection, setSelectedSection, s
   };
 
   // Select section
-  const handleSelect = (idx) => {
+  const handleSelect = (idx: number) => {
     setSelectedSection(idx);
     if (sections[idx].type === 'body' && !sections[idx].layout) setShowLayoutModal(true);
   };
 
   // Set layout for selected body section
-  const handleLayoutChoose = (layoutKey) => {
+  const handleLayoutChoose = (layoutKey: string) => {
     const idx = selectedSection;
     const updated = [...sections];
     updated[idx].layout = layoutKey;
@@ -220,22 +247,26 @@ export default function CanvasContainer({ selectedSection, setSelectedSection, s
   };
 
   // Section actions
-  const handleContextMenu = (idx, e) => {
+  const handleContextMenu = (idx: number, e: React.MouseEvent) => {
     e.preventDefault();
     setContextMenuIdx(idx);
     setRenameValue(sections[idx].label);
   };
   const handleRename = () => {
-    const updated = [...sections];
-    updated[contextMenuIdx].label = renameValue;
-    setSections(updated);
-    setContextMenuIdx(null);
+    if (contextMenuIdx !== null) {
+      const updated = [...sections];
+      updated[contextMenuIdx].label = renameValue;
+      setSections(updated);
+      setContextMenuIdx(null);
+    }
   };
   const handleDuplicate = () => {
-    const section = sections[contextMenuIdx];
-    const newSection = { ...section, id: section.id + '_copy', label: section.label + ' Copy' };
-    setSections([...sections.slice(0, contextMenuIdx + 1), newSection, ...sections.slice(contextMenuIdx + 1)]);
-    setContextMenuIdx(null);
+    if (contextMenuIdx !== null) {
+      const section = sections[contextMenuIdx];
+      const newSection = { ...section, id: section.id + '_copy', label: section.label + ' Copy' };
+      setSections([...sections.slice(0, contextMenuIdx + 1), newSection, ...sections.slice(contextMenuIdx + 1)]);
+      setContextMenuIdx(null);
+    }
   };
   const handleDelete = () => {
     setSections(sections.filter((_, idx) => idx !== contextMenuIdx));
@@ -243,7 +274,7 @@ export default function CanvasContainer({ selectedSection, setSelectedSection, s
   };
 
   // Handle drop from palette
-  const handleDropComponent = (item, idx) => {
+  const handleDropComponent = (item: any, idx: number) => {
     const sectionId = sections[idx].id;
     setSectionContents(prev => ({
       ...prev,

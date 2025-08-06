@@ -74,7 +74,7 @@ export default function ComponentPalette() {
                     visible: true
                   })}
                 >
-                  <div className="component-icon">{component.icon}</div>
+                  <div className="component-icon">{React.createElement(component.icon)}</div>
                   <div className="component-name">{component.displayName}</div>
                   <div className="component-description">{component.description}</div>
                 </ComponentCard>

@@ -270,7 +270,7 @@ export default function PathwaysWizard({ open, onClose, onComplete }: PathwaysWi
               </Typography>
             </Box>
             <Typography variant="h6" sx={{ color: 'rgba(255, 255, 255, 0.8)', fontWeight: 300 }}>
-              Let's build something amazing together
+              Let&apos;s build something amazing together
             </Typography>
           </Box>
 

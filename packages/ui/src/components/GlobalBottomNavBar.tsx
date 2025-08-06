@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
@@ -28,7 +30,7 @@ const navLinks = [
   { label: 'Domains', href: '/domains', icon: <PublicIcon /> },
 ];
 
-export const GlobalBottomNavBar: React.FC = () => {
+export const GlobalBottomNavBar = () => {
   const [value, setValue] = React.useState(0);
 
   return (

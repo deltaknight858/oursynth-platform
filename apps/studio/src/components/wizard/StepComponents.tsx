@@ -358,7 +358,7 @@ export default function StepComponents({ wizardState, updateState }: StepCompone
             mx: 'auto'
           }}
         >
-          Select the building blocks for your app. We'll customize them to match your style!
+          Select the building blocks for your app. We&apos;ll customize them to match your style!
         </Typography>
       </Box>
 
