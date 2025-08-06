@@ -1,6 +1,6 @@
 import { ContributionWorkflow } from './ContributionWorkflow';
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 
 describe('ContributionWorkflow', () => {
   it('should create a Storybook file for a new component', () => {

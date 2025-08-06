@@ -1,0 +1,70 @@
+.feedback {
+  margin-top: 8px;
+  font-size: 0.97rem;
+  color: #0070f3;
+  background: #eef6ff;
+  border-radius: 4px;
+  padding: 6px 12px;
+}
+.controlBtn {
+  padding: 6px 16px;
+  border: none;
+  border-radius: 4px;
+  background: #0070f3;
+  color: #fff;
+  font-size: 0.98rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.controlBtn:hover {
+  background: #005bb5;
+}
+.list {
+  list-style: none;
+  padding: 0;
+}
+.item {
+  margin: 18px 0;
+  font-size: 1.2rem;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 16px;
+  background: #fafbfc;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.name {
+  font-weight: bold;
+  font-size: 1.15rem;
+}
+.link {
+  color: #0070f3;
+  text-decoration: underline;
+}
+.library {
+  color: #888;
+}
+.status {
+  margin-left: 12px;
+  font-size: 0.95rem;
+  color: #22c55e;
+  font-weight: 500;
+}
+.logs {
+  margin-top: 8px;
+  background: #f5f5f5;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 0.95rem;
+}
+.controls {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}

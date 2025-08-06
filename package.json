@@ -15,10 +15,23 @@
     "dev:studio": "turbo run dev --filter=studio",
     "dev:pathways": "turbo run dev --filter=pathways",
     "dev:deploy": "turbo run dev --filter=deploy",
-    "dev:domains": "turbo run dev --filter=domains"
+    "dev:domains": "turbo run dev --filter=domains",
+    "test": "jest"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "@babel/preset-typescript": "^7.27.1",
+    "@testing-library/jest-dom": "^6.6.4",
+    "@testing-library/react": "^16.3.0",
+    "@types/chai": "^5.2.2",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.19.9",
+    "@types/react": "^19.1.9",
+    "@types/sinon": "^17.0.4",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
+    "ts-jest": "^29.4.1",
     "turbo": "^1.13.0",
     "typescript": "^5.0.0"
   },
@@ -28,6 +41,13 @@
   },
   "dependencies": {
     "@babel/parser": "^7.28.0",
-    "@babel/traverse": "^7.28.0"
+    "@babel/traverse": "^7.28.0",
+    "@mui/icons-material": "^7.3.0",
+    "@mui/lab": "^7.0.0-beta.15",
+    "@mui/material": "^7.3.0",
+    "@mui/system": "^7.3.0",
+    "@mui/types": "^7.4.5",
+    "chai": "^5.2.1",
+    "sinon": "^21.0.0"
   }
 }

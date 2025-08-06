@@ -1,7 +1,7 @@
 import { PatternRecognitionService } from './PatternRecognitionService';
 import { ComponentAnalyzer } from './ComponentAnalyzer';
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 
 describe('PatternRecognitionService', () => {
   it('identifies a novel and consistent component', () => {

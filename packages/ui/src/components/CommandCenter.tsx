@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Box, Typography, TextField, Paper, Fade, List, ListItem, ListItemText, IconButton, Chip } from '@mui/material';
+import { Box, Typography, TextField, Paper, Fade, List, ListItem, ListItemText, IconButton, Chip, ListItemButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -208,13 +209,15 @@ export const CommandCenter: React.FC<{ appContext?: string }> = ({ appContext = 
           )}
           {(filteredSuggestions.length > 0 || aiSuggestions.length > 0) && (
             <List sx={{ mt: 2, bgcolor: 'transparent' }}>
-              {filteredSuggestions.map((action, idx) => (
-                <ListItem button key={idx} onClick={() => handleCommand(action)}>
-                  <ListItemText primary={action} sx={{ color: '#fff' }} />
-                  <IconButton onClick={e => { e.stopPropagation(); toggleFavorite(action); }} sx={{ color: ElectricPurple }}>
-                    {favorites.includes(action) ? <StarIcon /> : <StarBorderIcon />}
-                  </IconButton>
-                </ListItem>
+                {filteredSuggestions.map((action, idx) => (
+                  <ListItem key={idx}>
+                    <ListItemButton onClick={() => handleCommand(action)}>
+                      <ListItemText primary={action} sx={{ color: '#fff' }} />
+                    </ListItemButton>
+                    <IconButton onClick={e => { e.stopPropagation(); toggleFavorite(action); }} sx={{ color: ElectricPurple }}>
+                      {favorites.includes(action) ? <StarIcon /> : <StarBorderIcon />}
+                    </IconButton>
+                  </ListItem>
               ))}
               {aiSuggestions.map((suggestion, idx) => (
                 <ListItem key={`ai-${idx}`}>
