@@ -379,7 +379,7 @@ export default function StudioPage() {
                 No projects found. Create a new project to get started!
               </EmptyProjectsBox>
             )}
-          </CanvasColumn>
+          </div>
         )}
 
         <StudioLayout>
@@ -402,7 +402,7 @@ export default function StudioPage() {
               droppedComponents={droppedComponents}
               onDrop={handleDrop}
             />
-          </div>
+          </CanvasColumn>
           {/* SuggestionTray for AI-generated components */}
           <SuggestionTray onInsertComponent={handleInsertComponent} />
         </StudioLayout>
