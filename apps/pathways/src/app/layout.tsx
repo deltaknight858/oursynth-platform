@@ -5,6 +5,8 @@ import "../styles/glass.css";
 import CustomThemeProvider from "@/components/theme/CustomThemeProvider";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Header from "@/components/Header";
+import CommandCenter from 'packages/ui/src/components/CommandCenter';
+import GlobalBottomNavBar from 'packages/ui/src/components/GlobalBottomNavBar';
 import NoSSR from "@/components/NoSSR";
 import { Toaster } from "react-hot-toast";
 
@@ -42,6 +44,8 @@ export default function RootLayout({
               <Header />
             </NoSSR>
             {children}
+            <CommandCenter appContext="pathways" />
+            <GlobalBottomNavBar />
             <Toaster
               position="bottom-right"
               toastOptions={{

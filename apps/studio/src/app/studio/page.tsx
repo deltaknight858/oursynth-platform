@@ -4,12 +4,13 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import styled, { keyframes } from 'styled-components';
+import { DroppedComponentBox, ErrorBox, EmptyProjectsBox, CanvasColumn, ComponentCount } from './StyledBoxes';
 import { useProjects, useProject, Project } from '@/lib/projects';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { ComponentPalette } from '@/components/ComponentPalette';
 import Logo from '@/components/Logo';
 import { Title } from '@mui/icons-material';
-import Canvas from './editor/[projectId]/Canvas';
+import { SuggestionTray } from '@/components/SuggestionTray';
 
 // Component types for the palette with enhanced data
 const ENHANCED_COMPONENT_TYPES = [
@@ -93,18 +94,12 @@ const CanvasDropZone: React.FC<CanvasDropZoneProps> = ({ droppedComponents, onDr
     <CanvasDropZoneStyled onDrop={handleDrop} onDragOver={handleDragOver}>
       {/* Render dropped components here */}
       {droppedComponents.map(comp => (
-        <div key={comp.id} style={{
-          position: 'absolute',
-          left: comp.x,
-          top: comp.y,
-          background: comp.color,
-          padding: '8px 16px',
-          borderRadius: '8px',
-          color: '#222',
-          fontWeight: 600,
-        }}>
+        <DroppedComponentBox
+          key={comp.id}
+          style={{ left: comp.x, top: comp.y, background: comp.color }}
+        >
           {comp.name}
-        </div>
+        </DroppedComponentBox>
       ))}
     </CanvasDropZoneStyled>
   );
@@ -184,6 +179,19 @@ const StudioLayout = styled.div`
 
 export default function StudioPage() {
   // State and hooks
+  // Handler to insert AI-generated component from SuggestionTray
+  const handleInsertComponent = (component: any) => {
+    // Insert at default position (e.g., x:100, y:100) and assign a unique id
+    const newComponent = {
+      id: `${component.type || 'ai'}-${Date.now()}`,
+      type: component.type || 'ai',
+      name: component.displayName || component.name || 'AI Component',
+      x: 100,
+      y: 100,
+      color: component.color || '#a259ff',
+    };
+    setDroppedComponents(prev => [...prev, newComponent]);
+  };
   const [droppedComponents, setDroppedComponents] = useState<DroppedComponent[]>([]);
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
   const [projectName, setProjectName] = useState('Untitled Project');
@@ -352,9 +360,9 @@ export default function StudioPage() {
         {projectsLoading ? (
           <div>Loading...</div>
         ) : projectsError ? (
-          <div style={{ color: 'var(--danger-color)', textAlign: 'center', margin: '2rem 0' }}>
+          <ErrorBox>
             Error loading projects. Please try again.
-          </div>
+          </ErrorBox>
         ) : (
           <div>
             {projects && projects.length > 0 ? (
@@ -367,11 +375,11 @@ export default function StudioPage() {
                 </div>
               ))
             ) : (
-              <div style={{ color: 'var(--text-secondary)', textAlign: 'center', margin: '2rem 0' }}>
+              <EmptyProjectsBox>
                 No projects found. Create a new project to get started!
-              </div>
+              </EmptyProjectsBox>
             )}
-          </div>
+          </CanvasColumn>
         )}
 
         <StudioLayout>
@@ -379,28 +387,24 @@ export default function StudioPage() {
             components={components}
             onToggleFavorite={handleToggleFavorite}
           />
-
-            <div style={{ flex: 1 }}>
+          <CanvasColumn>
             <CanvasHeader>
               <CanvasTitle>
-              Canvas
-              {currentProjectId && (
-                <span style={{ 
-                fontSize: '0.9rem', 
-                fontWeight: 'normal', 
-                color: 'var(--text-secondary)',
-                marginLeft: 'var(--spacing-md)'
-                }}>
-                {droppedComponents.length} components
-                </span>
-              )}
+                Canvas
+                {currentProjectId && (
+                  <ComponentCount>
+                    {droppedComponents.length} components
+                  </ComponentCount>
+                )}
               </CanvasTitle>
             </CanvasHeader>
             <CanvasDropZone 
               droppedComponents={droppedComponents}
               onDrop={handleDrop}
             />
-            </div>
+          </div>
+          {/* SuggestionTray for AI-generated components */}
+          <SuggestionTray onInsertComponent={handleInsertComponent} />
         </StudioLayout>
         
         <FooterHeader>

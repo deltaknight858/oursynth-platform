@@ -33,6 +33,28 @@ const AppsIcon = () => (
   </svg>
 );
 
+const DeployIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="12" cy="12" r="10"/>
+    <polygon points="10,8 16,12 10,16 10,8"/>
+  </svg>
+);
+
+const PathwaysIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M9 19c-5 0-8-4-8-9s3-9 8-9 8 4 8 9-3 9-8 9z"/>
+    <path d="M15 9l3 3-3 3"/>
+  </svg>
+);
+
+const DomainsIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="12" cy="12" r="10"/>
+    <line x1="2" y1="12" x2="22" y2="12"/>
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+  </svg>
+);
+
 const StyledNav = styled.nav`
   background: var(--glass-background);
   backdrop-filter: var(--glass-backdrop-filter);
@@ -137,14 +159,54 @@ export default function ResponsiveNav() {
     { title: 'Marketplace', href: '/marketplace', icon: <StorefrontIcon /> },
     { title: 'Templates', href: '/templates', icon: <GridViewIcon /> },
     { title: 'My Apps', href: '/apps', icon: <AppsIcon /> },
+    { title: 'Pathways', href: 'http://localhost:3001', icon: <PathwaysIcon />, external: true },
+    { title: 'Deploy', href: 'http://localhost:3002', icon: <DeployIcon />, external: true },
+    { title: 'Domains', href: 'http://localhost:3003', icon: <DomainsIcon />, external: true },
   ];
 
-  const navigationLinks = links.map(link => (
-    <StyledLink key={link.href} href={link.href} $active={isActiveLink(link.href)} title={link.title}>
-      {link.icon}
-      {!isMobile && <span>{link.title}</span>}
-    </StyledLink>
-  ));
+  const navigationLinks = links.map(link => {
+    if (link.external) {
+      return (
+        <a 
+          key={link.href} 
+          href={link.href} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          style={{
+            color: 'var(--text-secondary)',
+            textDecoration: 'none',
+            padding: 'var(--spacing-xs) var(--spacing-sm)',
+            borderRadius: 'var(--glass-border-radius)',
+            transition: 'all var(--transition-fast)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 'var(--spacing-xs)',
+            fontWeight: 400,
+          }}
+          title={link.title}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'var(--glass-background-light)';
+            e.currentTarget.style.color = 'var(--text-primary)';
+            e.currentTarget.style.boxShadow = 'var(--shadow-glow)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'transparent';
+            e.currentTarget.style.color = 'var(--text-secondary)';
+            e.currentTarget.style.boxShadow = 'none';
+          }}
+        >
+          {link.icon}
+          {!isMobile && <span>{link.title}</span>}
+        </a>
+      );
+    }
+    return (
+      <StyledLink key={link.href} href={link.href} $active={isActiveLink(link.href)} title={link.title}>
+        {link.icon}
+        {!isMobile && <span>{link.title}</span>}
+      </StyledLink>
+    );
+  });
 
   return (
     <StyledNav>

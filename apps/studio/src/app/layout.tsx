@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import ResponsiveNav from '@/components/ResponsiveNav'
+import CommandCenter from 'packages/ui/src/components/CommandCenter';
+import GlobalBottomNavBar from 'packages/ui/src/components/GlobalBottomNavBar'
 import StyledComponentsRegistry from '@/lib/styled-components-registry'
 import './globals.css'
 
@@ -39,6 +41,8 @@ export default function RootLayout({
             }}>
               {children}
             </main>
+            <CommandCenter appContext="studio" />
+            <GlobalBottomNavBar />
           </div>
         </StyledComponentsRegistry>
       </body>

@@ -1,45 +1,7 @@
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 
-// Define the custom theme
-const themeOptions: ThemeOptions = {
-  palette: {
-    mode: 'dark',
-    background: {
-      default: '#0a0a0f', // Deep dark base
-      paper: 'rgba(160, 32, 240, 0.05)', // Subtle purple tint
-    },
-    primary: {
-      main: '#a020f0', // Electric purple
-      light: '#d946ef', // Bright electric purple
-      dark: '#7c1fa8', // Deep purple
-      contrastText: '#ffffff',
-    },
-    secondary: {
-      main: '#e879f9', // Bright purple accent
-      light: '#f3e8ff', // Light purple glow
-      dark: '#a21caf', // Deep electric purple
-      contrastText: '#ffffff',
-    },
-    text: {
-      primary: '#ffffff', // Sharp white text
-      secondary: '#c4b5fd', // Purple-tinted secondary text
-    },
-    error: {
-      main: '#ff4757', // Electric red
-      light: '#ff6b7a',
-      dark: '#c44569',
-    },
-    warning: {
-      main: '#ffa502', // Electric orange
-      light: '#ffb84d',
-      dark: '#cc8400',
-    },
-    success: {
-      main: '#7bed9f', // Electric green
-      light: '#95e1a3',
-      dark: '#5fbf7f',
-    },
-  },
+// Base theme configuration shared between light and dark themes
+const baseThemeOptions: ThemeOptions = {
   typography: {
     fontFamily: [
       '-apple-system',
@@ -107,18 +69,18 @@ const themeOptions: ThemeOptions = {
   components: {
     MuiPaper: {
       styleOverrides: {
-        root: {
-          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        root: ({ theme }) => ({
+          backgroundColor: theme.palette.background.paper,
           backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+          border: `1px solid ${theme.palette.divider}`,
+          boxShadow: `0 8px 32px ${theme.palette.action.hover}`,
           transition: 'all 0.3s ease-in-out',
           '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.25)',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
-            boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15)',
+            backgroundColor: `${theme.palette.background.paper}dd`,
+            border: `1px solid ${theme.palette.divider}80`,
+            boxShadow: `0 12px 40px ${theme.palette.action.selected}`,
           },
-        },
+        }),
         elevation1: {
           boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
         },
@@ -132,7 +94,7 @@ const themeOptions: ThemeOptions = {
     },
     MuiButton: {
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           borderRadius: 12,
           fontWeight: 500,
           textTransform: 'none',
@@ -141,128 +103,130 @@ const themeOptions: ThemeOptions = {
           boxShadow: 'none',
           '&:hover': {
             transform: 'translateY(-2px)',
-            boxShadow: '0 6px 20px rgba(0, 0, 0, 0.15)',
+            boxShadow: `0 6px 20px ${theme.palette.action.hover}`,
           },
           '&:active': {
             transform: 'translateY(0)',
           },
-        },
-        contained: {
-          backgroundColor: '#000000',
-          color: '#ffffff',
+        }),
+        contained: ({ theme }) => ({
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.primary.contrastText,
           '&:hover': {
-            backgroundColor: '#333333',
+            backgroundColor: theme.palette.primary.dark,
             transform: 'translateY(-2px)',
-            boxShadow: '0 6px 20px rgba(0, 0, 0, 0.25)',
+            boxShadow: `0 6px 20px ${theme.palette.primary.main}40`,
           },
-        },
-        outlined: {
-          border: '1px solid rgba(0, 0, 0, 0.2)',
-          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        }),
+        outlined: ({ theme }) => ({
+          border: `1px solid ${theme.palette.primary.main}33`,
+          backgroundColor: `${theme.palette.background.paper}80`,
           backdropFilter: 'blur(10px)',
+          color: theme.palette.primary.main,
           '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.2)',
-            border: '1px solid rgba(0, 0, 0, 0.3)',
+            backgroundColor: `${theme.palette.background.paper}cc`,
+            border: `1px solid ${theme.palette.primary.main}66`,
             transform: 'translateY(-2px)',
           },
-        },
-        text: {
+        }),
+        text: ({ theme }) => ({
+          color: theme.palette.text.primary,
           '&:hover': {
-            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+            backgroundColor: theme.palette.action.hover,
             transform: 'translateY(-1px)',
           },
-        },
+        }),
       },
     },
     MuiCard: {
       styleOverrides: {
-        root: {
-          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        root: ({ theme }) => ({
+          backgroundColor: theme.palette.background.paper,
           backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
+          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 16,
           transition: 'all 0.3s ease-in-out',
           '&:hover': {
             transform: 'translateY(-4px)',
-            backgroundColor: 'rgba(255, 255, 255, 0.25)',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
-            boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15)',
+            backgroundColor: `${theme.palette.background.paper}dd`,
+            border: `1px solid ${theme.palette.divider}80`,
+            boxShadow: `0 12px 40px ${theme.palette.action.selected}`,
           },
-        },
+        }),
       },
     },
     MuiTextField: {
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           '& .MuiOutlinedInput-root': {
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            backgroundColor: `${theme.palette.background.paper}80`,
             backdropFilter: 'blur(10px)',
             borderRadius: 12,
             transition: 'all 0.3s ease-in-out',
             '& fieldset': {
-              border: '1px solid rgba(0, 0, 0, 0.2)',
+              border: `1px solid ${theme.palette.divider}`,
               transition: 'all 0.3s ease-in-out',
             },
             '&:hover fieldset': {
-              border: '1px solid rgba(0, 0, 0, 0.3)',
+              border: `1px solid ${theme.palette.divider}80`,
             },
             '&.Mui-focused fieldset': {
-              border: '2px solid #a020f0',
-              boxShadow: '0 0 0 3px rgba(160, 32, 240, 0.1)',
+              border: `2px solid ${theme.palette.primary.main}`,
+              boxShadow: `0 0 0 3px ${theme.palette.primary.main}1a`,
             },
             '&:hover': {
-              backgroundColor: 'rgba(255, 255, 255, 0.15)',
+              backgroundColor: `${theme.palette.background.paper}cc`,
             },
           },
-        },
+        }),
       },
     },
     MuiDialog: {
       styleOverrides: {
-        paper: {
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        paper: ({ theme }) => ({
+          backgroundColor: `${theme.palette.background.paper}e6`,
           backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.3)',
+          border: `1px solid ${theme.palette.divider}80`,
           borderRadius: 16,
-        },
+        }),
       },
     },
     MuiMenu: {
       styleOverrides: {
-        paper: {
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        paper: ({ theme }) => ({
+          backgroundColor: `${theme.palette.background.paper}e6`,
           backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.3)',
+          border: `1px solid ${theme.palette.divider}80`,
           borderRadius: 12,
-        },
+        }),
       },
     },
     MuiChip: {
       styleOverrides: {
-        root: {
-          backgroundColor: 'rgba(160, 32, 240, 0.1)',
-          border: '1px solid rgba(160, 32, 240, 0.3)',
+        root: ({ theme }) => ({
+          backgroundColor: `${theme.palette.primary.main}1a`,
+          border: `1px solid ${theme.palette.primary.main}4d`,
           borderRadius: 8,
           backdropFilter: 'blur(10px)',
           transition: 'all 0.3s ease-in-out',
           '&:hover': {
-            backgroundColor: 'rgba(160, 32, 240, 0.2)',
-            border: '1px solid rgba(160, 32, 240, 0.4)',
+            backgroundColor: `${theme.palette.primary.main}33`,
+            border: `1px solid ${theme.palette.primary.main}66`,
             transform: 'translateY(-1px)',
           },
-        },
+        }),
       },
     },
     MuiIconButton: {
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           borderRadius: 10,
           transition: 'all 0.3s ease-in-out',
           '&:hover': {
-            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+            backgroundColor: theme.palette.action.hover,
             transform: 'scale(1.05)',
           },
-        },
+        }),
       },
     },
     MuiTypography: {
@@ -275,79 +239,93 @@ const themeOptions: ThemeOptions = {
   },
 };
 
-// Create the theme
-const theme = createTheme(themeOptions);
-
-// Dark mode variant (optional)
-export const darkTheme = createTheme({
-  ...themeOptions,
+// Light theme (Primary - Electric Purple)
+const lightThemeOptions: ThemeOptions = {
+  ...baseThemeOptions,
   palette: {
-    ...themeOptions.palette,
-    mode: 'dark',
+    mode: 'light',
     background: {
-      default: '#0a0a0a',
-      paper: 'rgba(0, 0, 0, 0.6)',
+      default: '#0a0a0f', // Deep dark base
+      paper: '#a020f00d', // Subtle purple tint (5% opacity)
     },
     primary: {
-      main: '#ffffff',
-      light: '#ffffff',
-      dark: '#cccccc',
-      contrastText: '#000000',
+      main: '#a020f0', // Electric purple
+      light: '#d946ef', // Bright electric purple
+      dark: '#7c1fa8', // Deep purple
+      contrastText: '#ffffff',
     },
     secondary: {
-      main: '#00ff00', // Lime accent for dark mode
-      light: '#66ff66',
-      dark: '#00cc00',
-      contrastText: '#000000',
+      main: '#e879f9', // Bright purple accent
+      light: '#f3e8ff', // Light purple glow
+      dark: '#a21caf', // Deep electric purple
+      contrastText: '#ffffff',
     },
     text: {
-      primary: '#ffffff',
-      secondary: '#cccccc',
+      primary: '#ffffff', // Sharp white text
+      secondary: '#c4b5fd', // Purple-tinted secondary text
+    },
+    error: {
+      main: '#ff4757', // Electric red
+      light: '#ff6b7a',
+      dark: '#c44569',
+    },
+    warning: {
+      main: '#ffa502', // Electric orange
+      light: '#ffb84d',
+      dark: '#cc8400',
+    },
+    success: {
+      main: '#7bed9f', // Electric green
+      light: '#95e1a3',
+      dark: '#5fbf7f',
+    },
+    divider: '#a020f033', // Purple divider with 20% opacity
+    action: {
+      hover: '#a020f014', // Purple hover with 8% opacity
+      selected: '#a020f028', // Purple selected with 16% opacity
     },
   },
-  components: {
-    ...themeOptions.components,
-    MuiPaper: {
-      styleOverrides: {
-        root: {
-          backgroundColor: 'rgba(0, 0, 0, 0.6)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-          transition: 'all 0.3s ease-in-out',
-          '&:hover': {
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            boxShadow: '0 12px 40px rgba(0, 0, 0, 0.4)',
-          },
-        },
-      },
-    },
-    MuiButton: {
-      styleOverrides: {
-        ...themeOptions.components?.MuiButton?.styleOverrides,
-        contained: {
-          backgroundColor: '#ffffff',
-          color: '#000000',
-          '&:hover': {
-            backgroundColor: '#f0f0f0',
-            transform: 'translateY(-2px)',
-            boxShadow: '0 6px 20px rgba(255, 255, 255, 0.25)',
-          },
-        },
-        outlined: {
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          backgroundColor: 'rgba(0, 0, 0, 0.2)',
-          backdropFilter: 'blur(10px)',
-          color: '#ffffff',
-          '&:hover': {
-            backgroundColor: 'rgba(0, 0, 0, 0.3)',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
-            transform: 'translateY(-2px)',
-          },
-        },
-      },
-    },
+};
+
+// Dark theme variant with accessible colors
+const darkThemePaletteOverrides = {
+  mode: 'dark' as const,
+  background: {
+    default: '#0a0a0a',
+    paper: '#00000099', // Dark paper with 60% opacity
+  },
+  primary: {
+    main: '#ffffff',
+    light: '#ffffff',
+    dark: '#cccccc',
+    contrastText: '#000000',
+  },
+  secondary: {
+    main: '#22d3ee', // Accessible bright cyan instead of lime green
+    light: '#67e8f9', // Light cyan
+    dark: '#0891b2', // Dark cyan
+    contrastText: '#000000',
+  },
+  text: {
+    primary: '#ffffff',
+    secondary: '#cccccc',
+  },
+  divider: '#ffffff33', // White divider with 20% opacity
+  action: {
+    hover: '#ffffff14', // White hover with 8% opacity
+    selected: '#ffffff28', // White selected with 16% opacity
+  },
+};
+
+// Create the main theme
+const theme = createTheme(lightThemeOptions);
+
+// Create the dark theme by deep-merging palette overrides
+export const darkTheme = createTheme({
+  ...baseThemeOptions,
+  palette: {
+    ...lightThemeOptions.palette,
+    ...darkThemePaletteOverrides,
   },
 });
 

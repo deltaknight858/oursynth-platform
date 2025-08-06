@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import clsx from 'clsx'
 import styled, { keyframes } from 'styled-components'
 import Logo from './Logo'
+import BottomNavbar from './layout/BottomNavbar'
 
 // Keyframe animations
 const glowPulse = keyframes`
@@ -470,6 +471,8 @@ export function Layout({ children }: LayoutProps) {
       <MainContent>
         {children}
       </MainContent>
+
+      <BottomNavbar />
     </LayoutContainer>
   )
 }
