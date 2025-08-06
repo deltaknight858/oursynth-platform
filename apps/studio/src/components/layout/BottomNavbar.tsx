@@ -2,12 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { Home, GitBranch, Deploy, Globe } from 'lucide-react'; // Using placeholder icons
+import { Home, GitBranch, Upload, Globe } from 'lucide-react'; // Using placeholder icons
 
 const navItems = [
   { href: 'http://localhost:3000', label: 'Studio', icon: Home },
   { href: 'http://localhost:3001', label: 'Pathways', icon: GitBranch },
-  { href: 'http://localhost:3002', label: 'Deploy', icon: Deploy },
+  { href: 'http://localhost:3002', label: 'Deploy', icon: Upload },
   { href: 'http://localhost:3003', label: 'Domains', icon: Globe },
 ];
 
@@ -63,7 +63,7 @@ const BottomNavbar = () => {
       {navItems.map((item) => (
         <Link key={item.href} href={item.href} passHref>
           <NavLink isActive={isLinkActive(item.href)}>
-            <item.icon size={20} />
+            {React.createElement(item.icon as any, { size: 20 })}
             <span>{item.label}</span>
           </NavLink>
         </Link>

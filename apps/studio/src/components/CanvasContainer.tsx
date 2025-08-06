@@ -294,7 +294,7 @@ export default function CanvasContainer({ selectedSection, setSelectedSection, s
             selected={selectedSection === idx}
             label={section.label}
             onClick={() => handleSelect(idx)}
-            tooltip={section.type === 'body' && section.layout ? BODY_LAYOUTS.find(l => l.key === section.layout)?.help : undefined}
+            tooltip={section.type === 'body' && section.layout ? (BODY_LAYOUTS.find(l => l.key === section.layout)?.help || '') : ''}
             onContextMenu={e => handleContextMenu(idx, e)}
             onDropComponent={handleDropComponent}
             isOver={false} // will be set by useDrop
