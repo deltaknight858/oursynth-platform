@@ -1,4 +1,4 @@
-import { FaBox, FaHeading, FaImage, FaFont, FaTable, FaChartBar, FaList, FaLink, FaTabs, FaChartLine, FaChartPie, FaCaretSquareRight } from 'react-icons/fa';
+import { FaBox, FaHeading, FaImage, FaFont, FaTable, FaChartBar, FaList, FaLink, FaTags, FaChartLine, FaChartPie, FaCaretSquareRight } from 'react-icons/fa';
 import { MdViewModule, MdInput, MdTimeline, MdStackedBarChart } from 'react-icons/md';
 import { animationPresets } from './animations';
 
@@ -7,7 +7,7 @@ export const interactiveComponents = [
     id: 'tabs',
     type: 'Tabs',
     name: 'Tabs',
-    icon: FaTabs,
+    icon: FaTags,
     color: '#673AB7',
     category: 'Interactive',
     description: 'Tabbed content with animations',

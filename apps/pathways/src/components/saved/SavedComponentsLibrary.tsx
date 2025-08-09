@@ -424,8 +424,7 @@ export default function SavedComponentsLibrary() {
           {selectedComponent && (
             <CodePreview
               code={selectedComponent.code}
-              title={selectedComponent.title}
-              componentName={selectedComponent.name}
+              fileName={selectedComponent.name}
             />
           )}
         </DialogContent>

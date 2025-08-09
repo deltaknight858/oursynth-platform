@@ -1,5 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: [
+    'shared-utils',
+    'shared-types', 
+    'shared-config',
+    'ui',
+    'ui-components',
+    'design-system',
+    'analyzer',
+    'orchestrator'
+  ],
   compiler: {
     // Enable styled-components support
     styledComponents: true,

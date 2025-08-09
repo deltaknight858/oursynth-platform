@@ -2,12 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { Home, GitBranch, Deploy, Globe } from 'lucide-react'; // Using placeholder icons
+import { Home, GitBranch, Rocket, Globe } from 'lucide-react'; // Using placeholder icons
 
 const navItems = [
   { href: 'http://localhost:3000', label: 'Studio', icon: Home },
   { href: 'http://localhost:3001', label: 'Pathways', icon: GitBranch },
-  { href: 'http://localhost:3002', label: 'Deploy', icon: Deploy },
+  { href: 'http://localhost:3002', label: 'Deploy', icon: Rocket },
   { href: 'http://localhost:3003', label: 'Domains', icon: Globe },
 ];
 

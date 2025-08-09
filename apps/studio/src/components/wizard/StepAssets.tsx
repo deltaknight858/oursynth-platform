@@ -83,28 +83,20 @@ export default function StepAssets({ wizardState, updateState }: StepAssetsProps
         <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 3 }}>
           Future features will include:
         </Typography>
-        <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={6}>
-            <Box sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-              • Image uploads & optimization
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Box sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-              • Logo generation with AI
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Box sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-              • Icon library integration
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Box sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-              • Asset compression & CDN
-            </Box>
-          </Grid>
-        </Grid>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2, mb: 3 }}>
+          <Box sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+            • Image uploads & optimization
+          </Box>
+          <Box sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+            • Logo generation with AI
+          </Box>
+          <Box sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+            • Icon library integration
+          </Box>
+          <Box sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+            • Asset compression & CDN
+          </Box>
+        </Box>
         
         <Button
           variant="contained"

@@ -239,50 +239,50 @@ const baseThemeOptions: ThemeOptions = {
   },
 };
 
-// Light theme (Primary - Electric Purple)
+// Light theme (Magical Winter Wizard)
 const lightThemeOptions: ThemeOptions = {
   ...baseThemeOptions,
   palette: {
     mode: 'light',
     background: {
-      default: '#0a0a0f', // Deep dark base
-      paper: '#a020f00d', // Subtle purple tint (5% opacity)
+      default: '#f8fafc', // Snow white base
+      paper: 'rgba(255, 255, 255, 0.8)', // Frosty white paper
     },
     primary: {
-      main: '#a020f0', // Electric purple
+      main: '#a020f0', // Electric purple (preserved for neon glow)
       light: '#d946ef', // Bright electric purple
       dark: '#7c1fa8', // Deep purple
       contrastText: '#ffffff',
     },
     secondary: {
-      main: '#e879f9', // Bright purple accent
-      light: '#f3e8ff', // Light purple glow
-      dark: '#a21caf', // Deep electric purple
-      contrastText: '#ffffff',
+      main: '#00ffcc', // Neon cyan for magical effects
+      light: '#5eead4', // Light cyan
+      dark: '#0891b2', // Dark cyan
+      contrastText: '#000000',
     },
     text: {
-      primary: '#ffffff', // Sharp white text
-      secondary: '#c4b5fd', // Purple-tinted secondary text
+      primary: '#1e293b', // Dark slate for readability on light background
+      secondary: '#64748b', // Medium slate
     },
     error: {
-      main: '#ff4757', // Electric red
-      light: '#ff6b7a',
-      dark: '#c44569',
+      main: '#dc2626', // Red
+      light: '#f87171',
+      dark: '#991b1b',
     },
     warning: {
-      main: '#ffa502', // Electric orange
-      light: '#ffb84d',
-      dark: '#cc8400',
+      main: '#d97706', // Orange
+      light: '#fbbf24',
+      dark: '#92400e',
     },
     success: {
-      main: '#7bed9f', // Electric green
-      light: '#95e1a3',
-      dark: '#5fbf7f',
+      main: '#059669', // Green
+      light: '#34d399',
+      dark: '#047857',
     },
-    divider: '#a020f033', // Purple divider with 20% opacity
+    divider: 'rgba(100, 116, 139, 0.2)', // Light slate divider
     action: {
-      hover: '#a020f014', // Purple hover with 8% opacity
-      selected: '#a020f028', // Purple selected with 16% opacity
+      hover: 'rgba(160, 32, 240, 0.08)', // Purple hover effect
+      selected: 'rgba(160, 32, 240, 0.12)', // Purple selected effect
     },
   },
 };

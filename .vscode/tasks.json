@@ -1,0 +1,226 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "func",
+			"label": "func: host start",
+			"command": "host start",
+			"problemMatcher": "$func-python-watch",
+			"isBackground": true,
+			"dependsOn": "pip install (functions)",
+			"options": {
+				"cwd": "${workspaceFolder}/apps\\api\\Application"
+			}
+		},
+		{
+			"label": "pip install (functions)",
+			"type": "shell",
+			"osx": {
+				"command": "${config:azureFunctions.pythonVenv}/bin/python -m pip install -r requirements.txt"
+			},
+			"windows": {
+				"command": "${config:azureFunctions.pythonVenv}\\Scripts\\python -m pip install -r requirements.txt"
+			},
+			"linux": {
+				"command": "${config:azureFunctions.pythonVenv}/bin/python -m pip install -r requirements.txt"
+			},
+			"problemMatcher": [],
+			"options": {
+				"cwd": "${workspaceFolder}/apps\\api\\Application"
+			}
+		},
+		{
+			"label": "validate:script",
+			"type": "shell",
+			"command": "${workspaceFolder}/scripts/validate.sh",
+			"windows": {
+				"command": "${workspaceFolder}\\scripts\\validate.bat"
+			},
+			"linux": {
+				"command": "bash",
+				"args": ["${workspaceFolder}/scripts/validate.sh"]
+			},
+			"osx": {
+				"command": "bash", 
+				"args": ["${workspaceFolder}/scripts/validate.sh"]
+			},
+			"problemMatcher": [],
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"detail": "Run validation script"
+		},
+		{
+			"label": "Validate App",
+			"dependsOn": [
+				"validate:script"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "Complete app validation suite"
+		},
+		{
+			"label": "validate:quick",
+			"type": "shell",
+			"command": "${workspaceFolder}/scripts/validate-quick.bat",
+			"windows": {
+				"command": "${workspaceFolder}\\scripts\\validate-quick.bat"
+			},
+			"linux": {
+				"command": "bash",
+				"args": ["${workspaceFolder}/scripts/validate-quick.sh"]
+			},
+			"osx": {
+				"command": "bash", 
+				"args": ["${workspaceFolder}/scripts/validate-quick.sh"]
+			},
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true
+			},
+			"problemMatcher": [
+				"$tsc",
+				"$eslint-stylish"
+			],
+			"detail": "Run quick validation checks (TypeScript, ESLint, Tests) without installation or build"
+		},
+		{
+			"label": "tsc:noEmit",
+			"type": "shell",
+			"command": "npm",
+			"args": ["run", "tsc:noEmit"],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"problemMatcher": ["$tsc"],
+			"detail": "TypeScript compilation check without emitting files"
+		},
+		{
+			"label": "lint",
+			"type": "shell", 
+			"command": "npm",
+			"args": ["run", "lint", "--", "--max-warnings=0"],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"problemMatcher": ["$eslint-stylish"],
+			"detail": "Run ESLint validation across the workspace"
+		},
+		{
+			"label": "test",
+			"type": "shell",
+			"command": "npm",
+			"args": ["test"],
+			"group": "test",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"detail": "Run all test suites"
+		},
+		{
+			"label": "test:ci",
+			"type": "shell",
+			"command": "npm",
+			"args": ["run", "test:ci"],
+			"group": "test",
+			"presentation": {
+				"echo": true,
+				"reveal": "always", 
+				"focus": false,
+				"panel": "shared"
+			},
+			"detail": "Run tests in CI mode"
+		},
+		{
+			"label": "build",
+			"type": "shell",
+			"command": "npm",
+			"args": ["run", "build"],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"problemMatcher": [],
+			"detail": "Build all applications for production"
+		},
+		{
+			"label": "build:studio",
+			"type": "shell",
+			"command": "npm",
+			"args": ["run", "build:studio"],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"detail": "Build the studio Next.js app"
+		},
+		{
+			"label": "build:pathways",
+			"type": "shell",
+			"command": "npm",
+			"args": ["run", "build:pathways"],
+			"group": "build", 
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"detail": "Build the pathways Next.js app"
+		},
+		{
+			"label": "build:domains",
+			"type": "shell",
+			"command": "npm",
+			"args": ["run", "build:domains"],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"detail": "Build the domains Next.js app"
+		},
+		{
+			"label": "build:deploy",
+			"type": "shell",
+			"command": "npm",
+			"args": ["run", "build:deploy"],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"detail": "Build the deploy Next.js app"
+		}
+	]
+}

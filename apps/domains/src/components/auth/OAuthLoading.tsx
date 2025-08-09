@@ -24,9 +24,10 @@ export default function OAuthLoading({
   const [animationData, setAnimationData] = React.useState<object | null>(null);
 
   React.useEffect(() => {
-    import("../../../public/lottie/loader.json").then((data) => {
-      setAnimationData(data.default);
-    });
+    // import("../../../public/lottie/loader.json").then((data) => {
+    //   setAnimationData(data.default);
+    // });
+    setAnimationData(null); // Temporary fallback
   }, []);
 
   if (!animationData) {

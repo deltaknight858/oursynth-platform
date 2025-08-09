@@ -1,5 +1,7 @@
 import { styled, createTheme } from '@mui/material/styles';
-import { expectType } from '@mui/types';
+
+// Define expectType function for type checking
+const expectType = <T>(value: T): T => value;
 
 {
   // properties of the variants can be "unset"

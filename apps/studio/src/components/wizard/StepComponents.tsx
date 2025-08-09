@@ -464,13 +464,13 @@ export default function StepComponents({ wizardState, updateState }: StepCompone
       )}
 
       {/* Components Grid */}
-      <Grid container spacing={3}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 3 }}>
         {filteredComponents.map((component, index) => {
           const IconComponent = component.icon;
           const isSelected = wizardState.selectedComponents?.includes(component.id) || false;
           
           return (
-            <Grid item xs={12} sm={6} md={4} key={component.id}>
+            <Box key={component.id}>
               <ComponentCard
                 selected={isSelected}
                 onClick={() => handleComponentToggle(component.id)}
@@ -560,10 +560,10 @@ export default function StepComponents({ wizardState, updateState }: StepCompone
                   </Typography>
                 </CardContent>
               </ComponentCard>
-            </Grid>
+            </Box>
           );
         })}
-      </Grid>
+      </Box>
 
       {/* Empty State */}
       {filteredComponents.length === 0 && (

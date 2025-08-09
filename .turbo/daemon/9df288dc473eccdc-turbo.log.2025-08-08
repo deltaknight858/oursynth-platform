@@ -1,0 +1,40 @@
+2025-08-08T02:40:23.378686Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\pathways\\src\\app\\globals.css")}
+2025-08-08T02:40:23.384247Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("pathways"), path: AnchoredSystemPathBuf("apps\\pathways") }}))
+2025-08-08T02:40:24.361083Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-08T02:40:24.365902Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo\\daemon\\9df288dc473eccdc-turbo.log.2025-08-08"), AnchoredSystemPathBuf(".turbo\\daemon\\9df288dc473eccdc-turbo.log.2025-08-07")}
+2025-08-08T02:40:24.365918Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-08-08T02:40:30.612288Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo\\daemon")}
+2025-08-08T02:40:30.612308Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-08-08T02:50:38.964621Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\pathways\\src\\app\\layout.tsx")}
+2025-08-08T02:50:38.965397Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("pathways"), path: AnchoredSystemPathBuf("apps\\pathways") }}))
+2025-08-08T02:51:10.512752Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\pathways\\src\\app\\globals.css")}
+2025-08-08T02:51:10.512790Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("pathways"), path: AnchoredSystemPathBuf("apps\\pathways") }}))
+2025-08-08T02:51:13.945468Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\pathways\\src\\app\\globals.css")}
+2025-08-08T02:51:13.945509Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("pathways"), path: AnchoredSystemPathBuf("apps\\pathways") }}))
+2025-08-08T02:51:13.945590Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-08T02:53:15.026742Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\pathways\\src\\app\\globals.css")}
+2025-08-08T02:53:15.027851Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("pathways"), path: AnchoredSystemPathBuf("apps\\pathways") }}))
+2025-08-08T02:54:16.925528Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\pathways\\src\\app\\globals.css"), AnchoredSystemPathBuf("apps\\pathways\\src\\app\\layout.tsx")}
+2025-08-08T02:54:16.925671Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("pathways"), path: AnchoredSystemPathBuf("apps\\pathways") }}))
+2025-08-08T02:54:22.119281Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-08T02:56:30.816025Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\pathways")}
+2025-08-08T02:56:30.816070Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("pathways"), path: AnchoredSystemPathBuf("apps\\pathways") }}))
+2025-08-08T02:56:36.236424Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-08T02:58:41.626898Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\pathways"), AnchoredSystemPathBuf("apps\\pathways\\.turbo")}
+2025-08-08T02:58:41.626982Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("pathways"), path: AnchoredSystemPathBuf("apps\\pathways") }}))
+2025-08-08T02:58:41.976637Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-08T02:59:11.328933Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\pathways")}
+2025-08-08T02:59:11.328956Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("pathways"), path: AnchoredSystemPathBuf("apps\\pathways") }}))
+2025-08-08T02:59:12.778564Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-08T03:16:39.238693Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\pathways\\src\\app\\globals.css")}
+2025-08-08T03:16:39.243009Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("pathways"), path: AnchoredSystemPathBuf("apps\\pathways") }}))
+2025-08-08T03:16:56.934519Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\pathways\\src\\app\\layout.tsx")}
+2025-08-08T03:16:56.934566Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("pathways"), path: AnchoredSystemPathBuf("apps\\pathways") }}))
+2025-08-08T03:17:09.302213Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\pathways\\src\\app\\globals.css")}
+2025-08-08T03:17:09.302283Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("pathways"), path: AnchoredSystemPathBuf("apps\\pathways") }}))
+2025-08-08T03:17:13.051634Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\pathways\\src\\app\\globals.css")}
+2025-08-08T03:17:13.051671Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("pathways"), path: AnchoredSystemPathBuf("apps\\pathways") }}))
+2025-08-08T03:17:13.051750Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-08T03:17:52.338989Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\pathways\\src\\app\\globals.css"), AnchoredSystemPathBuf("apps\\pathways\\src\\app\\layout.tsx")}
+2025-08-08T03:17:52.339094Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("pathways"), path: AnchoredSystemPathBuf("apps\\pathways") }}))
+2025-08-08T03:17:56.540614Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun

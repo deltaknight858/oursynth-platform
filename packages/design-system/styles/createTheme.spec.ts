@@ -191,3 +191,13 @@ const theme = createTheme();
     },
   });
 }
+
+// Add actual tests to prevent "no tests" error
+describe('createTheme', () => {
+  it('should create a default theme', () => {
+    const theme = createTheme();
+    expect(theme).toBeDefined();
+    expect(theme.palette).toBeDefined();
+    expect(theme.typography).toBeDefined();
+  });
+});

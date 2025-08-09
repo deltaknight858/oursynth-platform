@@ -57,8 +57,8 @@ export function findAlignmentGuides(
   });
 
   return {
-    vertical: [...new Set(guides.vertical)], // Remove duplicates
-    horizontal: [...new Set(guides.horizontal)]
+    vertical: Array.from(new Set(guides.vertical)), // Remove duplicates
+    horizontal: Array.from(new Set(guides.horizontal))
   };
 }
 

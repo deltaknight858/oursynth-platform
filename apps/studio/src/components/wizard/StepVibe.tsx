@@ -182,9 +182,9 @@ export default function StepVibe({ wizardState, updateState }: StepVibeProps) {
       </Box>
 
       {/* Theme Cards Grid */}
-      <Grid container spacing={3}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' }, gap: 3 }}>
         {themes.map((theme, index) => (
-          <Grid item xs={12} sm={6} key={theme.id}>
+          <Box key={theme.id}>
             <ThemeCard
               selected={wizardState.selectedTheme === theme.id}
               onClick={() => handleThemeSelect(theme.id)}
@@ -282,9 +282,9 @@ export default function StepVibe({ wizardState, updateState }: StepVibeProps) {
                 </Box>
               </CardContent>
             </ThemeCard>
-          </Grid>
+          </Box>
         ))}
-      </Grid>
+      </Box>
 
       {/* Selection Confirmation */}
       {wizardState.selectedTheme && (

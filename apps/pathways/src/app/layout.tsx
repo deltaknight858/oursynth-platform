@@ -1,13 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import "../styles/glass.css";
-import CustomThemeProvider from "@/components/theme/CustomThemeProvider";
-import { AuthProvider } from "@/contexts/AuthContext";
-import Header from "@/components/Header";
-import CommandCenter from 'packages/ui/src/components/CommandCenter';
-import GlobalBottomNavBar from 'packages/ui/src/components/GlobalBottomNavBar';
-import NoSSR from "@/components/NoSSR";
+import "./globals-clean.css";
 import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
@@ -21,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pathways - AI Component Generator",
-  description: "Generate beautiful React components with AI",
+  title: "OurSynth Pathways - Project Wizard",
+  description: "Create your next project with our intelligent wizard. Choose templates, configure features, and deploy with ease.",
 };
 
 export default function RootLayout({
@@ -36,31 +29,23 @@ export default function RootLayout({
         <meta name="emotion-insertion-point" content="" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased m-0 p-0 h-full w-full overflow-x-hidden bg-transparent text-white`}
+        style={{ margin: 0, padding: 0 }}
       >
-        <CustomThemeProvider>
-          <AuthProvider>
-            <NoSSR fallback={<div style={{ height: '70px' }} />}>
-              <Header />
-            </NoSSR>
-            {children}
-            <CommandCenter appContext="pathways" />
-            <GlobalBottomNavBar />
-            <Toaster
-              position="bottom-right"
-              toastOptions={{
-                duration: 3000,
-                style: {
-                  background: 'rgba(0, 0, 0, 0.8)',
-                  backdropFilter: 'blur(10px)',
-                  color: 'white',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '12px',
-                },
-              }}
-            />
-          </AuthProvider>
-        </CustomThemeProvider>
+        {children}
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: 'rgba(0, 0, 0, 0.8)',
+              backdropFilter: 'blur(10px)',
+              color: 'white',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '12px',
+            },
+          }}
+        />
       </body>
     </html>
   );

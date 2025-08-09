@@ -5,35 +5,52 @@
   "private": true,
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "!apps/api",
+    "packages/analyzer",
+    "packages/orchestrator",
+    "packages/shared-config",
+    "packages/shared-types",
+    "packages/shared-utils"
   ],
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
     "start": "turbo run start",
     "lint": "turbo run lint",
+    "tsc:noEmit": "turbo run tsc:noEmit",
+    "validate": "node -e \"process.platform === 'win32' ? require('child_process').spawn('cmd', ['/c', 'scripts\\\\validate.bat'], {stdio: 'inherit'}) : require('child_process').spawn('bash', ['scripts/validate.sh'], {stdio: 'inherit'})\"",
+    "validate:quick": "node -e \"process.platform === 'win32' ? require('child_process').spawn('cmd', ['/c', 'scripts\\\\validate-quick.bat'], {stdio: 'inherit'}) : require('child_process').spawn('bash', ['scripts/validate-quick.sh'], {stdio: 'inherit'})\"",
+    "validate:bash": "bash scripts/validate.sh",
+    "validate:bat": "scripts\\validate.bat",
     "dev:studio": "turbo run dev --filter=studio",
     "dev:pathways": "turbo run dev --filter=pathways",
     "dev:deploy": "turbo run dev --filter=deploy",
     "dev:domains": "turbo run dev --filter=domains",
-    "test": "jest"
+    "build:studio": "turbo run build --filter=studio",
+    "build:pathways": "turbo run build --filter=pathways",
+    "build:deploy": "turbo run build --filter=deploy",
+    "build:domains": "turbo run build --filter=domains",
+    "test": "jest",
+    "test:ci": "jest --ci --passWithNoTests"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
     "@testing-library/jest-dom": "^6.6.4",
-    "@testing-library/react": "^16.3.0",
+    "@testing-library/react": "^14.3.1",
+    "@testing-library/user-event": "^14.6.1",
     "@types/chai": "^5.2.2",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.19.9",
-    "@types/react": "^19.1.9",
+    "@types/react": "^18.0.0",
     "@types/sinon": "^17.0.4",
+    "husky": "^8.0.0",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
     "ts-jest": "^29.4.1",
     "turbo": "^1.13.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.9.2"
   },
   "engines": {
     "node": ">=18.0.0",
@@ -42,10 +59,10 @@
   "dependencies": {
     "@babel/parser": "^7.28.0",
     "@babel/traverse": "^7.28.0",
-    "@mui/icons-material": "^7.3.0",
-    "@mui/lab": "^7.0.0-beta.15",
-    "@mui/material": "^7.3.0",
-    "@mui/system": "^7.3.0",
+    "@mui/icons-material": "^5.15.20",
+    "@mui/lab": "^5.0.0-alpha.170",
+    "@mui/material": "^5.15.20",
+    "@mui/system": "^5.15.15",
     "@mui/types": "^7.4.5",
     "chai": "^5.2.1",
     "sinon": "^21.0.0"

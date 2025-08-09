@@ -1,0 +1,82 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "es6"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@oursynth/shared-types/*": ["packages/shared-types/src/*"],
+      "@oursynth/shared-utils/*": ["packages/shared-utils/src/*"],
+      "@oursynth/shared-config/*": ["packages/shared-config/src/*"],
+      "@oursynth/ui/*": ["packages/ui/src/*"],
+      "@oursynth/ui-components/*": ["packages/ui-components/*"],
+      "@oursynth/design-system/*": ["packages/design-system/*"],
+      "@oursynth/analyzer/*": ["packages/analyzer/*"],
+      "@oursynth/orchestrator/*": ["packages/orchestrator/*"]
+    }
+  },
+  "references": [
+    {
+      "path": "./apps/studio"
+    },
+    {
+      "path": "./apps/pathways"  
+    },
+    {
+      "path": "./apps/dashboard"
+    },
+    {
+      "path": "./apps/domains"
+    },
+    {
+      "path": "./apps/deploy"
+    },
+    {
+      "path": "./packages/shared-types"
+    },
+    {
+      "path": "./packages/shared-utils"
+    },
+    {
+      "path": "./packages/shared-config"
+    },
+    {
+      "path": "./packages/ui"
+    },
+    {
+      "path": "./packages/ui-components"
+    },
+    {
+      "path": "./packages/design-system"
+    },
+    {
+      "path": "./packages/analyzer"
+    },
+    {
+      "path": "./packages/orchestrator"
+    }
+  ],
+  "include": [],
+  "exclude": [
+    "node_modules",
+    "**/.next/**",
+    "**/build/**",
+    "**/dist/**",
+    "**/.venv/**",
+    "**/venv/**"
+  ]
+}

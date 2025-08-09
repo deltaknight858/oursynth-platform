@@ -19,3 +19,15 @@ import { createTheme, Theme } from '@mui/material/styles';
 {
   const themeCommons: Pick<Theme['palette']['common'], 'black' | 'white'> = common;
 }
+
+// Add actual tests to prevent "no tests" error
+describe('createPalette', () => {
+  it('should work with color augmentation', () => {
+    const palette = createTheme().palette;
+    const color: Color = blue;
+    
+    const augmented = palette.augmentColor({ color });
+    expect(augmented).toBeDefined();
+    expect(augmented.main).toBeDefined();
+  });
+});

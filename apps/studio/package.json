@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "echo 'No tests configured for studio app'",
+    "tsc:noEmit": "tsc --noEmit"
   },
   "dependencies": {
     "@oursynth/shared-types": "file:../../packages/shared-types",

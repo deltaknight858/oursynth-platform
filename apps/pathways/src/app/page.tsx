@@ -1,9 +1,7 @@
-import ComponentGenerator from '@/components/generator/ComponentGenerator';
+'use client';
+
+import FullScreenPrompt from '../components/FullScreenPrompt';
 
 export default function Home() {
-  return (
-    <div className="gradient-bg">
-      <ComponentGenerator />
-    </div>
-  );
+  return <FullScreenPrompt />;
 }

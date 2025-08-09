@@ -3,10 +3,11 @@
   "version": "2.2.1",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "tsc:noEmit": "tsc --noEmit"
   },
   "dependencies": {
     "@oursynth/shared-config": "file:../../packages/shared-config",

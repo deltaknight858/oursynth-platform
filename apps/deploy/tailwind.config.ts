@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 import baseConfig from "@oursynth/shared-config";
 
-const config: Config = {
+const config = {
   ...baseConfig,
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",

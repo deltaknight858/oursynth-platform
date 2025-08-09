@@ -5,8 +5,8 @@ import { useState } from 'react'
 import { Toaster } from '@/components/ui/sonner'
 import { AuthProvider } from '@/contexts/AuthContext'
 import Layout from '@/components/layout/Layout'
-import GlobalBottomNavBar from 'packages/ui/src/components/GlobalBottomNavBar';
-import CommandCenter from 'packages/ui/src/components/CommandCenter';
+// import GlobalBottomNavBar from 'packages/ui/src/components/GlobalBottomNavBar';
+// import CommandCenter from 'packages/ui/src/components/CommandCenter';
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient())
@@ -17,8 +17,8 @@ export default function App({ Component, pageProps }: AppProps) {
         <Layout>
           <Component {...pageProps} />
           <Toaster />
-          <CommandCenter appContext="domains" />
-          <GlobalBottomNavBar />
+          {/* <CommandCenter appContext="domains" /> */}
+          {/* <GlobalBottomNavBar /> */}
         </Layout>
       </AuthProvider>
     </QueryClientProvider>
