@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { StreamingProvider, useStreaming } from '../contexts/StreamingContext';
+import GenerationProgress from './GenerationProgress';
 // import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 interface CodeGeneratorState {
@@ -45,7 +47,7 @@ const steps = [
   { id: 5, title: 'Export', description: 'Get your code' }
 ];
 
-export default function UnifiedCodeGenerator() {
+function UnifiedCodeGeneratorInternal() {
   const [currentStep, setCurrentStep] = useState(1);
   const [state, setState] = useState<CodeGeneratorState>({
     projectType: 'component',
@@ -610,41 +612,52 @@ function ConfigureStep({ state, updateState, onNext, onPrev }: any) {
 }
 
 function GenerateStep({ state, updateState, onNext, onPrev }: any) {
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [currentTask, setCurrentTask] = useState('');
+  const { startGeneration, isGenerating, files, error, reset } = useStreaming();
+  const [hasStarted, setHasStarted] = useState(false);
 
-  const generateCode = async () => {
-    setIsGenerating(true);
-    updateState({ isGenerating: true, generationProgress: 0 });
+  const generateCode = useCallback(async () => {
+    setHasStarted(true);
     
-    const tasks = [
-      'Analyzing project requirements...',
-      'Setting up project structure...',
-      'Generating components...',
-      'Configuring dependencies...',
-      'Adding features...',
-      'Optimizing code...',
-      'Finalizing project...'
-    ];
+    // Convert state to ProjectConfig format
+    const projectConfig = {
+      projectName: state.description.split(' ').slice(0, 3).join('-').toLowerCase() || 'my-project',
+      description: state.description,
+      deployment: 'vercel',
+      environment: 'development',
+      features: [
+        ...(state.features.auth ? ['authentication'] : []),
+        ...(state.features.database ? ['database'] : []),
+        ...(state.features.api ? ['api'] : []),
+        ...(state.features.charts ? ['charts'] : []),
+        ...(state.features.testing ? ['testing'] : []),
+        state.styling,
+        state.framework
+      ],
+      template: {
+        id: state.projectType,
+        name: state.projectType.charAt(0).toUpperCase() + state.projectType.slice(1),
+        description: state.description
+      }
+    };
 
-    for (let i = 0; i < tasks.length; i++) {
-      setCurrentTask(tasks[i]);
-      setProgress((i + 1) / tasks.length * 100);
-      updateState({ generationProgress: (i + 1) / tasks.length * 100 });
-      await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      await startGeneration(projectConfig);
+      // Auto advance after generation is complete
+      setTimeout(() => {
+        if (!isGenerating && files.length > 0) {
+          onNext();
+        }
+      }, 2000);
+    } catch (err) {
+      console.error('Generation failed:', err);
     }
-
-    setIsGenerating(false);
-    updateState({ isGenerating: false });
-    setTimeout(onNext, 1000);
-  };
+  }, [state, startGeneration, isGenerating, files.length, onNext]);
 
   useEffect(() => {
-    if (!state.isGenerating && !isGenerating) {
+    if (!hasStarted && !isGenerating && files.length === 0 && !error) {
       generateCode();
     }
-  }, []);
+  }, [hasStarted, isGenerating, files.length, error, generateCode]);
 
   return (
     <motion.div
@@ -656,131 +669,99 @@ function GenerateStep({ state, updateState, onNext, onPrev }: any) {
       <h2 className="text-3xl font-bold neon-text mb-6 floaty flicker">Generating Your Code</h2>
       <p className="text-white/70 mb-8">AI is creating your {state.projectType} with the selected features...</p>
       
-      {/* Generation Progress */}
-      <div className="mb-8">
-        <div className="glass-strong p-6 rounded-xl neon-border">
-          {/* Progress Bar */}
-          <div className="mb-6">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-white font-semibold">Progress</span>
-              <span className="neon-accent">{Math.round(progress)}%</span>
-            </div>
-            <div className="w-full h-3 glass rounded-full overflow-hidden">
-              <motion.div
-                className="h-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 glow"
-                initial={{ width: 0 }}
-                animate={{ width: `${progress}%` }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
-              />
-            </div>
-          </div>
-
-          {/* Current Task */}
-          <div className="text-center">
-            <motion.div
-              key={currentTask}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="neon-text text-lg font-medium flicker"
-            >
-              {currentTask || 'Initializing...'}
-            </motion.div>
-          </div>
-
-          {/* Animated Icons */}
-          <div className="flex justify-center items-center mt-6 space-x-4">
-            {['⚡', '🔮', '✨', '🚀'].map((icon, index) => (
-              <motion.div
-                key={icon}
-                className="text-2xl"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.5, 1, 0.5],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  delay: index * 0.5,
-                }}
-              >
-                {icon}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Live Code Preview */}
-        {progress > 20 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-6 glass-strong p-4 rounded-xl"
-          >
-            <h4 className="neon-accent font-semibold mb-3">Generated Files Preview</h4>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center text-white/80">
-                <span className="text-green-400 mr-2">✓</span>
-                <span>src/components/{state.projectType}.tsx</span>
-              </div>
-              {progress > 40 && (
-                <motion.div 
-                  initial={{ opacity: 0 }} 
-                  animate={{ opacity: 1 }}
-                  className="flex items-center text-white/80"
-                >
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>src/styles/globals.css</span>
-                </motion.div>
-              )}
-              {progress > 60 && (
-                <motion.div 
-                  initial={{ opacity: 0 }} 
-                  animate={{ opacity: 1 }}
-                  className="flex items-center text-white/80"
-                >
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>package.json</span>
-                </motion.div>
-              )}
-              {progress > 80 && (
-                <motion.div 
-                  initial={{ opacity: 0 }} 
-                  animate={{ opacity: 1 }}
-                  className="flex items-center text-white/80"
-                >
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>README.md</span>
-                </motion.div>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </div>
+      {/* Generation Progress Component */}
+      <GenerationProgress className="mb-8" />
       
-      <div className="flex space-x-4">
-        <button 
-          onClick={onPrev} 
-          disabled={isGenerating}
-          className="px-6 py-3 glass neon-border text-white hover:glow transition-all disabled:opacity-50"
-        >
-          ← Back
-        </button>
-        {progress >= 100 && (
+      {/* Reset/Retry Options */}
+      {error && (
+        <div className="flex justify-center space-x-4">
           <motion.button
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            onClick={onNext}
-            className="flex-1 py-3 glass-strong neon-border text-green-400 glow flicker"
+            onClick={() => {
+              reset();
+              setHasStarted(false);
+            }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-6 py-3 glass neon-border text-white hover:glow transition-all"
           >
-            View Code →
+            Try Again
           </motion.button>
-        )}
-      </div>
+          <motion.button
+            onClick={onPrev}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-6 py-3 glass neon-border text-white hover:glow transition-all"
+          >
+            ← Back to Configure
+          </motion.button>
+        </div>
+      )}
+
+      {/* Continue to Export when generation is complete */}
+      {!isGenerating && files.length > 0 && !error && (
+        <div className="flex justify-between">
+          <motion.button
+            onClick={onPrev}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-6 py-3 glass neon-border text-white hover:glow transition-all"
+          >
+            ← Back to Configure
+          </motion.button>
+          <motion.button
+            onClick={onNext}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-6 py-3 glass-strong neon-border glow neon-text font-semibold transition-all flicker"
+          >
+            Continue to Export →
+          </motion.button>
+        </div>
+      )}
     </motion.div>
   );
 }
 
 function ExportStep({ state, updateState, onPrev }: any) {
+  const { files } = useStreaming();
+
+  // Deduplicate files and filter out empty directories  
+  const uniqueFiles = useMemo(() => {
+    const seen = new Set<string>();
+    return files.filter((file) => {
+      if (seen.has(file.path)) return false;
+      seen.add(file.path);
+      return file.type === 'file' && file.content.length > 0;
+    });
+  }, [files]);
+
+  const downloadAsZip = useCallback(async () => {
+    if (uniqueFiles.length === 0) {
+      alert('No files to download. Please generate the code first.');
+      return;
+    }
+
+    try {
+      // Create a simple zip-like structure by combining all files
+      const fileContents = uniqueFiles.map(file => 
+        `// File: ${file.path}\n${file.content}\n\n${'='.repeat(80)}\n\n`
+      ).join('');
+
+      const blob = new Blob([fileContents], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${state.projectName || 'generated-project'}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Download failed:', error);
+      alert('Failed to download files. Please try again.');
+    }
+  }, [uniqueFiles, state.projectName]);
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 50 }}
@@ -789,17 +770,49 @@ function ExportStep({ state, updateState, onPrev }: any) {
       className="glass p-8"
     >
       <h2 className="text-3xl font-bold neon-text mb-6 floaty">Export Your Code</h2>
-      <p className="text-white/70 mb-8">Choose how you want to get your generated code...</p>
+      <p className="text-white/70 mb-8">
+        {uniqueFiles.length > 0 
+          ? `Ready to download ${uniqueFiles.length} generated files`
+          : 'Generate code first to enable download'
+        }
+      </p>
+      
+      {uniqueFiles.length > 0 && (
+        <div className="mb-6 glass-strong p-4 rounded-lg">
+          <h3 className="text-lg font-semibold neon-text mb-3">Generated Files:</h3>
+          <div className="space-y-2 max-h-48 overflow-y-auto">
+            {uniqueFiles.map((file, index) => (
+              <div key={index} className="flex items-center space-x-2 text-sm">
+                <span className="text-green-400">📄</span>
+                <span className="text-white/80">{file.path}</span>
+                <span className="text-white/50 ml-auto">
+                  {(file.content.length / 1024).toFixed(1)}kb
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       
       <div className="flex space-x-4">
         <button onClick={onPrev} className="px-6 py-3 glass neon-border text-white">← Back</button>
-        <button className="flex-1 py-3 glass-strong neon-border text-green-400 glow">Download Code</button>
+        <button 
+          onClick={downloadAsZip}
+          disabled={uniqueFiles.length === 0}
+          className={`flex-1 py-3 glass-strong neon-border glow ${
+            uniqueFiles.length > 0 
+              ? 'text-green-400 hover:bg-green-400/10' 
+              : 'text-gray-500 cursor-not-allowed opacity-50'
+          }`}
+        >
+          {uniqueFiles.length > 0 ? '⬇️ Download Code' : 'No Files to Download'}
+        </button>
       </div>
     </motion.div>
   );
 }
 
-function LivePreview({ state, currentStep }: any) {
+function LivePreview({ state, currentStep }: { state: any; currentStep: number }) {
   const getPreviewContent = () => {
     switch (currentStep) {
       case 1:
@@ -867,14 +880,14 @@ function LivePreview({ state, currentStep }: any) {
         );
       
       case 3:
-        const enabledFeatures = Object.entries(state.features).filter(([_, enabled]) => enabled);
+        const enabledFeatures = Object.entries(state.features).filter(([, enabled]) => enabled);
         return (
           <div className="space-y-4">
             <div className="text-center mb-4">
               <h4 className="neon-accent font-bold">Features Preview</h4>
             </div>
             <div className="space-y-2">
-              {enabledFeatures.map(([feature, _]) => (
+              {enabledFeatures.map(([feature]) => (
                 <motion.div
                   key={feature}
                   initial={{ opacity: 0, x: -10 }}
@@ -959,5 +972,14 @@ function LivePreview({ state, currentStep }: any) {
         {getPreviewContent()}
       </motion.div>
     </div>
+  );
+}
+
+// Main wrapper component with StreamingProvider
+export default function UnifiedCodeGenerator() {
+  return (
+    <StreamingProvider>
+      <UnifiedCodeGeneratorInternal />
+    </StreamingProvider>
   );
 }

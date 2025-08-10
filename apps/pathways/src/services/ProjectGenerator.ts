@@ -17,6 +17,8 @@ export interface GeneratedFile {
   type: 'file' | 'directory';
 }
 
+export type FileGenerationCallback = (file: GeneratedFile) => void;
+
 export class ProjectGenerator {
   private config: ProjectConfig;
   
@@ -45,19 +47,59 @@ export class ProjectGenerator {
     return files;
   }
 
+  async generateProjectWithStreaming(onFileGenerated?: FileGenerationCallback): Promise<GeneratedFile[]> {
+    const allFiles: GeneratedFile[] = [];
+    
+    // Get all files that would be generated
+    const baseFiles = this.createBaseStructure();
+    const packageFile = this.createPackageJson();
+    const frameworkFiles = this.createFrameworkFiles();
+    const featureFiles = this.createFeatureFiles();
+    const deploymentFiles = this.createDeploymentConfig();
+    
+    const filesToGenerate = [
+      ...baseFiles,
+      packageFile,
+      ...frameworkFiles,
+      ...featureFiles,
+      ...deploymentFiles
+    ];
+
+    // Stream files one by one with delays
+    for (const file of filesToGenerate) {
+      allFiles.push(file);
+      
+      if (onFileGenerated) {
+        onFileGenerated(file);
+      }
+      
+      // Add a small delay to simulate streaming and prevent memory overload
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    
+    return allFiles;
+  }
+
   private createBaseStructure(): GeneratedFile[] {
     const projectName = this.sanitizeProjectName(this.config.projectName);
     
-    return [
-      { path: `${projectName}/`, content: '', type: 'directory' },
-      { path: `${projectName}/src/`, content: '', type: 'directory' },
-      { path: `${projectName}/src/components/`, content: '', type: 'directory' },
-      { path: `${projectName}/src/pages/`, content: '', type: 'directory' },
-      { path: `${projectName}/src/lib/`, content: '', type: 'directory' },
-      { path: `${projectName}/public/`, content: '', type: 'directory' },
+    // Only create actual files with content, no empty directories
+    const baseFiles: GeneratedFile[] = [
+      // Essential project files
       { path: `${projectName}/README.md`, content: this.createReadme(), type: 'file' },
       { path: `${projectName}/.gitignore`, content: this.createGitignore(), type: 'file' },
+      { path: `${projectName}/.env.example`, content: this.createEnvExample(), type: 'file' },
+      { path: `${projectName}/next.config.js`, content: this.createNextConfig(), type: 'file' },
+      { path: `${projectName}/tsconfig.json`, content: this.createTsConfig(), type: 'file' },
+      { path: `${projectName}/tailwind.config.js`, content: this.createTailwindConfig(), type: 'file' },
+      
+      // Basic app structure
+      { path: `${projectName}/src/pages/index.tsx`, content: this.createIndexPage(), type: 'file' },
+      { path: `${projectName}/src/pages/_app.tsx`, content: this.createAppTsx(), type: 'file' },
+      { path: `${projectName}/src/styles/globals.css`, content: this.createGlobalsCss(), type: 'file' },
     ];
+    
+    return baseFiles;
   }
 
   private createPackageJson(): GeneratedFile {
@@ -386,6 +428,47 @@ next-env.d.ts
 
 # Database
 ${this.config.features.includes('Database Integration') ? 'prisma/dev.db\nprisma/migrations/' : ''}
+`;
+  }
+
+  private createEnvExample(): string {
+    return `# Environment Variables
+# Copy this file to .env.local and fill in the values
+
+# Database
+DATABASE_URL="postgresql://username:password@localhost:5432/ecommerce_db"
+
+# NextAuth.js
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your-secret-key"
+
+# OAuth Providers
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+
+# Stripe
+STRIPE_PUBLISHABLE_KEY="pk_test_..."
+STRIPE_SECRET_KEY="sk_test_..."
+STRIPE_WEBHOOK_SECRET="whsec_..."
+
+# Redis (for caching)
+REDIS_URL="redis://localhost:6379"
+
+# File Upload
+UPLOADTHING_SECRET="sk_live_..."
+UPLOADTHING_APP_ID="your-app-id"
+
+# Analytics
+GOOGLE_ANALYTICS_ID="G-XXXXXXXXXX"
+
+# Monitoring
+SENTRY_DSN="https://...@sentry.io/..."
+
+# Email
+SMTP_HOST="smtp.gmail.com"
+SMTP_PORT="587"
+SMTP_USER="your-email@gmail.com"
+SMTP_PASSWORD="your-app-password"
 `;
   }
 
@@ -731,4 +814,3 @@ jobs:
 `;
   }
 }
-`;
