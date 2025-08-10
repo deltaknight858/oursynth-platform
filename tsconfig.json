@@ -46,28 +46,10 @@
       "path": "./apps/deploy"
     },
     {
-      "path": "./packages/shared-types"
-    },
-    {
-      "path": "./packages/shared-utils"
-    },
-    {
-      "path": "./packages/shared-config"
-    },
-    {
-      "path": "./packages/ui"
-    },
-    {
       "path": "./packages/ui-components"
     },
     {
       "path": "./packages/design-system"
-    },
-    {
-      "path": "./packages/analyzer"
-    },
-    {
-      "path": "./packages/orchestrator"
     }
   ],
   "include": [],
