@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { expect } from 'chai';
+
 import { spy } from 'sinon';
 import { createRenderer, describeConformance, fireEvent } from 'test/utils';
 import FormControl from '@mui/material/FormControl';
@@ -31,7 +31,7 @@ describe('<TextField />', () => {
     it('should forward the multiline prop to Input', () => {
       const { getByRole } = render(<TextField variant="standard" multiline />);
 
-      expect(getByRole('textbox', { hidden: false })).to.have.class(
+      expect(getByRole('textbox', { hidden: false })).toHaveClass(
         inputBaseClasses.inputMultiline,
       );
     });
@@ -45,7 +45,7 @@ describe('<TextField />', () => {
         />,
       );
 
-      expect(getByTestId('mui-input-base-root')).to.have.class(inputBaseClasses.fullWidth);
+      expect(getByTestId('mui-input-base-root')).toHaveClass(inputBaseClasses.fullWidth);
     });
   });
 
@@ -61,7 +61,7 @@ describe('<TextField />', () => {
         <TextField label="Foo bar" InputLabelProps={{ className: 'foo' }} variant="standard" />,
       );
 
-      expect(container.querySelector('label')).to.have.class('foo');
+      expect(container.querySelector('label')).toHaveClass('foo');
     });
 
     ['', undefined].forEach((label) => {
@@ -83,7 +83,7 @@ describe('<TextField />', () => {
         />,
       );
 
-      expect(getDescriptionOf(getByRole('textbox'))).to.have.class('foo');
+      expect(getDescriptionOf(getByRole('textbox'))).toHaveClass('foo');
     });
 
     it('has an accessible description', () => {
@@ -118,7 +118,7 @@ describe('<TextField />', () => {
     it('should set shrink prop on outline from label', () => {
       const { container } = render(<TextField InputLabelProps={{ shrink: true }} classes={{}} />);
 
-      expect(container.querySelector('fieldset')).to.have.class(
+      expect(container.querySelector('fieldset')).toHaveClass(
         outlinedInputClasses.notchedOutline,
       );
     });

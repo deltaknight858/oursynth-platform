@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { expect } from 'chai';
+
 import { createRenderer, screen } from 'test/utils';
 import createTheme from './createTheme';
 import styled from './styled';
@@ -485,7 +485,7 @@ describe('styled', () => {
         height: 300px;
       `;
 
-      expect(Component.displayName).to.equal('MuiComponent');
+      expect(Component.displayName).toBe('MuiComponent');
     });
 
     it('should set displayName as name + slot if both are specified', () => {
@@ -498,7 +498,7 @@ describe('styled', () => {
         height: 300px;
       `;
 
-      expect(Component.displayName).to.equal('MuiComponentRoot');
+      expect(Component.displayName).toBe('MuiComponentRoot');
     });
 
     it('should set the className when generating the classes', () => {
@@ -524,7 +524,7 @@ describe('styled', () => {
         }
       });
 
-      expect(containsValidClass).to.equal(true);
+      expect(containsValidClass).toBe(true);
     });
 
     it('should set the className as root if no slot is specified', () => {
@@ -549,7 +549,7 @@ describe('styled', () => {
         }
       });
 
-      expect(containsValidClass).to.equal(true);
+      expect(containsValidClass).toBe(true);
     });
 
     it('should not propagate classes props to component if it is a root slot', () => {
@@ -569,7 +569,7 @@ describe('styled', () => {
           Test
         </Component>,
       );
-      expect(getByTestId('root').getAttribute('data-with-classes')).to.equal('false');
+      expect(getByTestId('root').getAttribute('data-with-classes')).toBe('false');
     });
 
     it('should propagate classes props to component if it is not a root slot', () => {
@@ -593,8 +593,8 @@ describe('styled', () => {
         </React.Fragment>,
       );
 
-      expect(getByTestId('with-classes').getAttribute('data-with-classes')).to.equal('true');
-      expect(getByTestId('without-classes').getAttribute('data-with-classes')).to.equal('false');
+      expect(getByTestId('with-classes').getAttribute('data-with-classes')).toBe('true');
+      expect(getByTestId('without-classes').getAttribute('data-with-classes')).toBe('false');
     });
 
     it('should propagate classes props to component if no slot is specified', () => {
@@ -615,8 +615,8 @@ describe('styled', () => {
         </React.Fragment>,
       );
 
-      expect(getByTestId('with-classes').getAttribute('data-with-classes')).to.equal('true');
-      expect(getByTestId('without-classes').getAttribute('data-with-classes')).to.equal('false');
+      expect(getByTestId('with-classes').getAttribute('data-with-classes')).toBe('true');
+      expect(getByTestId('without-classes').getAttribute('data-with-classes')).toBe('false');
     });
 
     it('classes props should be correctly applied to root and slot elements', () => {
@@ -654,15 +654,15 @@ describe('styled', () => {
 
       expect(
         container.getElementsByClassName('MuiParent-root')[0]?.classList.contains('root'),
-      ).to.equal(true);
+      ).toBe(true);
 
       // child has the correct class
       expect(
         container.getElementsByClassName('MuiChild-root')[0]?.classList.contains('slot'),
-      ).to.equal(true);
+      ).toBe(true);
 
       // none of the elements should have the classes attribute
-      expect(container.querySelectorAll('[classes]').length).to.equal(0);
+      expect(container.querySelectorAll('[classes]').length).toBe(0);
     });
   });
 });

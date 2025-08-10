@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { expect } from 'chai';
+
 import { createRenderer } from 'test/utils';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';

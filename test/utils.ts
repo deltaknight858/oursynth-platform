@@ -6,6 +6,14 @@ import React from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+// Mock renderToString for server-side rendering tests  
+const renderToString = (ui: React.ReactElement) => {
+  const Wrapper = ({ children }: { children: React.ReactNode }) => 
+    React.createElement(ThemeProvider, { theme: defaultTheme }, children);
+  
+  return render(ui, { wrapper: Wrapper });
+};
+
 // Create a default theme for testing
 const defaultTheme = createTheme();
 
@@ -17,7 +25,8 @@ export const createRenderer = () => {
         React.createElement(ThemeProvider, { theme: defaultTheme }, children);
       
       return render(ui, { wrapper: Wrapper, ...options });
-    }
+    },
+    renderToString
   };
 };
 

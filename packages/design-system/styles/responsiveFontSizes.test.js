@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+
 import { createTheme } from '@mui/material/styles';
 import defaultTheme from './defaultTheme';
 import responsiveFontSizes from './responsiveFontSizes';

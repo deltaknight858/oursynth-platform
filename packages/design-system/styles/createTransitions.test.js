@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+
 import { createTheme } from '@mui/material/styles';
 import createTransitions, { easing, duration } from './createTransitions';
 
