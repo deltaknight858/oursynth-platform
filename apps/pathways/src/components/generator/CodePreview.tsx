@@ -285,7 +285,7 @@ const CodePreview: React.FC<CodePreviewProps> = ({
         return (
           <Alert severity="info">
             <Typography variant="body2">
-              This code doesn't appear to be a React component. Preview is only available for React components.
+              This code doesn&apos;t appear to be a React component. Preview is only available for React components.
             </Typography>
           </Alert>
         );
