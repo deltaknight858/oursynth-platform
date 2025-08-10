@@ -162,7 +162,7 @@ export default function Step3StylingTheme({ data, onChange, onNext }: Step3Styli
         color="text.secondary" 
         sx={{ textAlign: 'center', mb: 4 }}
       >
-        Choose the visual theme that best matches your project's aesthetic
+        Choose the visual theme that best matches your project&apos;s aesthetic
       </Typography>
 
       <Box sx={{ mb: 4 }}>

@@ -27,7 +27,7 @@ export default function FullScreenPrompt() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            You're building something powerful.
+            You&apos;re building something powerful.
           </motion.h1>
           
           <motion.p 
@@ -45,7 +45,7 @@ export default function FullScreenPrompt() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.6 }}
           >
-            Don't hold back. This isn't a "start typing" prompt — it's your blueprint.
+            Don&apos;t hold back. This isn&apos;t a &quot;start typing&quot; prompt — it&apos;s your blueprint.
           </motion.p>
           
           {/* Examples Section */}
