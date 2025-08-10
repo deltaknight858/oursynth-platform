@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "tsc:noEmit": "tsc --noEmit",
-    "lint": "echo 'No lint configured for orchestrator package'"
+    "lint": "echo 'No lint configured for orchestrator package'",
+    "test": "echo 'No tests configured for orchestrator package'"
   }
 }

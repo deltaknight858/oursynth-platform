@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "tsc:noEmit": "tsc --noEmit",
-    "lint": "echo 'No lint configured for shared-utils package'"
+    "lint": "echo 'No lint configured for shared-utils package'",
+    "test": "echo 'No tests configured for shared-utils package'"
   },
   "dependencies": {
     "clsx": "^2.1.1",

@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "tsc:noEmit": "tsc --noEmit",
-    "lint": "echo 'No lint configured for analyzer package'"
+    "lint": "echo 'No lint configured for analyzer package'",
+    "test": "echo 'No tests configured for analyzer package'"
   },
   "dependencies": {
     "@babel/parser": "^7.24.0",

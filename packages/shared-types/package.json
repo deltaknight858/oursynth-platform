@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "tsc:noEmit": "tsc --noEmit",
-    "lint": "echo 'No lint configured for shared-types package'"
+    "lint": "echo 'No lint configured for shared-types package'",
+    "test": "echo 'No tests configured for shared-types package'"
   },
   "devDependencies": {
     "typescript": "^5.0.0"
