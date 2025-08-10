@@ -10,10 +10,10 @@
     "tsc:noEmit": "tsc --noEmit"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
     "@oursynth/shared-config": "file:../../packages/shared-config",
     "@oursynth/shared-types": "file:../../packages/shared-types",
     "@oursynth/shared-utils": "file:../../packages/shared-utils",
-    "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "^1.2.2",
     "@radix-ui/react-alert-dialog": "^1.1.5",
     "@radix-ui/react-aspect-ratio": "^1.1.1",
@@ -55,7 +55,7 @@
     "input-otp": "^1.4.2",
     "lucide-react": "^0.474.0",
     "micro": "^10.0.1",
-    "next": "^15.2.3",
+    "next": "^15.4.6",
     "next-themes": "^0.4.4",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.3.0",
@@ -70,7 +70,7 @@
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^1.1.2",
-    "vercel": "^25.2.0",
+    "vercel": "^24.2.4",
     "zod": "^3.24.1"
   },
   "devDependencies": {
