@@ -5,6 +5,7 @@
   "types": "index.ts",
   "license": "MIT",
   "scripts": {
+    "build": "tsc --noEmit",
     "tsc:noEmit": "tsc --noEmit",
     "lint": "echo 'No lint configured for orchestrator package'"
   }
