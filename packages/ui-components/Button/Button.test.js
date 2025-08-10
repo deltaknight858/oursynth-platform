@@ -568,10 +568,10 @@ describe('<Button />', () => {
   });
 
   describe('server-side', () => {
-    before(function beforeHook() {
+    beforeAll(function beforeHook() {
       // Only run the test on node.
       if (!/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
+        pending('Skip server-side tests in jsdom environment');
       }
     });
 

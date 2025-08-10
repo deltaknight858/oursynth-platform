@@ -27,12 +27,12 @@ describe('<Card />', () => {
         }}
       />,
     );
-    expect(container.firstChild).to.have.class('MuiPaper-elevation8');
-    expect(container.firstChild).not.to.have.class('card-elevation-8');
+    expect(container.firstChild).toHaveClass('MuiPaper-elevation8');
+    expect(container.firstChild).not.toHaveClass('card-elevation-8');
   });
 
   it('should support variant="outlined"', () => {
     const { container } = render(<Card variant="outlined" />);
-    expect(container.firstChild).to.have.class('MuiPaper-outlined');
+    expect(container.firstChild).toHaveClass('MuiPaper-outlined');
   });
 });

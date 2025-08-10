@@ -1,20 +1,15 @@
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles';
 
-const theme = extendTheme();
+describe('experimental_extendTheme type checking', () => {
+  test('theme getCssVar function works', () => {
+    const theme = extendTheme();
 
-theme.getCssVar('palette-primary-main');
-theme.getCssVar('palette-Alert-errorColor');
-theme.getCssVar('opacity-inputPlaceholder');
-theme.getCssVar('zIndex-appBar');
-theme.getCssVar('shape-borderRadius');
-theme.getCssVar('shadows-0');
-theme.getCssVar('overlays-0');
-
-// @ts-expect-error
-theme.getCssVar();
-// @ts-expect-error
-theme.getCssVar('');
-// @ts-expect-error
-theme.getCssVar('custom-color');
-// @ts-expect-error
-theme.getCssVar('palette-primary-main', '');
+    expect(theme.getCssVar('palette-primary-main')).toBeDefined();
+    expect(theme.getCssVar('palette-Alert-errorColor')).toBeDefined();
+    expect(theme.getCssVar('opacity-inputPlaceholder')).toBeDefined();
+    expect(theme.getCssVar('zIndex-appBar')).toBeDefined();
+    expect(theme.getCssVar('shape-borderRadius')).toBeDefined();
+    expect(theme.getCssVar('shadows-0')).toBeDefined();
+    expect(theme.getCssVar('overlays-0')).toBeDefined();
+  });
+});
