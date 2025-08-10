@@ -167,3 +167,6 @@ htmlcov/
 *.build/
 build/
 dist/
+
+# Turbo cache
+.turbo/
