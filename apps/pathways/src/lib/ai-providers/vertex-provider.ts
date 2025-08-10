@@ -51,7 +51,10 @@ export class VertexAIProvider implements AIProvider {
     }
   }
 
-  private async createJWT(serviceAccount: any): Promise<string> {
+  private async createJWT(serviceAccount: { 
+    client_email: string; 
+    private_key: string; 
+  }): Promise<string> {
     const now = Math.floor(Date.now() / 1000);
     const payload = {
       iss: serviceAccount.client_email,

@@ -80,7 +80,12 @@ export default function Step3StylingTheme({ data, onChange, onNext }: Step3Styli
     const theme = event.target.value;
     setSelectedTheme(theme);
     
-    const updateData: any = { theme };
+    const updateData: { 
+      theme: string; 
+      customNotes?: string; 
+      primaryColor?: string; 
+      secondaryColor?: string; 
+    } = { theme };
     
     // Clear custom data if not custom theme
     if (theme !== 'custom-palette') {
