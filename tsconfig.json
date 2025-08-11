@@ -35,14 +35,8 @@
   { "path": "./apps/dashboard" },
   { "path": "./apps/domains" },
   { "path": "./apps/deploy" },
-  { "path": "./packages/shared-types/tsconfig.json" },
-  { "path": "./packages/shared-utils/tsconfig.json" },
-  { "path": "./packages/shared-config/tsconfig.json" },
-  { "path": "./packages/ui/tsconfig.json" },
   { "path": "./packages/ui-components/tsconfig.json" },
-  { "path": "./packages/design-system/tsconfig.json" },
-  { "path": "./packages/analyzer/tsconfig.json" },
-  { "path": "./packages/orchestrator/tsconfig.json" }
+  { "path": "./packages/design-system/tsconfig.json" }
   ],
   "include": [],
   "exclude": [

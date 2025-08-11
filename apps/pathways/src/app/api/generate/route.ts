@@ -1,6 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
+// Type guards for OpenAI error handling
+interface OpenAIError {
+  error?: {
+    type?: string;
+    message?: string;
+  };
+}
+
+interface NetworkError {
+  code?: string;
+  message?: string;
+}
+
+function isOpenAIError(error: unknown): error is OpenAIError {
+  return typeof error === 'object' && 
+         error !== null && 
+         'error' in error && 
+         typeof (error as OpenAIError).error === 'object' && 
+         (error as OpenAIError).error !== null;
+}
+
+function isNetworkError(error: unknown): error is NetworkError {
+  return typeof error === 'object' && 
+         error !== null && 
+         'code' in error;
+}
+
 // Initialize OpenAI client
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -113,21 +140,21 @@ The component should be production-ready and follow React best practices.`;
     console.error('Error in generate endpoint:', error);
 
     // Handle specific OpenAI errors
-    if (typeof error === 'object' && error !== null && 'error' in error && typeof (error as any).error === 'object' && (error as any).error !== null && 'type' in (error as any).error && (error as any).error.type === 'insufficient_quota') {
+    if (isOpenAIError(error) && error.error?.type === 'insufficient_quota') {
       return NextResponse.json(
         { error: 'OpenAI API quota exceeded. Please try again later.' },
         { status: 429 }
       );
     }
 
-    if (typeof error === 'object' && error !== null && 'error' in error && typeof (error as any).error === 'object' && (error as any).error !== null && 'type' in (error as any).error && (error as any).error.type === 'invalid_request_error') {
+    if (isOpenAIError(error) && error.error?.type === 'invalid_request_error') {
       return NextResponse.json(
         { error: 'Invalid request to OpenAI API. Please check your prompt.' },
         { status: 400 }
       );
     }
 
-    if (error?.code === 'ENOTFOUND' || error?.code === 'ECONNREFUSED') {
+    if (isNetworkError(error) && (error.code === 'ENOTFOUND' || error.code === 'ECONNREFUSED')) {
       return NextResponse.json(
         { error: 'Unable to connect to OpenAI API. Please check your internet connection.' },
         { status: 503 }

@@ -179,7 +179,6 @@ function NewDeploymentModal() {
 
   const handleDeploy = () => {
     // TODO: Implement deployment logic
-    console.log("Deploying:", { repoUrl, siteName });
     setIsOpen(false);
     setRepoUrl("");
     setSiteName("");
