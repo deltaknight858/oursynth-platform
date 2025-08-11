@@ -92,3 +92,10 @@ function FocusHandlerTest() {
 
   return null;
 }
+
+// Add a simple test to make Jest happy
+describe('TextField TypeScript spec', () => {
+  test('should compile without TypeScript errors', () => {
+    expect(FocusHandlerTest).toBeDefined();
+  });
+});

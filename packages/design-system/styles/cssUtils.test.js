@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+
 import {
   isUnitless,
   getUnit,
@@ -12,36 +12,36 @@ import {
 describe('cssUtils', () => {
   describe('isUnitless', () => {
     it('should work as expected', () => {
-      expect(isUnitless('20px')).to.equal(false);
-      expect(isUnitless('2.5 px')).to.equal(false);
-      expect(isUnitless('2.5 %')).to.equal(false);
-      expect(isUnitless('-2.5')).to.equal(true);
+      expect(isUnitless('20px')).toBe(false);
+      expect(isUnitless('2.5 px')).toBe(false);
+      expect(isUnitless('2.5 %')).toBe(false);
+      expect(isUnitless('-2.5')).toBe(true);
     });
   });
 
   describe('getUnit', () => {
     it('should work as expected', () => {
-      expect(getUnit('20px')).to.equal('px');
-      expect(getUnit('2.5 px')).to.equal('px');
-      expect(getUnit('2.5 %')).to.equal('%');
-      expect(getUnit('-2.5')).to.equal('');
+      expect(getUnit('20px')).toBe('px');
+      expect(getUnit('2.5 px')).toBe('px');
+      expect(getUnit('2.5 %')).toBe('%');
+      expect(getUnit('-2.5')).toBe('');
     });
   });
 
   describe('toUnitless', () => {
     it('should work as expected', () => {
-      expect(toUnitless('20px')).to.equal(20);
-      expect(toUnitless('2.5 px')).to.equal(2.5);
-      expect(toUnitless('2.5 %')).to.equal(2.5);
-      expect(toUnitless('-2.5')).to.equal(-2.5);
+      expect(toUnitless('20px')).toBe(20);
+      expect(toUnitless('2.5 px')).toBe(2.5);
+      expect(toUnitless('2.5 %')).toBe(2.5);
+      expect(toUnitless('-2.5')).toBe(-2.5);
     });
   });
 
   describe('convertLength', () => {
     it('should work as expected', () => {
       const convert = convertLength('16px');
-      expect(convert('32px', 'rem')).to.equal('2rem');
-      expect(convert('2rem', 'px')).to.equal('32px');
+      expect(convert('32px', 'rem')).toBe('2rem');
+      expect(convert('2rem', 'px')).toBe('32px');
     });
   });
 
@@ -62,7 +62,7 @@ describe('cssUtils', () => {
 
       it(`aligns ${size} on grid ${grid} to ${expected}`, () => {
         const sizeAligned = alignProperty({ size, grid });
-        expect(sizeAligned).to.equal(expected);
+        expect(sizeAligned).toBe(expected);
       });
     });
   });
@@ -83,7 +83,7 @@ describe('cssUtils', () => {
 
         it(`should return a font grid such that the relative lineHeight is aligned`, () => {
           const absoluteLineHeight = grid * lineHeight * htmlFontSize;
-          expect(Math.round((absoluteLineHeight % pixels) * 100000) / 100000).to.equal(0);
+          expect(Math.round((absoluteLineHeight % pixels) * 100000) / 100000).toBe(0);
         });
       });
 
@@ -92,7 +92,7 @@ describe('cssUtils', () => {
       there is no smaller font aligning the lineHeight`, () => {
         const grid = fontGrid({ lineHeight, pixels, htmlFontSize });
         const absoluteLineHeight = grid * lineHeight * htmlFontSize;
-        expect(Math.floor(absoluteLineHeight / pixels)).to.equal(1);
+        expect(Math.floor(absoluteLineHeight / pixels)).toBe(1);
       });
     });
   });
@@ -108,7 +108,7 @@ describe('cssUtils', () => {
           breakpoints: [300, 600],
         });
 
-        expect(result).to.deep.equal({
+        expect(result).toEqual({
           fontSize: '15px',
           '@media (min-width:300px)': {
             fontSize: '17.5px',
@@ -130,7 +130,7 @@ describe('cssUtils', () => {
           breakpoints: [500],
         });
 
-        expect(result).to.deep.equal({
+        expect(result).toEqual({
           fontSize: '0.875rem',
           '@media (min-width:500px)': {
             fontSize: '1rem',

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { expect } from 'chai';
+
 import { createRenderer, describeConformance } from 'test/utils';
 import Card, { cardClasses as classes } from '@mui/material/Card';
 import Paper from '@mui/material/Paper';
@@ -27,12 +27,12 @@ describe('<Card />', () => {
         }}
       />,
     );
-    expect(container.firstChild).to.have.class('MuiPaper-elevation8');
-    expect(container.firstChild).not.to.have.class('card-elevation-8');
+    expect(container.firstChild).toHaveClass('MuiPaper-elevation8');
+    expect(container.firstChild).not.toHaveClass('card-elevation-8');
   });
 
   it('should support variant="outlined"', () => {
     const { container } = render(<Card variant="outlined" />);
-    expect(container.firstChild).to.have.class('MuiPaper-outlined');
+    expect(container.firstChild).toHaveClass('MuiPaper-outlined');
   });
 });

@@ -1,47 +1,47 @@
-import { expect } from 'chai';
+
 import createPalette from './createPalette';
 import createTypography from './createTypography';
 
 describe('createTypography', () => {
   let palette;
 
-  before(() => {
+  beforeAll(() => {
     palette = createPalette({});
   });
 
   it('should create a material design typography according to spec', () => {
     const typography = createTypography(palette, {});
-    expect(typography.fontSize).to.equal(14);
+    expect(typography.fontSize).toBe(14);
   });
 
   it('should create a typography with custom fontSize', () => {
     const typography = createTypography(palette, { fontSize: 15 });
-    expect(typography.fontSize).to.equal(15);
+    expect(typography.fontSize).toBe(15);
   });
 
   it('should accept a function', () => {
     const typography = createTypography(palette, (paletteCurrent) => {
-      expect(palette).to.equal(paletteCurrent);
+      expect(palette).toBe(paletteCurrent);
 
       return { fontSize: 15 };
     });
-    expect(typography.fontSize).to.equal(15);
+    expect(typography.fontSize).toBe(15);
   });
 
   it('should accept a custom font size', () => {
     const typography = createTypography(palette, { fontSize: 16 });
-    expect(typography.body2.fontSize).to.equal('1rem');
+    expect(typography.body2.fontSize).toBe('1rem');
   });
 
   it('should create a typography with a custom baseFontSize', () => {
     const typography = createTypography(palette, { htmlFontSize: 10 });
-    expect(typography.h2.fontSize).to.equal('6rem');
+    expect(typography.h2.fontSize).toBe('6rem');
   });
 
   it('should create a typography with custom h1', () => {
     const customFontSize = '18px';
     const typography = createTypography(palette, { h1: { fontSize: customFontSize } });
-    expect(typography.h1.fontSize).to.equal(customFontSize);
+    expect(typography.h1.fontSize).toBe(customFontSize);
   });
 
   it('should apply a CSS property to all the variants', () => {
@@ -63,13 +63,13 @@ describe('createTypography', () => {
     ];
 
     allVariants.forEach((variant) => {
-      expect(typography[variant].marginLeft).to.equal(0);
+      expect(typography[variant].marginLeft).toBe(0);
     });
   });
 
   it('only defines letter-spacing if the font-family is not overwritten', () => {
-    expect(createTypography(palette, {}).h1.letterSpacing).not.to.equal(undefined);
-    expect(createTypography(palette, { fontFamily: 'Gotham' }).h1.letterSpacing).to.equal(
+    expect(createTypography(palette, {}).h1.letterSpacing).not.toBe(undefined);
+    expect(createTypography(palette, { fontFamily: 'Gotham' }).h1.letterSpacing).toBe(
       undefined,
     );
   });
@@ -79,7 +79,7 @@ describe('createTypography', () => {
     const fontProperties = ['fontFamily', 'fontWeight', 'fontSize', 'lineHeight', 'letterSpacing'];
 
     fontProperties.forEach((prop) => {
-      expect(typography.inherit[prop]).to.equal('inherit');
+      expect(typography.inherit[prop]).toBe('inherit');
     });
   });
 

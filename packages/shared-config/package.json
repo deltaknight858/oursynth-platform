@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "tsc:noEmit": "echo 'No TypeScript in shared-config (JavaScript package)'",
-    "lint": "echo 'No lint configured for shared-config package'"
+    "lint": "echo 'No lint configured for shared-config package'",
+    "test": "echo 'No tests configured for shared-config package'"
   },
   "dependencies": {
     "tailwindcss": "^3.4.1",

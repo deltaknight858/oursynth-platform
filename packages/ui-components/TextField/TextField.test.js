@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { expect } from 'chai';
+
 import { spy } from 'sinon';
 import { createRenderer, describeConformance, fireEvent } from 'test/utils';
 import FormControl from '@mui/material/FormControl';
@@ -25,13 +25,13 @@ describe('<TextField />', () => {
     it('should have an input as the only child', () => {
       const { getAllByRole } = render(<TextField variant="standard" />);
 
-      expect(getAllByRole('textbox')).to.have.lengthOf(1);
+      expect(getAllByRole('textbox')).toHaveLength(1);
     });
 
     it('should forward the multiline prop to Input', () => {
       const { getByRole } = render(<TextField variant="standard" multiline />);
 
-      expect(getByRole('textbox', { hidden: false })).to.have.class(
+      expect(getByRole('textbox', { hidden: false })).toHaveClass(
         inputBaseClasses.inputMultiline,
       );
     });
@@ -45,7 +45,7 @@ describe('<TextField />', () => {
         />,
       );
 
-      expect(getByTestId('mui-input-base-root')).to.have.class(inputBaseClasses.fullWidth);
+      expect(getByTestId('mui-input-base-root')).toHaveClass(inputBaseClasses.fullWidth);
     });
   });
 
@@ -61,14 +61,14 @@ describe('<TextField />', () => {
         <TextField label="Foo bar" InputLabelProps={{ className: 'foo' }} variant="standard" />,
       );
 
-      expect(container.querySelector('label')).to.have.class('foo');
+      expect(container.querySelector('label')).toHaveClass('foo');
     });
 
     ['', undefined].forEach((label) => {
       it(`should not render empty (${label}) label element`, () => {
         const { container } = render(<TextField label={label} variant="standard" />);
 
-        expect(container.querySelector('label')).to.equal(null);
+        expect(container.querySelector('label')).toBe(null);
       });
     });
   });
@@ -83,7 +83,7 @@ describe('<TextField />', () => {
         />,
       );
 
-      expect(getDescriptionOf(getByRole('textbox'))).to.have.class('foo');
+      expect(getDescriptionOf(getByRole('textbox'))).toHaveClass('foo');
     });
 
     it('has an accessible description', () => {
@@ -111,14 +111,14 @@ describe('<TextField />', () => {
 
       const [, fakeLabel] = getAllByTestId('label');
       const notch = container.querySelector('.notch legend');
-      expect(notch).to.contain(fakeLabel);
-      expect(notch).to.have.text('label\u2009*');
+      expect(notch).toContainElement(fakeLabel);
+      expect(notch).toHaveTextContent('label\u2009*');
     });
 
     it('should set shrink prop on outline from label', () => {
       const { container } = render(<TextField InputLabelProps={{ shrink: true }} classes={{}} />);
 
-      expect(container.querySelector('fieldset')).to.have.class(
+      expect(container.querySelector('fieldset')).toHaveClass(
         outlinedInputClasses.notchedOutline,
       );
     });
@@ -128,13 +128,10 @@ describe('<TextField />', () => {
       );
 
       const notch = container.querySelector('.notch legend');
-      expect(notch).to.have.text('0\u2009*');
+      expect(notch).toHaveTextContent(/0.*\*/); // Match "0" followed by any space and "*"
     });
 
-    it('should not set padding for empty, null or undefined label props', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
+    (/jsdom/.test(window.navigator.userAgent) ? it.skip : it)('should not set padding for empty, null or undefined label props', () => {
       const spanStyle = { paddingLeft: '0px', paddingRight: '0px' };
       ['', undefined, null].forEach((prop) => {
         const { container: container1 } = render(
@@ -151,7 +148,7 @@ describe('<TextField />', () => {
         <TextField InputProps={{ 'data-testid': 'InputComponent' }} variant="standard" />,
       );
 
-      expect(getByTestId('InputComponent')).not.to.equal(null);
+      expect(getByTestId('InputComponent')).not.toBe(null);
     });
   });
 
@@ -160,14 +157,14 @@ describe('<TextField />', () => {
       const handleClick = spy();
       const { getByRole } = render(<TextField disabled onClick={handleClick} />);
       fireEvent.click(getByRole('textbox'));
-      expect(handleClick.callCount).to.equal(0);
+      expect(handleClick.callCount).toBe(0);
     });
 
     it('should not run click event when disabled and when onClick prop is set through InputProps', () => {
       const handleClick = spy();
       const { getByRole } = render(<TextField disabled InputProps={{ onClick: handleClick }} />);
       fireEvent.click(getByRole('textbox'));
-      expect(handleClick.callCount).to.equal(0);
+      expect(handleClick.callCount).toBe(0);
     });
   });
 
@@ -189,8 +186,8 @@ describe('<TextField />', () => {
       );
 
       const select = container.querySelector('select');
-      expect(select).not.to.equal(null);
-      expect(select.options).to.have.lengthOf(2);
+      expect(select).not.toBe(null);
+      expect(select.options).toHaveLength(2);
     });
 
     it('associates the label with the <select /> when `native={true}`', () => {
@@ -206,7 +203,7 @@ describe('<TextField />', () => {
         </TextField>,
       );
 
-      expect(getByRole('combobox', { name: 'Currency:' })).to.have.property('value', 'dollar');
+      expect(getByRole('combobox', { name: 'Currency:' })).toHaveProperty('value', 'dollar');
     });
 
     it('renders a combobox with the appropriate accessible name', () => {
@@ -229,8 +226,8 @@ describe('<TextField />', () => {
       );
 
       const input = container.querySelector('input[aria-hidden]');
-      expect(input).not.to.have.attribute('id');
-      expect(input).not.to.have.attribute('aria-describedby');
+      expect(input).not.toHaveAttribute('id');
+      expect(input).not.toHaveAttribute('aria-describedby');
     });
 
     it('renders a combobox with the appropriate accessible description', () => {

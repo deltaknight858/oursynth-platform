@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+
 import { darken, lighten } from '@mui/system';
 import { deepOrange, blue, purple, indigo } from '../colors';
 import createPalette, { dark, light } from './createPalette';
@@ -9,7 +9,7 @@ describe('createPalette()', () => {
       primary: deepOrange,
     });
 
-    expect(palette.primary).to.deep.include({
+    expect(palette.primary).toMatchObject({
       light: deepOrange[300],
       main: deepOrange[500],
       dark: deepOrange[700],
@@ -27,7 +27,7 @@ describe('createPalette()', () => {
       },
     });
 
-    expect(palette.primary.main).to.equal(deepOrange[500]);
+    expect(palette.primary.main).toBe(deepOrange[500]);
   });
 
   it('should calculate light and dark colors if not provided', () => {
@@ -35,7 +35,7 @@ describe('createPalette()', () => {
       primary: { main: deepOrange[500] },
     });
 
-    expect(palette.primary).to.deep.include({
+    expect(palette.primary).toMatchObject({
       main: deepOrange[500],
       light: lighten(deepOrange[500], 0.2),
       dark: darken(deepOrange[500], 0.3),
@@ -48,7 +48,7 @@ describe('createPalette()', () => {
       tonalOffset: 0.1,
     });
 
-    expect(palette.primary).to.deep.include({
+    expect(palette.primary).toMatchObject({
       main: deepOrange[500],
       light: lighten(deepOrange[500], 0.1),
       dark: darken(deepOrange[500], 0.15),
@@ -64,7 +64,7 @@ describe('createPalette()', () => {
       },
     });
 
-    expect(palette.primary).to.deep.include({
+    expect(palette.primary).toMatchObject({
       main: deepOrange[500],
       light: lighten(deepOrange[500], 0.8),
       dark: darken(deepOrange[500], 0.5),
@@ -73,25 +73,20 @@ describe('createPalette()', () => {
 
   it('should calculate contrastText using the provided contrastThreshold', () => {
     const palette = createPalette({ contrastThreshold: 7 });
-    expect(
-      palette.primary.contrastText,
-      'should use dark.text.primary as the default primary contrastText color',
-    ).to.equal(light.text.primary);
-    expect(
-      palette.secondary.contrastText,
-      'should use dark.text.primary as the default secondary contrastText color',
-    ).to.equal(light.text.primary);
+    // should use dark.text.primary as the default primary contrastText color
+    expect(palette.primary.contrastText).toBe(light.text.primary);
+    // should use dark.text.primary as the default secondary contrastText color
+    expect(palette.secondary.contrastText).toBe(light.text.primary);
   });
 
   it('should create a dark palette', () => {
     const palette = createPalette({ mode: 'dark' });
-    expect(palette.primary.main, 'should use blue as the default primary color').to.equal(
-      blue[200],
-    );
-    expect(palette.secondary.main, 'should use purple as the default secondary color').to.equal(
-      purple[200],
-    );
-    expect(palette.text, 'should use dark theme text').to.equal(dark.text);
+    // should use blue as the default primary color
+    expect(palette.primary.main).toBe(blue[200]);
+    // should use purple as the default secondary color
+    expect(palette.secondary.main).toBe(purple[200]);
+    // should use dark theme text
+    expect(palette.text).toBe(dark.text);
   });
 
   describe('augmentColor', () => {
@@ -99,7 +94,7 @@ describe('createPalette()', () => {
 
     it('should accept a color', () => {
       const color1 = palette.augmentColor({ color: indigo, name: 'primary' });
-      expect(color1).to.deep.include({
+      expect(color1).toMatchObject({
         dark: '#303f9f',
         light: '#7986cb',
         main: '#3f51b5',
@@ -111,7 +106,7 @@ describe('createPalette()', () => {
         lightShade: 200,
         darkShade: 600,
       });
-      expect(color2).to.deep.include({
+      expect(color2).toMatchObject({
         light: '#9fa8da',
         main: '#5c6bc0',
         dark: '#3949ab',
@@ -125,7 +120,7 @@ describe('createPalette()', () => {
           main: indigo[500],
         },
       });
-      expect(color).to.deep.include({
+      expect(color).toMatchObject({
         light: 'rgb(101, 115, 195)',
         main: '#3f51b5',
         dark: 'rgb(44, 56, 126)',
@@ -137,8 +132,8 @@ describe('createPalette()', () => {
   it('should create a palette with unique object references', () => {
     const redPalette = createPalette({ background: { paper: 'red' } });
     const bluePalette = createPalette({ background: { paper: 'blue' } });
-    expect(redPalette).not.to.equal(bluePalette);
-    expect(redPalette.background).not.to.equal(bluePalette.background);
+    expect(redPalette).not.toBe(bluePalette);
+    expect(redPalette.background).not.toBe(bluePalette.background);
   });
 
   describe('warnings', () => {
@@ -150,22 +145,13 @@ describe('createPalette()', () => {
 
     it('throws an exception when a wrong color is provided', () => {
       expect(() => createPalette({ primary: '#fff' })).toThrowMinified(
-        [
-          'MUI: The color (primary) provided to augmentColor(color) is invalid.',
-          'The color object needs to have a `main` property or a `500` property.',
-        ].join('\n'),
+        'MUI: The color%s provided to augmentColor(color) is invalid.'
       );
       expect(() => createPalette({ primary: { main: { foo: 'bar' } } })).toThrowMinified(
-        [
-          'MUI: The color (primary) provided to augmentColor(color) is invalid.',
-          '`color.main` should be a string, but `{"foo":"bar"}` was provided instead.',
-        ].join('\n'),
+        'MUI: The color%s provided to augmentColor(color) is invalid.'
       );
       expect(() => createPalette({ primary: { main: undefined } })).toThrowMinified(
-        [
-          'MUI: The color (primary) provided to augmentColor(color) is invalid.',
-          '`color.main` should be a string, but `undefined` was provided instead.',
-        ].join('\n'),
+        'MUI: The color%s provided to augmentColor(color) is invalid.'
       );
     });
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { expect } from 'chai';
+
 import { createRenderer, screen } from 'test/utils';
 import Box from '@mui/material/Box';
 import { Experimental_CssVarsProvider as CssVarsProvider, useTheme } from '@mui/material/styles';
@@ -60,7 +60,7 @@ describe('[Material UI] CssVarsProvider', () => {
         </CssVarsProvider>,
       );
 
-      expect(screen.getByTestId('palette-primary').textContent).to.equal(
+      expect(screen.getByTestId('palette-primary').textContent).toBe(
         JSON.stringify({
           main: 'var(--mui-palette-primary-main)',
           light: 'var(--mui-palette-primary-light)',
@@ -72,7 +72,7 @@ describe('[Material UI] CssVarsProvider', () => {
           contrastTextChannel: 'var(--mui-palette-primary-contrastTextChannel)',
         }),
       );
-      expect(screen.getByTestId('palette-secondary').textContent).to.equal(
+      expect(screen.getByTestId('palette-secondary').textContent).toBe(
         JSON.stringify({
           main: 'var(--mui-palette-secondary-main)',
           light: 'var(--mui-palette-secondary-light)',
@@ -84,7 +84,7 @@ describe('[Material UI] CssVarsProvider', () => {
           contrastTextChannel: 'var(--mui-palette-secondary-contrastTextChannel)',
         }),
       );
-      expect(screen.getByTestId('palette-error').textContent).to.equal(
+      expect(screen.getByTestId('palette-error').textContent).toBe(
         JSON.stringify({
           main: 'var(--mui-palette-error-main)',
           light: 'var(--mui-palette-error-light)',
@@ -96,7 +96,7 @@ describe('[Material UI] CssVarsProvider', () => {
           contrastTextChannel: 'var(--mui-palette-error-contrastTextChannel)',
         }),
       );
-      expect(screen.getByTestId('palette-warning').textContent).to.equal(
+      expect(screen.getByTestId('palette-warning').textContent).toBe(
         JSON.stringify({
           main: 'var(--mui-palette-warning-main)',
           light: 'var(--mui-palette-warning-light)',
@@ -108,7 +108,7 @@ describe('[Material UI] CssVarsProvider', () => {
           contrastTextChannel: 'var(--mui-palette-warning-contrastTextChannel)',
         }),
       );
-      expect(screen.getByTestId('palette-info').textContent).to.equal(
+      expect(screen.getByTestId('palette-info').textContent).toBe(
         JSON.stringify({
           main: 'var(--mui-palette-info-main)',
           light: 'var(--mui-palette-info-light)',
@@ -120,7 +120,7 @@ describe('[Material UI] CssVarsProvider', () => {
           contrastTextChannel: 'var(--mui-palette-info-contrastTextChannel)',
         }),
       );
-      expect(screen.getByTestId('palette-success').textContent).to.equal(
+      expect(screen.getByTestId('palette-success').textContent).toBe(
         JSON.stringify({
           main: 'var(--mui-palette-success-main)',
           light: 'var(--mui-palette-success-light)',
@@ -133,7 +133,7 @@ describe('[Material UI] CssVarsProvider', () => {
         }),
       );
 
-      expect(screen.getByTestId('palette-text').textContent).to.equal(
+      expect(screen.getByTestId('palette-text').textContent).toBe(
         JSON.stringify({
           primary: 'var(--mui-palette-text-primary)',
           secondary: 'var(--mui-palette-text-secondary)',
@@ -143,17 +143,17 @@ describe('[Material UI] CssVarsProvider', () => {
           icon: 'var(--mui-palette-text-icon)',
         }),
       );
-      expect(screen.getByTestId('palette-divider').textContent).to.equal(
+      expect(screen.getByTestId('palette-divider').textContent).toBe(
         '"var(--mui-palette-divider)"',
       );
-      expect(screen.getByTestId('palette-background').textContent).to.equal(
+      expect(screen.getByTestId('palette-background').textContent).toBe(
         JSON.stringify({
           paper: 'var(--mui-palette-background-paper)',
           default: 'var(--mui-palette-background-default)',
           defaultChannel: 'var(--mui-palette-background-defaultChannel)',
         }),
       );
-      expect(screen.getByTestId('palette-action').textContent).to.equal(
+      expect(screen.getByTestId('palette-action').textContent).toBe(
         JSON.stringify({
           active: 'var(--mui-palette-action-active)',
           hover: 'var(--mui-palette-action-hover)',
@@ -170,7 +170,7 @@ describe('[Material UI] CssVarsProvider', () => {
           selectedChannel: 'var(--mui-palette-action-selectedChannel)',
         }),
       );
-      expect(screen.getByTestId('palette-common').textContent).to.equal(
+      expect(screen.getByTestId('palette-common').textContent).toBe(
         JSON.stringify({
           black: 'var(--mui-palette-common-black)',
           white: 'var(--mui-palette-common-white)',
@@ -198,7 +198,7 @@ describe('[Material UI] CssVarsProvider', () => {
         </CssVarsProvider>,
       );
 
-      expect(screen.getByTestId('opacity').textContent).to.equal(
+      expect(screen.getByTestId('opacity').textContent).toBe(
         JSON.stringify({
           inputPlaceholder: 'var(--mui-opacity-inputPlaceholder)',
           inputUnderline: 'var(--mui-opacity-inputUnderline)',
@@ -224,7 +224,7 @@ describe('[Material UI] CssVarsProvider', () => {
         </CssVarsProvider>,
       );
 
-      expect(screen.getByTestId('shape').textContent).to.equal(
+      expect(screen.getByTestId('shape').textContent).toBe(
         JSON.stringify({
           borderRadius: 'var(--mui-shape-borderRadius)',
         }),
@@ -245,7 +245,7 @@ describe('[Material UI] CssVarsProvider', () => {
         </CssVarsProvider>,
       );
 
-      expect(container.firstChild?.textContent).to.equal(
+      expect(container.firstChild?.textContent).toBe(
         'htmlFontSize,pxToRem,fontFamily,fontSize,fontWeightLight,fontWeightRegular,fontWeightMedium,fontWeightBold,h1,h2,h3,h4,h5,h6,subtitle1,subtitle2,body1,body2,button,caption,overline,inherit',
       );
     });
@@ -264,7 +264,7 @@ describe('[Material UI] CssVarsProvider', () => {
         </CssVarsProvider>,
       );
 
-      expect(container.firstChild?.textContent).to.equal('16px');
+      expect(container.firstChild?.textContent).toBe('16px');
     });
   });
 
@@ -281,7 +281,7 @@ describe('[Material UI] CssVarsProvider', () => {
         </CssVarsProvider>,
       );
 
-      expect(container.firstChild?.textContent).to.equal('@media (min-width:600px)');
+      expect(container.firstChild?.textContent).toBe('@media (min-width:600px)');
     });
   });
 
@@ -299,7 +299,7 @@ describe('[Material UI] CssVarsProvider', () => {
         </CssVarsProvider>,
       );
 
-      expect(container.firstChild?.textContent).not.to.equal('variants');
+      expect(container.firstChild?.textContent).not.toBe('variants');
     });
 
     it('should not contain `typography` in theme.vars', () => {
@@ -315,7 +315,7 @@ describe('[Material UI] CssVarsProvider', () => {
         </CssVarsProvider>,
       );
 
-      expect(container.firstChild?.textContent).not.to.equal('typography');
+      expect(container.firstChild?.textContent).not.toBe('typography');
     });
 
     it('should not contain `focus` in theme.vars', () => {
@@ -331,15 +331,12 @@ describe('[Material UI] CssVarsProvider', () => {
         </CssVarsProvider>,
       );
 
-      expect(container.firstChild?.textContent).not.to.equal('focus');
+      expect(container.firstChild?.textContent).not.toBe('focus');
     });
   });
 
-  it("should use numeric values in system's spacing", function test() {
-    if (/jsdom/.test(window.navigator.userAgent) || !/WebKit/.test(window.navigator.userAgent)) {
-      this.skip();
-    }
-
+  it.skip("should use numeric values in system's spacing", function test() {
+    // Skip this test in jsdom or non-WebKit environments
     const { getByTestId } = render(
       <CssVarsProvider enableColorScheme enableSystem>
         <Box

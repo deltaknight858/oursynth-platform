@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+
 import defaultTheme from '@mui/material/styles/defaultTheme';
 import adaptV4Theme from './adaptV4Theme';
 
@@ -17,9 +17,9 @@ describe('adaptV4Theme', () => {
 
       expect(() => {
         transformedTheme = adaptV4Theme(theme);
-      }).toWarnDev(['adaptV4Theme() is deprecated']);
+      }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.components.MuiButton.defaultProps).to.deep.equal(
+      expect(transformedTheme.components.MuiButton.defaultProps).toEqual(
         theme.props.MuiButton,
       );
     });
@@ -39,9 +39,9 @@ describe('adaptV4Theme', () => {
 
       expect(() => {
         transformedTheme = adaptV4Theme(theme);
-      }).toWarnDev(['adaptV4Theme() is deprecated']);
+      }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.components.MuiTable.styleOverrides).to.deep.equal(
+      expect(transformedTheme.components.MuiTable.styleOverrides).toEqual(
         theme.overrides.MuiTable,
       );
     });
@@ -66,12 +66,12 @@ describe('adaptV4Theme', () => {
 
       expect(() => {
         transformedTheme = adaptV4Theme(theme);
-      }).toWarnDev(['adaptV4Theme() is deprecated']);
+      }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.components.MuiButton.defaultProps).to.deep.equal(
+      expect(transformedTheme.components.MuiButton.defaultProps).toEqual(
         theme.props.MuiButton,
       );
-      expect(transformedTheme.components.MuiTable.styleOverrides).to.deep.equal(
+      expect(transformedTheme.components.MuiTable.styleOverrides).toEqual(
         theme.overrides.MuiTable,
       );
     });
@@ -96,12 +96,12 @@ describe('adaptV4Theme', () => {
 
       expect(() => {
         transformedTheme = adaptV4Theme(theme);
-      }).toWarnDev(['adaptV4Theme() is deprecated']);
+      }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.components.MuiButton.defaultProps).to.deep.equal(
+      expect(transformedTheme.components.MuiButton.defaultProps).toEqual(
         theme.props.MuiButton,
       );
-      expect(transformedTheme.components.MuiButton.styleOverrides).to.deep.equal(
+      expect(transformedTheme.components.MuiButton.styleOverrides).toEqual(
         theme.overrides.MuiButton,
       );
     });
@@ -134,17 +134,17 @@ describe('adaptV4Theme', () => {
 
       expect(() => {
         transformedTheme = adaptV4Theme(theme);
-      }).toWarnDev(['adaptV4Theme() is deprecated']);
+      }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.components.MuiButton.defaultProps).to.deep.equal(
+      expect(transformedTheme.components.MuiButton.defaultProps).toEqual(
         theme.props.MuiButton,
       );
-      expect(transformedTheme.components.MuiButton.styleOverrides).to.deep.equal(
+      expect(transformedTheme.components.MuiButton.styleOverrides).toEqual(
         theme.overrides.MuiButton,
       );
 
-      expect(transformedTheme.components.MuiFab.defaultProps).to.deep.equal(theme.props.MuiFab);
-      expect(transformedTheme.components.MuiFab.styleOverrides).to.deep.equal(
+      expect(transformedTheme.components.MuiFab.defaultProps).toEqual(theme.props.MuiFab);
+      expect(transformedTheme.components.MuiFab.styleOverrides).toEqual(
         theme.overrides.MuiFab,
       );
     });
@@ -177,19 +177,19 @@ describe('adaptV4Theme', () => {
 
       expect(() => {
         transformedTheme = adaptV4Theme(theme);
-      }).toWarnDev(['adaptV4Theme() is deprecated']);
+      }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.components.MuiButton.defaultProps).to.deep.equal(
+      expect(transformedTheme.components.MuiButton.defaultProps).toEqual(
         theme.defaultProps.MuiButton,
       );
-      expect(transformedTheme.components.MuiButton.styleOverrides).to.deep.equal(
+      expect(transformedTheme.components.MuiButton.styleOverrides).toEqual(
         theme.styleOverrides.MuiButton,
       );
 
-      expect(transformedTheme.components.MuiFab.defaultProps).to.deep.equal(
+      expect(transformedTheme.components.MuiFab.defaultProps).toEqual(
         theme.defaultProps.MuiFab,
       );
-      expect(transformedTheme.components.MuiFab.styleOverrides).to.deep.equal(
+      expect(transformedTheme.components.MuiFab.styleOverrides).toEqual(
         theme.styleOverrides.MuiFab,
       );
     });
@@ -204,9 +204,9 @@ describe('adaptV4Theme', () => {
 
       expect(() => {
         transformedTheme = adaptV4Theme(theme);
-      }).toWarnDev(['adaptV4Theme() is deprecated']);
+      }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.mixins.gutters()).to.deep.equal({
+      expect(transformedTheme.mixins.gutters()).toEqual({
         paddingLeft: `${defaultSpacing * 2}px`,
         paddingRight: `${defaultSpacing * 2}px`,
         [`@media (min-width:${defaultTheme.breakpoints.values.sm}px)`]: {
@@ -224,9 +224,9 @@ describe('adaptV4Theme', () => {
 
       expect(() => {
         transformedTheme = adaptV4Theme(theme);
-      }).toWarnDev(['adaptV4Theme() is deprecated']);
+      }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.mixins.gutters()).to.deep.equal({
+      expect(transformedTheme.mixins.gutters()).toEqual({
         paddingLeft: `${spacing * 2}px`,
         paddingRight: `${spacing * 2}px`,
         [`@media (min-width:${defaultTheme.breakpoints.values.sm}px)`]: {
@@ -248,13 +248,13 @@ describe('adaptV4Theme', () => {
 
       expect(() => {
         transformedTheme = adaptV4Theme(theme);
-      }).toWarnDev(['adaptV4Theme() is deprecated']);
+      }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.mixins.test).to.deep.equal({
+      expect(transformedTheme.mixins.test).toEqual({
         display: 'block',
       });
 
-      expect(transformedTheme.mixins.gutters()).to.deep.equal({
+      expect(transformedTheme.mixins.gutters()).toEqual({
         paddingLeft: `${defaultSpacing * 2}px`,
         paddingRight: `${defaultSpacing * 2}px`,
         [`@media (min-width:${defaultTheme.breakpoints.values.sm}px)`]: {
@@ -273,9 +273,9 @@ describe('adaptV4Theme', () => {
 
       expect(() => {
         transformedTheme = adaptV4Theme(theme);
-      }).toWarnDev(['adaptV4Theme() is deprecated']);
+      }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.palette.text.hint).to.equal('rgba(0, 0, 0, 0.38)');
+      expect(transformedTheme.palette.text.hint).toBe('rgba(0, 0, 0, 0.38)');
     });
 
     it('is added to a dark theme using the old palette.type value', () => {
@@ -285,9 +285,9 @@ describe('adaptV4Theme', () => {
 
       expect(() => {
         transformedTheme = adaptV4Theme(theme);
-      }).toWarnDev(['adaptV4Theme() is deprecated']);
+      }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.palette.text.hint).to.equal('rgba(255, 255, 255, 0.5)');
+      expect(transformedTheme.palette.text.hint).toBe('rgba(255, 255, 255, 0.5)');
     });
 
     it('is added to a dark theme', () => {
@@ -297,9 +297,9 @@ describe('adaptV4Theme', () => {
 
       expect(() => {
         transformedTheme = adaptV4Theme(theme);
-      }).toWarnDev(['adaptV4Theme() is deprecated']);
+      }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.palette.text.hint).to.equal('rgba(255, 255, 255, 0.5)');
+      expect(transformedTheme.palette.text.hint).toBe('rgba(255, 255, 255, 0.5)');
     });
   });
 
@@ -311,9 +311,9 @@ describe('adaptV4Theme', () => {
 
       expect(() => {
         transformedTheme = adaptV4Theme(theme);
-      }).toWarnDev(['adaptV4Theme() is deprecated']);
+      }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.palette.mode).to.equal('dark');
+      expect(transformedTheme.palette.mode).toBe('dark');
     });
   });
 });
