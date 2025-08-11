@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
@@ -7,6 +6,33 @@ import { StreamingProvider, useStreaming } from '../contexts/StreamingContext';
 import GenerationProgress from './GenerationProgress';
 import { FuturisticWizard } from './FuturisticWizard';
 // import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+
+interface StepProps {
+  state: CodeGeneratorState;
+  updateState: (updates: Partial<CodeGeneratorState>) => void;
+  onNext: () => void;
+  onPrev?: () => void;
+}
+
+interface ToggleSwitchProps {
+  label: string;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  description?: string;
+}
+
+interface DropdownOption {
+  value: string;
+  label: string;
+}
+
+interface DropdownProps {
+  label: string;
+  value: string;
+  options: DropdownOption[];
+  onChange: (value: string) => void;
+  description?: string;
+}
 
 interface CodeGeneratorState {
   // Step 1: Define
@@ -213,7 +239,7 @@ function UnifiedCodeGeneratorInternal() {
 }
 
 // Individual Step Components
-function DefineStep({ state, updateState, onNext }: any) {
+function DefineStep({ state, updateState, onNext }: StepProps) {
   const [showAdvanced, setShowAdvanced] = React.useState(false);
   
   // Simplified to 4 clear project types
@@ -316,7 +342,7 @@ function DefineStep({ state, updateState, onNext }: any) {
   );
 }
 // Placeholder components for other steps
-function StructureStep({ state, updateState, onNext, onPrev }: any) {
+function StructureStep({ state, updateState, onNext, onPrev }: StepProps) {
   const layouts = [
     { id: 'cards', title: 'Card Layout', desc: 'Grid of cards with content blocks', icon: '🗃️' },
     { id: 'list', title: 'List Layout', desc: 'Vertical list with items', icon: '📋' },
@@ -420,8 +446,8 @@ function StructureStep({ state, updateState, onNext, onPrev }: any) {
   );
 }
 
-function ConfigureStep({ state, updateState, onNext, onPrev }: any) {
-  const ToggleSwitch = ({ label, checked, onChange, description }: any) => (
+function ConfigureStep({ state, updateState, onNext, onPrev }: StepProps) {
+  const ToggleSwitch = ({ label, checked, onChange, description }: ToggleSwitchProps) => (
     <div className="toggle-container">
       <div className="flex items-center justify-between">
         <div className="flex-1 mr-4">
@@ -444,7 +470,7 @@ function ConfigureStep({ state, updateState, onNext, onPrev }: any) {
     </div>
   );
 
-  const Dropdown = ({ label, value, options, onChange, description }: any) => {
+  const Dropdown = ({ label, value, options, onChange, description }: DropdownProps) => {
     const dropdownId = `dropdown-${label.toLowerCase().replace(/\s+/g, '-')}`;
     return (
       <div className="dropdown-container">
@@ -457,7 +483,7 @@ function ConfigureStep({ state, updateState, onNext, onPrev }: any) {
           onChange={(e) => onChange(e.target.value)}
           className="enhanced-select"
         >
-          {options.map((option: any) => (
+          {options.map((option: DropdownOption) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>
@@ -589,7 +615,7 @@ function ConfigureStep({ state, updateState, onNext, onPrev }: any) {
   );
 }
 
-function GenerateStep({ state, updateState, onNext, onPrev }: any) {
+function GenerateStep({ state, updateState, onNext, onPrev }: StepProps) {
   const { startGeneration, isGenerating, files, error, reset } = useStreaming();
   const [hasStarted, setHasStarted] = useState(false);
 
@@ -700,7 +726,7 @@ function GenerateStep({ state, updateState, onNext, onPrev }: any) {
   );
 }
 
-function ExportStep({ state, updateState, onPrev }: any) {
+function ExportStep({ state, updateState, onPrev }: Omit<StepProps, 'onNext'>) {
   const { files } = useStreaming();
 
   // Deduplicate files and filter out empty directories  
@@ -795,7 +821,7 @@ function ExportStep({ state, updateState, onPrev }: any) {
   );
 }
 
-function LivePreview({ state, currentStep }: { state: any; currentStep: number }) {
+function LivePreview({ state, currentStep }: { state: CodeGeneratorState; currentStep: number }) {
   const getPreviewContent = () => {
     switch (currentStep) {
       case 1:
