@@ -1,20 +1,6 @@
 module.exports = {
     testEnvironment: 'jsdom',
-    transform: {
-        '^.+\\.tsx?$': ['ts-jest', {
-            tsconfig: {
-                jsx: 'react-jsx',
-                module: 'commonjs',
-                target: 'es2020',
-                skipLibCheck: true,
-                strict: false,
-                esModuleInterop: true,
-                moduleResolution: 'node',
-                isolatedModules: true,
-            }
-        }],
-        '^.+\\.jsx?$': 'babel-jest',
-    },
+    preset: 'ts-jest',
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/apps/domains/src/$1',
         '^test/utils$': '<rootDir>/test/utils.ts',

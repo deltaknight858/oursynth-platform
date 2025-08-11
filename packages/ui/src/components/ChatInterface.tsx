@@ -1,4 +1,6 @@
 
+"use client";
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Box, Typography, TextField, Button, Paper, List, ListItem, ListItemText, Divider } from '@mui/material';
 import { useOurSynthAI } from '../OurSynthAIContext';

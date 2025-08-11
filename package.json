@@ -10,7 +10,8 @@
     "packages/orchestrator",
     "packages/shared-config",
     "packages/shared-types",
-    "packages/shared-utils"
+    "packages/shared-utils",
+    "packages/ui"
   ],
   "scripts": {
     "dev": "turbo run dev",

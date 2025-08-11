@@ -1,19 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast"; // This import is correct
 import { GlobalBottomNavBar } from '@oursynth/ui';
 import CustomThemeProvider from "../theme/CustomThemeProvider";
 
-const geistSans = Geist({
+// Use system fonts instead of Google Fonts to avoid network dependency
+const geistSans = {
   variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+};
 
-const geistMono = Geist_Mono({
+const geistMono = {
   variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+};
 
 export const metadata: Metadata = {
   title: "OurSynth Pathways - Project Wizard",
