@@ -18,7 +18,8 @@ module.exports = {
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/apps/domains/src/$1',
         '^test/utils$': '<rootDir>/test/utils.ts',
-        '^@mui/utils/macros/MuiError\\.macro$': '<rootDir>/test/mocks/MuiError.js'
+        '^@mui/utils/macros/MuiError\\.macro$': '<rootDir>/test/mocks/MuiError.js',
+        '^chai$': '<rootDir>/test/mocks/chai.ts'
     },
     moduleFileExtensions: ['js', 'mjs', 'cjs', 'jsx', 'ts', 'mts', 'cts', 'tsx', 'json', 'node'],
     transformIgnorePatterns: [
@@ -28,6 +29,5 @@ module.exports = {
     testMatch: [
         '**/__tests__/**/*.(ts|tsx|js)',
         '**/*.(test|spec).(ts|tsx|js)'
-    ],
-    preset: 'ts-jest'
+    ]
 };

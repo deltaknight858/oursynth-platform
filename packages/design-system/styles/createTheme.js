@@ -5,7 +5,7 @@ import {
   unstable_styleFunctionSx as styleFunctionSx,
 } from '@mui/system';
 import MuiError from '@mui/utils/macros/MuiError.macro';
-import generateUtilityClass from '../generateUtilityClass';
+import { unstable_generateUtilityClass as generateUtilityClass } from '@mui/utils';
 import createMixins from './createMixins';
 import createPalette from './createPalette';
 import createTypography from './createTypography';

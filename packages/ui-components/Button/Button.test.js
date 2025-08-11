@@ -568,10 +568,11 @@ describe('<Button />', () => {
   });
 
   describe('server-side', () => {
-    before(function beforeHook() {
+    beforeAll(function beforeHook() {
       // Only run the test on node.
       if (!/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
+        // In Jest, we use test.skip() or skip this test suite
+        return;
       }
     });
 
