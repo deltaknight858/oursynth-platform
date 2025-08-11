@@ -554,6 +554,7 @@ export default function ConfigForm() {
                 </div>
                 <button
                   onClick={closeFeatureInfo}
+                  aria-label="Close feature information"
                   className="p-2 rounded-lg hover:bg-white/10 transition-colors"
                 >
                   <svg className="w-5 h-5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">

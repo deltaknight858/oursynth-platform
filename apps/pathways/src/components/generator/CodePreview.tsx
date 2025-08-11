@@ -441,7 +441,7 @@ const CodePreview: React.FC<CodePreviewProps> = ({
                       key={i}
                       label={`Tag ${i + 1}`}
                       size="small"
-                      color={['primary', 'secondary', 'success', 'warning', 'error'][i] as any}
+                      color={['primary', 'secondary', 'success', 'warning', 'error'][i] as string}
                       variant={i % 2 === 0 ? 'filled' : 'outlined'}
                     />
                   ))}

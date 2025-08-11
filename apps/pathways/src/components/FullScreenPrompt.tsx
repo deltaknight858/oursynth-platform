@@ -27,7 +27,7 @@ export default function FullScreenPrompt() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            You're building something powerful.
+              You&apos;re building something powerful.
           </motion.h1>
           
           <motion.p 

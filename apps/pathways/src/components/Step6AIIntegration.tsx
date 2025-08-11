@@ -76,7 +76,7 @@ export default function Step6AIIntegration({ data, onChange, onNext }: Step6AIIn
     const provider = event.target.value;
     setSelectedProvider(provider);
     
-    const updateData: any = { aiProvider: provider };
+  const updateData: Record<string, unknown> = { aiProvider: provider };
     
     // Include notes for hybrid option
     if (provider === 'hybrid') {

@@ -2,10 +2,12 @@
 
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
-import { ReactNode, createContext, useContext, useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { CacheProvider } from '@emotion/react';
+import type { EmotionCache } from '@emotion/react';
 import theme, { darkTheme } from '@/theme';
-import createEmotionCache from '@/lib/createEmotionCache';
+import createEmotionCache from '@/createEmotionCache';
 
 // Create emotion cache
 const clientSideEmotionCache = createEmotionCache();
@@ -25,7 +27,7 @@ export const useThemeMode = () => useContext(ThemeContext);
 
 interface CustomThemeProviderProps {
   children: ReactNode;
-  emotionCache?: any;
+  emotionCache?: EmotionCache;
 }
 
 export default function CustomThemeProvider({ 

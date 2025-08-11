@@ -1,7 +1,7 @@
 'use client';
 
-import FullScreenPrompt from '../components/FullScreenPrompt';
+import UnifiedCodeGenerator from '../components/UnifiedCodeGenerator';
 
 export default function Home() {
-  return <FullScreenPrompt />;
+  return <UnifiedCodeGenerator />;
 }
