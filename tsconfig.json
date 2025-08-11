@@ -30,6 +30,28 @@
     }
   },
   "references": [
+    {
+      "path": "./apps/studio"
+    },
+    {
+      "path": "./apps/pathways"  
+    },
+    {
+      "path": "./apps/dashboard"
+    },
+    {
+      "path": "./apps/domains"
+    },
+    {
+      "path": "./apps/deploy"
+    },
+    {
+      "path": "./packages/ui-components"
+    },
+    {
+      "path": "./packages/design-system"
+    }
+=======
   { "path": "./apps/studio" },
   { "path": "./apps/pathways" },
   { "path": "./apps/dashboard" },
