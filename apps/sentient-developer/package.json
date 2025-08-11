@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "build": "echo 'No build needed for sentient-developer (Node.js app)'",
     "start": "node index.js",
     "tsc:noEmit": "echo 'No TypeScript in sentient-developer (Node.js app)'",
     "lint": "echo 'No lint configured for sentient-developer'"

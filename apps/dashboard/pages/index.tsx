@@ -82,13 +82,13 @@ export default function Dashboard() {
 
   return (
     <main className={`${styles.main} background-flow`}>
-      <header className={styles.header}>
+      <header className={styles['header'] || 'header'}>
         <h1 className={`${styles.heading} gradient-text typewriter`}>OurSynth Platform Dashboard</h1>
         <p className={`${styles.description} delayed-fade-in`}>Monitor and launch all platform services from one place.</p>
         
-        <div className={`${styles.quickNav} fade-in-up`}>
+        <div className={`${styles['quickNav'] || 'quickNav'} fade-in-up`}>
           <h2 className="gradient-text">Quick Launch</h2>
-          <div className={styles.quickLinks}>
+          <div className={styles['quickLinks'] || 'quickLinks'}>
             <a href="http://localhost:3004" target="_blank" rel="noopener" className="sparkle-button lime-border-glow">
               🎨 Studio
             </a>
@@ -109,8 +109,8 @@ export default function Dashboard() {
         <ServiceList services={services} />
       </div>
       
-      <footer className={`${styles.footer} delayed-fade-in-3`}>
-        <div className={styles.stats}>
+      <footer className={`${styles['footer'] || 'footer'} delayed-fade-in-3`}>
+        <div className={styles['stats'] || 'stats'}>
           <div className="glass-morphism">
             <span className="lime-glow">Online Services:</span> {services.filter(s => s.status === 'Online').length}
           </div>

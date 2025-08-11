@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { expect } from 'chai';
 import { createRenderer } from 'test/utils';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -11,36 +10,36 @@ describe('createTheme', () => {
 
   it('should have a palette', () => {
     const theme = createTheme();
-    expect(typeof createTheme).to.equal('function');
-    expect(typeof theme.palette).to.equal('object');
+    expect(typeof createTheme).toBe('function');
+    expect(typeof theme.palette).toBe('object');
   });
 
   it('should have the custom palette', () => {
     const theme = createTheme({
       palette: { primary: { main: deepOrange[500] }, secondary: { main: green.A400 } },
     });
-    expect(theme.palette.primary.main).to.equal(deepOrange[500]);
-    expect(theme.palette.secondary.main).to.equal(green.A400);
+    expect(theme.palette.primary.main).toBe(deepOrange[500]);
+    expect(theme.palette.secondary.main).toBe(green.A400);
   });
 
   describe('transitions', () => {
     it('[`easing`]: should provide the default values', () => {
       const theme = createTheme();
-      expect(theme.transitions.easing.easeInOut).to.equal('cubic-bezier(0.4, 0, 0.2, 1)');
-      expect(theme.transitions.easing.easeOut).to.equal('cubic-bezier(0.0, 0, 0.2, 1)');
-      expect(theme.transitions.easing.easeIn).to.equal('cubic-bezier(0.4, 0, 1, 1)');
-      expect(theme.transitions.easing.sharp).to.equal('cubic-bezier(0.4, 0, 0.6, 1)');
+      expect(theme.transitions.easing.easeInOut).toBe('cubic-bezier(0.4, 0, 0.2, 1)');
+      expect(theme.transitions.easing.easeOut).toBe('cubic-bezier(0.0, 0, 0.2, 1)');
+      expect(theme.transitions.easing.easeIn).toBe('cubic-bezier(0.4, 0, 1, 1)');
+      expect(theme.transitions.easing.sharp).toBe('cubic-bezier(0.4, 0, 0.6, 1)');
     });
 
     it('[`duration`]: should provide the default values', () => {
       const theme = createTheme();
-      expect(theme.transitions.duration.shortest).to.equal(150);
-      expect(theme.transitions.duration.shorter).to.equal(200);
-      expect(theme.transitions.duration.short).to.equal(250);
-      expect(theme.transitions.duration.standard).to.equal(300);
-      expect(theme.transitions.duration.complex).to.equal(375);
-      expect(theme.transitions.duration.enteringScreen).to.equal(225);
-      expect(theme.transitions.duration.leavingScreen).to.equal(195);
+      expect(theme.transitions.duration.shortest).toBe(150);
+      expect(theme.transitions.duration.shorter).toBe(200);
+      expect(theme.transitions.duration.short).toBe(250);
+      expect(theme.transitions.duration.standard).toBe(300);
+      expect(theme.transitions.duration.complex).toBe(375);
+      expect(theme.transitions.duration.enteringScreen).toBe(225);
+      expect(theme.transitions.duration.leavingScreen).toBe(195);
     });
 
     it('[`easing`]: should provide the custom values', () => {
@@ -54,10 +53,10 @@ describe('createTheme', () => {
           },
         },
       });
-      expect(theme.transitions.easing.easeInOut).to.equal('cubic-bezier(1, 1, 1, 1)');
-      expect(theme.transitions.easing.easeOut).to.equal('cubic-bezier(1, 1, 1, 1)');
-      expect(theme.transitions.easing.easeIn).to.equal('cubic-bezier(1, 1, 1, 1)');
-      expect(theme.transitions.easing.sharp).to.equal('cubic-bezier(1, 1, 1, 1)');
+      expect(theme.transitions.easing.easeInOut).toBe('cubic-bezier(1, 1, 1, 1)');
+      expect(theme.transitions.easing.easeOut).toBe('cubic-bezier(1, 1, 1, 1)');
+      expect(theme.transitions.easing.easeIn).toBe('cubic-bezier(1, 1, 1, 1)');
+      expect(theme.transitions.easing.sharp).toBe('cubic-bezier(1, 1, 1, 1)');
     });
 
     it('[`duration`]: should provide the custom values', () => {
@@ -74,25 +73,25 @@ describe('createTheme', () => {
           },
         },
       });
-      expect(theme.transitions.duration.shortest).to.equal(1);
-      expect(theme.transitions.duration.shorter).to.equal(1);
-      expect(theme.transitions.duration.short).to.equal(1);
-      expect(theme.transitions.duration.standard).to.equal(1);
-      expect(theme.transitions.duration.complex).to.equal(1);
-      expect(theme.transitions.duration.enteringScreen).to.equal(1);
-      expect(theme.transitions.duration.leavingScreen).to.equal(1);
+      expect(theme.transitions.duration.shortest).toBe(1);
+      expect(theme.transitions.duration.shorter).toBe(1);
+      expect(theme.transitions.duration.short).toBe(1);
+      expect(theme.transitions.duration.standard).toBe(1);
+      expect(theme.transitions.duration.complex).toBe(1);
+      expect(theme.transitions.duration.enteringScreen).toBe(1);
+      expect(theme.transitions.duration.leavingScreen).toBe(1);
     });
 
     it('should allow providing a partial structure', () => {
       const theme = createTheme({ transitions: { duration: { shortest: 150 } } });
-      expect(theme.transitions.duration.shorter).not.to.equal(undefined);
+      expect(theme.transitions.duration.shorter).not.toBe(undefined);
     });
   });
 
   describe('shadows', () => {
     it('should provide the default array', () => {
       const theme = createTheme();
-      expect(theme.shadows[2]).to.equal(
+      expect(theme.shadows[2]).toBe(
         '0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)',
       );
     });
@@ -126,7 +125,7 @@ describe('createTheme', () => {
         11,
       ];
       const theme = createTheme({ shadows });
-      expect(theme.shadows).to.equal(shadows);
+      expect(theme.shadows).toBe(shadows);
     });
   });
 
@@ -151,7 +150,7 @@ describe('createTheme', () => {
         },
       };
       const theme = createTheme({ components });
-      expect(theme.components).to.deep.equal(components);
+      expect(theme.components).toEqual(components);
     });
   });
 
@@ -164,7 +163,7 @@ describe('createTheme', () => {
           components: { Button: { styleOverrides: { disabled: { color: 'blue' } } } },
         });
       }).not.toErrorDev();
-      expect(Object.keys(theme.components.Button.styleOverrides.disabled).length).to.equal(1);
+      expect(Object.keys(theme.components.Button.styleOverrides.disabled).length).toBe(1);
 
       expect(() => {
         theme = createTheme({
@@ -179,20 +178,20 @@ describe('createTheme', () => {
       }).toErrorDev(
         'MUI: The `MuiButton` component increases the CSS specificity of the `disabled` internal state.',
       );
-      expect(Object.keys(theme.components.MuiButton.styleOverrides.disabled).length).to.equal(0);
+      expect(Object.keys(theme.components.MuiButton.styleOverrides.disabled).length).toBe(0);
     });
   });
 
   it('shallow merges multiple arguments', () => {
     const theme = createTheme({ foo: 'I am foo' }, { bar: 'I am bar' });
-    expect(theme.foo).to.equal('I am foo');
-    expect(theme.bar).to.equal('I am bar');
+    expect(theme.foo).toBe('I am foo');
+    expect(theme.bar).toBe('I am bar');
   });
 
   it('deep merges multiple arguments', () => {
     const theme = createTheme({ custom: { foo: 'I am foo' } }, { custom: { bar: 'I am bar' } });
-    expect(theme.custom.foo).to.equal('I am foo');
-    expect(theme.custom.bar).to.equal('I am bar');
+    expect(theme.custom.foo).toBe('I am foo');
+    expect(theme.custom.bar).toBe('I am bar');
   });
 
   it('allows callbacks using theme in variants', () => {
@@ -228,7 +227,7 @@ describe('createTheme', () => {
     const isJSDOM = /jsdom/.test(window.navigator.userAgent);
 
     if (isJSDOM) {
-      this.skip();
+      return;
     }
 
     const theme = createTheme({
@@ -259,7 +258,7 @@ describe('createTheme', () => {
         },
       });
     } catch (e) {
-      expect(e.message).to.equal(
+      expect(e.message).toBe(
         'MUI: `vars` is a private field used for CSS variables support.\n' +
           'Please use another name.',
       );

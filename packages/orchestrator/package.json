@@ -5,6 +5,7 @@
   "types": "index.ts",
   "license": "MIT",
   "scripts": {
+    "build": "echo 'Build skipped for orchestrator (has external dependencies)'",
     "tsc:noEmit": "tsc --noEmit",
     "lint": "echo 'No lint configured for orchestrator package'"
   }

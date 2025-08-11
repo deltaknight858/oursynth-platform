@@ -121,7 +121,8 @@
 
   /* Neon border helper */
   .neon-border {
-    @apply border-2 border-electric-purple shadow-lg shadow-electric-purple/50;
+    border: 2px solid var(--electric-purple);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 0 20px var(--electric-purple), 0 0 40px rgb(160 32 240 / 0.5);
   }
 
   /* …add any other component styles here… */
