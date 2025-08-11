@@ -5,7 +5,7 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": true,
+  "noEmit": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -14,7 +14,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
+    
     "jsx": "preserve",
     "incremental": true,
     "baseUrl": ".",
@@ -51,6 +51,14 @@
     {
       "path": "./packages/design-system"
     }
+=======
+  { "path": "./apps/studio" },
+  { "path": "./apps/pathways" },
+  { "path": "./apps/dashboard" },
+  { "path": "./apps/domains" },
+  { "path": "./apps/deploy" },
+  { "path": "./packages/ui-components/tsconfig.json" },
+  { "path": "./packages/design-system/tsconfig.json" }
   ],
   "include": [],
   "exclude": [

@@ -1,8 +1,37 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { StreamingProvider, useStreaming } from '../contexts/StreamingContext';
 import GenerationProgress from './GenerationProgress';
+import { FuturisticWizard } from './FuturisticWizard';
 // import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+
+interface StepProps {
+  state: CodeGeneratorState;
+  updateState: (updates: Partial<CodeGeneratorState>) => void;
+  onNext: () => void;
+  onPrev?: () => void;
+}
+
+interface ToggleSwitchProps {
+  label: string;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  description?: string;
+}
+
+interface DropdownOption {
+  value: string;
+  label: string;
+}
+
+interface DropdownProps {
+  label: string;
+  value: string;
+  options: DropdownOption[];
+  onChange: (value: string) => void;
+  description?: string;
+}
 
 interface CodeGeneratorState {
   // Step 1: Define
@@ -123,254 +152,202 @@ function UnifiedCodeGeneratorInternal() {
     setCurrentStep(step);
   };
 
+  // Validation function for wizard
+  const isStepValid = (step: number) => {
+    switch (step) {
+      case 0: // Define step
+        return state.projectType && state.description.length > 10;
+      case 1: // Structure step
+        return state.structure.layout && state.structure.organization;
+      case 2: // Configure step
+        return state.styling && state.features.stateManagement;
+      case 3: // Generate step
+        return state.generatedCode && Object.keys(state.generatedCode).length > 0;
+      case 4: // Export step
+        return true;
+      default:
+        return false;
+    }
+  };
+
+  // Prepare steps for the wizard
+  const wizardSteps = [
+    {
+      title: 'Define',
+      content: (
+        <DefineStep 
+          state={state} 
+          updateState={updateState} 
+          onNext={nextStep}
+        />
+      )
+    },
+    {
+      title: 'Structure',
+      content: (
+        <StructureStep 
+          state={state} 
+          updateState={updateState} 
+          onNext={nextStep}
+          onPrev={prevStep}
+        />
+      )
+    },
+    {
+      title: 'Configure',
+      content: (
+        <ConfigureStep 
+          state={state} 
+          updateState={updateState} 
+          onNext={nextStep}
+          onPrev={prevStep}
+        />
+      )
+    },
+    {
+      title: 'Generate',
+      content: (
+        <GenerateStep 
+          state={state} 
+          updateState={updateState} 
+          onNext={nextStep}
+          onPrev={prevStep}
+        />
+      )
+    },
+    {
+      title: 'Export',
+      content: (
+        <ExportStep 
+          state={state} 
+          updateState={updateState} 
+          onPrev={prevStep}
+        />
+      )
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-slate-900">
-      {/* Header */}
-      <div className="glass border-b-0 rounded-none">
-        <div className="container mx-auto px-6 py-4">
-          <h1 className="text-2xl font-bold neon-text flex items-center">
-            <span className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center mr-3">
-              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </span>
-            OurSynth AI Code Generator
-          </h1>
-        </div>
+    <FuturisticWizard 
+      steps={wizardSteps}
+      initialStep={currentStep - 1}
+      onStepChange={(step) => setCurrentStep(step + 1)}
+      isStepValid={isStepValid}
+    />
+  );
+}
+
+// Individual Step Components
+function DefineStep({ state, updateState, onNext }: StepProps) {
+  const [showAdvanced, setShowAdvanced] = React.useState(false);
+  
+  // Simplified to 4 clear project types
+  const projectTypes = [
+    { id: 'component', title: 'Component', desc: 'Reusable UI component', icon: '🧩' },
+    { id: 'page', title: 'Page', desc: 'Complete web page', icon: '📄' },
+    { id: 'feature', title: 'Feature', desc: 'App feature with multiple components', icon: '⚡' },
+    { id: 'fullapp', title: 'Full App', desc: 'Complete application', icon: '🚀' }
+  ];
+
+  return (
+    <div className="space-y-8">
+      <div className="text-center">
+        <h2 className="text-3xl font-bold text-white mb-4">What do you want to build?</h2>
+        <p className="text-slate-300 max-w-2xl mx-auto">
+          Choose your project type to get started with AI-powered code generation
+        </p>
       </div>
 
-      {/* Breadcrumb Navigation */}
-      <div className="glass-strong border-b-0 rounded-none">
-        <div className="container mx-auto px-6 py-4">
+      {/* Main Project Types - Limited to 4 clear choices */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+        {projectTypes.map(type => (
+          <motion.div
+            key={type.id}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => updateState({ projectType: type.id as CodeGeneratorState['projectType'] })}
+            className={`
+              bg-slate-800 bg-opacity-50 backdrop-blur-md border border-slate-700 shadow-2xl rounded-2xl
+              p-6 cursor-pointer text-center transition-all duration-300
+              hover:bg-slate-700 hover:bg-opacity-50 hover:border-slate-600 hover:shadow-lg
+              ${state.projectType === type.id ? 'bg-cyan-900 bg-opacity-30 border-cyan-400 shadow-lg' : ''}
+            `}
+          >
+            <div className="text-4xl mb-3">{type.icon}</div>
+            <h3 className="font-bold text-lg text-white mb-2">{type.title}</h3>
+            <p className="text-slate-300 text-sm">{type.desc}</p>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Advanced Options Expander */}
+      <div className="text-center">
+        <button
+          onClick={() => setShowAdvanced(!showAdvanced)}
+          className="text-cyan-400 hover:text-cyan-300 text-sm font-medium transition-colors"
+        >
+          {showAdvanced ? '▼ Hide Advanced Options' : '▶ Advanced Options...'}
+        </button>
+      </div>
+
+      {/* AI Prompt Section */}
+      <div className="bg-slate-800 bg-opacity-50 backdrop-blur-md border border-slate-700 shadow-2xl rounded-2xl">
+        <div className="p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              {steps.map((step, index) => (
-                <React.Fragment key={step.id}>
-                  <motion.button
-                    onClick={() => goToStep(step.id)}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`
-                      flex items-center px-4 py-2 rounded-lg transition-all duration-300 neon-border
-                      ${currentStep === step.id
-                        ? 'neon-text glow'
-                        : currentStep > step.id
-                        ? 'text-green-400'
-                        : 'text-white/60 hover:text-white/80'
-                      }
-                    `}
-                  >
-                    <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-2 ${
-                      currentStep === step.id
-                        ? 'glass'
-                        : currentStep > step.id
-                        ? 'bg-green-400 text-black'
-                        : 'glass'
-                    }`}>
-                      {currentStep > step.id ? (
-                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      ) : (
-                        step.id
-                      )}
-                    </span>
-                    <div className="text-left">
-                      <div className="font-semibold text-sm">{step.title}</div>
-                      <div className="text-xs opacity-70">{step.description}</div>
-                    </div>
-                  </motion.button>
-                  {index < steps.length - 1 && (
-                    <svg className="w-4 h-4 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-            
-            {/* Progress Indicator */}
-            <div className="flex items-center space-x-3">
-              <div className="text-white/70 text-sm">
-                {Math.round((currentStep / steps.length) * 100)}% Complete
-              </div>
-              <div className="w-32 h-2 glass rounded-full overflow-hidden">
-                <motion.div
-                  className="h-full bg-gradient-to-r from-cyan-500 to-pink-500 glow"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${(currentStep / steps.length) * 100}%` }}
-                  transition={{ duration: 0.5, ease: 'easeOut' }}
-                />
-              </div>
+            <h3 className="font-semibold text-white">Describe Your Project</h3>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+              <span className="text-xs text-slate-400">AI Ready</span>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Main Content Area */}
-      <div className="container mx-auto px-6 py-8" ref={containerRef}>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentStep}
-                data-step={currentStep}
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: -20 }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
+          
+          {/* Quick Suggestion Tags */}
+          <div className="flex gap-2 flex-wrap">
+            {[
+              "Dashboard with charts",
+              "E-commerce store", 
+              "Social media feed",
+              "Task management"
+            ].map((suggestion, idx) => (
+              <motion.button
+                key={idx}
+                whileHover={{ scale: 1.05 }}
+                onClick={() => updateState({ description: suggestion })}
+                className="text-xs px-3 py-1 bg-cyan-900 bg-opacity-30 border border-cyan-400 border-opacity-50 rounded-full text-cyan-300 hover:bg-cyan-800 hover:bg-opacity-40 transition-colors"
               >
-                {currentStep === 1 && (
-                  <DefineStep 
-                    state={state} 
-                    updateState={updateState} 
-                    onNext={nextStep}
-                  />
-                )}
-                {currentStep === 2 && (
-                  <StructureStep 
-                    state={state} 
-                    updateState={updateState} 
-                    onNext={nextStep}
-                    onPrev={prevStep}
-                  />
-                )}
-                {currentStep === 3 && (
-                  <ConfigureStep 
-                    state={state} 
-                    updateState={updateState} 
-                    onNext={nextStep}
-                    onPrev={prevStep}
-                  />
-                )}
-                {currentStep === 4 && (
-                  <GenerateStep 
-                    state={state} 
-                    updateState={updateState} 
-                    onNext={nextStep}
-                    onPrev={prevStep}
-                  />
-                )}
-                {currentStep === 5 && (
-                  <ExportStep 
-                    state={state} 
-                    updateState={updateState} 
-                    onPrev={prevStep}
-                  />
-                )}
-              </motion.div>
-            </AnimatePresence>
+                {suggestion}
+              </motion.button>
+            ))}
           </div>
 
-          {/* Live Preview Sidebar */}
-          <div className="lg:col-span-1">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <LivePreview state={state} currentStep={currentStep} />
-            </motion.div>
+          <textarea
+            value={state.description}
+            onChange={(e) => updateState({ description: e.target.value })}
+            placeholder="Describe your project in detail... The more specific you are, the better I can help you build it! ✨"
+            className="w-full p-4 bg-slate-900 bg-opacity-50 border border-slate-600 rounded-lg text-white placeholder-slate-400 resize-none focus:outline-none focus:border-cyan-400 focus:border-opacity-50 transition-colors"
+            rows={4}
+          />
+          
+          <div className="flex justify-between items-center text-xs text-slate-400">
+            <span>{state.description.length}/500 characters</span>
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
+              <span>AI analyzing...</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-// Individual Step Components
-function DefineStep({ state, updateState, onNext }: any) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: 50 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -50 }}
-      className="glass p-8"
-    >
-      <h2 className="text-3xl font-bold neon-text mb-6 floaty">What do you want to build?</h2>
-      
-      {/* Project Type Selection */}
-      <div className="grid grid-cols-2 gap-4 mb-8">
-        {[
-          { id: 'component', title: 'React Component', desc: 'Single reusable component', icon: '🧩' },
-          { id: 'page', title: 'Full Page', desc: 'Complete page with layout', icon: '📄' },
-          { id: 'feature', title: 'Feature Module', desc: 'Complete feature with multiple components', icon: '⚡' },
-          { id: 'fullapp', title: 'Full Application', desc: 'Complete app with routing & state', icon: '🚀' }
-        ].map(type => (
-          <motion.div
-            key={type.id}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => updateState({ projectType: type.id as any })}
-            className={`
-              p-6 rounded-xl cursor-pointer transition-all glass-strong neon-border
-              ${state.projectType === type.id ? 'glow' : 'hover:glow'}
-            `}
-          >
-            <div className="text-4xl mb-3 floaty">{type.icon}</div>
-            <h3 className={`font-bold mb-2 ${state.projectType === type.id ? 'neon-text' : 'text-white'}`}>{type.title}</h3>
-            <p className="text-white/70 text-sm">{type.desc}</p>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Description Input */}
-      <div className="mb-8">
-        <label className="block text-white font-semibold mb-3 neon-accent">
-          Describe what you want to build:
-        </label>
-        <textarea
-          value={state.description}
-          onChange={(e) => updateState({ description: e.target.value })}
-          placeholder="E.g., A modern dashboard with charts, user authentication, and real-time data..."
-          className="w-full h-32 p-4 glass text-white placeholder-white/50 focus:focus-ring transition-all resize-none"
-        />
-      </div>
-
-      {/* Framework Selection */}
-      <div className="mb-8">
-        <label className="block text-white font-semibold mb-3 neon-accent">Choose Framework:</label>
-        <div className="grid grid-cols-4 gap-3">
-          {['react', 'nextjs', 'vue', 'angular'].map(framework => (
-            <motion.button
-              key={framework}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => updateState({ framework: framework as any })}
-              className={`
-                p-3 rounded-lg capitalize font-medium transition-all glass neon-border
-                ${state.framework === framework ? 'neon-text glow' : 'text-white/70 hover:text-white hover:glow'}
-              `}
-            >
-              {framework}
-            </motion.button>
-          ))}
-        </div>
-      </div>
-
-      {/* Continue Button */}
-      <motion.button
-        onClick={onNext}
-        disabled={!state.description.trim()}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="w-full py-4 glass-strong neon-border glow neon-text font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all flicker"
-      >
-        Continue to Structure →
-      </motion.button>
-    </motion.div>
-  );
-}
-
 // Placeholder components for other steps
-function StructureStep({ state, updateState, onNext, onPrev }: any) {
+function StructureStep({ state, updateState, onNext, onPrev }: StepProps) {
   const layouts = [
-    { id: 'cards', title: 'Card Layout', desc: 'Grid of cards with content blocks', icon: '🗃️', preview: 'grid grid-cols-3 gap-4' },
-    { id: 'list', title: 'List Layout', desc: 'Vertical list with items', icon: '📋', preview: 'space-y-3' },
-    { id: 'tabs', title: 'Tabbed Layout', desc: 'Content organized in tabs', icon: '📑', preview: 'border-b' },
-    { id: 'grid', title: 'Data Grid', desc: 'Table-like data presentation', icon: '🗂️', preview: 'grid grid-cols-4' },
-    { id: 'sidebar', title: 'Sidebar Layout', desc: 'Main content with sidebar', icon: '📐', preview: 'grid grid-cols-[250px_1fr]' }
+    { id: 'cards', title: 'Card Layout', desc: 'Grid of cards with content blocks', icon: '🗃️' },
+    { id: 'list', title: 'List Layout', desc: 'Vertical list with items', icon: '📋' },
+    { id: 'tabs', title: 'Tabbed Layout', desc: 'Content organized in tabs', icon: '📑' },
+    { id: 'grid', title: 'Data Grid', desc: 'Table-like data presentation', icon: '🗂️' },
+    { id: 'sidebar', title: 'Sidebar Layout', desc: 'Main content with sidebar', icon: '📐' }
   ];
 
   const organizations = [
@@ -380,19 +357,16 @@ function StructureStep({ state, updateState, onNext, onPrev }: any) {
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 50 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -50 }}
-      className="glass p-8"
-    >
-      <h2 className="text-3xl font-bold neon-text mb-6 floaty">Project Structure</h2>
-      <p className="text-white/70 mb-8">Choose how your {state.projectType} should be laid out and organized.</p>
+    <div>
+      <div className="section-header">
+        <h2 className="section-title">Project Structure</h2>
+        <p className="section-subtitle">Choose how your {state.projectType} should be laid out and organized.</p>
+      </div>
       
       {/* Layout Selection */}
-      <div className="mb-8">
-        <h3 className="text-xl font-semibold neon-accent mb-4">Layout Style</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="mb-12">
+        <h3 className="subsection-title">Layout Style</h3>
+        <div className="choice-grid">
           {layouts.map(layout => (
             <motion.div
               key={layout.id}
@@ -401,31 +375,28 @@ function StructureStep({ state, updateState, onNext, onPrev }: any) {
               onClick={() => updateState({ 
                 structure: { 
                   ...state.structure, 
-                  layout: layout.id as any 
+                  layout: layout.id as CodeGeneratorState['structure']['layout'] 
                 } 
               })}
               className={`
-                p-4 rounded-xl cursor-pointer transition-all glass-strong neon-border
-                ${state.structure.layout === layout.id ? 'glow' : 'hover:glow'}
+                layout-card cursor-pointer text-center
+                ${state.structure.layout === layout.id ? 'selected' : ''}
               `}
             >
-              <div className="text-3xl mb-2 floaty">{layout.icon}</div>
-              <h4 className={`font-bold mb-1 ${state.structure.layout === layout.id ? 'neon-text' : 'text-white'}`}>
+              <div className="icon text-4xl mb-3">{layout.icon}</div>
+              <h4 className="font-bold text-lg mb-2 text-gray-900">
                 {layout.title}
               </h4>
-              <p className="text-white/70 text-sm mb-3">{layout.desc}</p>
-              <div className={`h-12 bg-white/10 rounded ${layout.preview} p-2`}>
-                <div className="bg-white/20 rounded h-full"></div>
-              </div>
+              <p className="text-gray-600 text-sm leading-relaxed">{layout.desc}</p>
             </motion.div>
           ))}
         </div>
       </div>
 
       {/* Organization Selection */}
-      <div className="mb-8">
-        <h3 className="text-xl font-semibold neon-accent mb-4">Code Organization</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="mb-12">
+        <h3 className="subsection-title">Code Organization</h3>
+        <div className="choice-grid">
           {organizations.map(org => (
             <motion.div
               key={org.id}
@@ -434,89 +405,104 @@ function StructureStep({ state, updateState, onNext, onPrev }: any) {
               onClick={() => updateState({ 
                 structure: { 
                   ...state.structure, 
-                  organization: org.id as any 
+                  organization: org.id as CodeGeneratorState['structure']['organization'] 
                 } 
               })}
               className={`
-                p-4 rounded-xl cursor-pointer transition-all glass-strong neon-border
-                ${state.structure.organization === org.id ? 'glow' : 'hover:glow'}
+                choice-card cursor-pointer text-center
+                ${state.structure.organization === org.id ? 'selected' : ''}
               `}
             >
-              <div className="text-2xl mb-2 floaty">{org.icon}</div>
-              <h4 className={`font-bold mb-1 ${state.structure.organization === org.id ? 'neon-text' : 'text-white'}`}>
+              <div className="icon text-4xl mb-3">{org.icon}</div>
+              <h4 className="font-bold text-lg mb-2 text-gray-900">
                 {org.title}
               </h4>
-              <p className="text-white/70 text-sm">{org.desc}</p>
+              <p className="text-gray-600 text-sm leading-relaxed">{org.desc}</p>
             </motion.div>
           ))}
         </div>
       </div>
       
       <div className="flex space-x-4">
-        <button onClick={onPrev} className="px-6 py-3 glass neon-border text-white hover:glow transition-all">← Back</button>
-        <button onClick={onNext} className="flex-1 py-3 glass-strong neon-border glow neon-text flicker">Continue →</button>
+        <motion.button 
+          onClick={onPrev} 
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 rounded-xl hover:border-gray-400 transition-all"
+        >
+          ← Back
+        </motion.button>
+        <motion.button 
+          onClick={onNext} 
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="flex-1 py-3 bg-white border-2 border-cyan-400 text-cyan-600 font-semibold rounded-xl hover:bg-cyan-50 transition-all shadow-lg shadow-cyan-400/20"
+        >
+          Continue →
+        </motion.button>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
-function ConfigureStep({ state, updateState, onNext, onPrev }: any) {
-  const ToggleSwitch = ({ label, checked, onChange, description }: any) => (
-    <div className="flex items-center justify-between p-4 glass-strong rounded-lg neon-border hover:glow transition-all">
-      <div>
-        <h4 className="font-semibold text-white">{label}</h4>
-        <p className="text-white/60 text-sm">{description}</p>
+function ConfigureStep({ state, updateState, onNext, onPrev }: StepProps) {
+  const ToggleSwitch = ({ label, checked, onChange, description }: ToggleSwitchProps) => (
+    <div className="toggle-container">
+      <div className="flex items-center justify-between">
+        <div className="flex-1 mr-4">
+          <h4 className="font-bold text-gray-900 text-lg mb-2">{label}</h4>
+          <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
+        </div>
+        <motion.button
+          onClick={() => onChange(!checked)}
+          className={`toggle-switch ${checked ? 'active' : 'inactive'}`}
+          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.05 }}
+        >
+          <motion.div
+            className="toggle-knob"
+            animate={{ x: checked ? 28 : 2 }}
+            transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+          />
+        </motion.button>
       </div>
-      <motion.button
-        onClick={() => onChange(!checked)}
-        className={`relative w-12 h-6 rounded-full transition-colors ${
-          checked ? 'bg-gradient-to-r from-cyan-500 to-pink-500' : 'bg-white/20'
-        }`}
-        whileTap={{ scale: 0.95 }}
-      >
-        <motion.div
-          className={`absolute w-5 h-5 bg-white rounded-full top-0.5 shadow-lg ${
-            checked ? 'glow' : ''
-          }`}
-          animate={{ x: checked ? 26 : 2 }}
-          transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-        />
-      </motion.button>
     </div>
   );
 
-  const Dropdown = ({ label, value, options, onChange, description }: any) => (
-    <div className="p-4 glass-strong rounded-lg neon-border">
-      <h4 className="font-semibold text-white mb-1">{label}</h4>
-      <p className="text-white/60 text-sm mb-3">{description}</p>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full p-3 glass rounded-lg text-white focus:focus-ring transition-all bg-transparent border-0"
-      >
-        {options.map((option: any) => (
-          <option key={option.value} value={option.value} className="bg-gray-900">
-            {option.label}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
+  const Dropdown = ({ label, value, options, onChange, description }: DropdownProps) => {
+    const dropdownId = `dropdown-${label.toLowerCase().replace(/\s+/g, '-')}`;
+    return (
+      <div className="dropdown-container">
+        <label htmlFor={dropdownId} className="block font-bold text-gray-900 text-lg mb-2">{label}</label>
+        <p className="text-gray-600 text-sm mb-4 leading-relaxed">{description}</p>
+        <select
+          id={dropdownId}
+          name={dropdownId}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="enhanced-select"
+        >
+          {options.map((option: DropdownOption) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 50 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -50 }}
-      className="glass p-8"
-    >
-      <h2 className="text-3xl font-bold neon-text mb-6 floaty">Configure Features</h2>
-      <p className="text-white/70 mb-8">Choose the features and tools for your {state.projectType}.</p>
+    <div>
+      <div className="section-header">
+        <h2 className="section-title">Configure Features</h2>
+        <p className="section-subtitle">Choose the features and tools for your {state.projectType}.</p>
+      </div>
       
       {/* Feature Toggles */}
-      <div className="mb-8">
-        <h3 className="text-xl font-semibold neon-accent mb-4">Features</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="mb-12">
+        <h3 className="subsection-title">Features</h3>
+        <div className="feature-grid">
           <ToggleSwitch
             label="Authentication"
             description="User login and registration"
@@ -561,9 +547,9 @@ function ConfigureStep({ state, updateState, onNext, onPrev }: any) {
       </div>
 
       {/* Configuration Dropdowns */}
-      <div className="mb-8">
-        <h3 className="text-xl font-semibold neon-accent mb-4">Configuration</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="mb-12">
+        <h3 className="subsection-title">Configuration</h3>
+        <div className="config-grid">
           <Dropdown
             label="State Management"
             description="How to manage application state"
@@ -575,7 +561,7 @@ function ConfigureStep({ state, updateState, onNext, onPrev }: any) {
               { value: 'redux', label: 'Redux Toolkit' }
             ]}
             onChange={(value: string) => updateState({ 
-              features: { ...state.features, stateManagement: value as any } 
+              features: { ...state.features, stateManagement: value as CodeGeneratorState['features']['stateManagement'] } 
             })}
           />
           <Dropdown
@@ -588,30 +574,47 @@ function ConfigureStep({ state, updateState, onNext, onPrev }: any) {
               { value: 'css', label: 'CSS Modules' },
               { value: 'scss', label: 'SCSS/SASS' }
             ]}
-            onChange={(value: string) => updateState({ styling: value as any })}
+            onChange={(value: string) => updateState({ styling: value as CodeGeneratorState['styling'] })}
           />
         </div>
       </div>
 
       {/* TypeScript Toggle */}
-      <div className="mb-8">
-        <ToggleSwitch
-          label="TypeScript"
-          description="Use TypeScript for type safety"
-          checked={state.typescript}
-          onChange={(checked: boolean) => updateState({ typescript: checked })}
-        />
+      <div className="mb-12">
+        <h3 className="subsection-title">Language</h3>
+        <div className="max-w-md">
+          <ToggleSwitch
+            label="TypeScript"
+            description="Use TypeScript for type safety"
+            checked={state.typescript}
+            onChange={(checked: boolean) => updateState({ typescript: checked })}
+          />
+        </div>
       </div>
       
       <div className="flex space-x-4">
-        <button onClick={onPrev} className="px-6 py-3 glass neon-border text-white hover:glow transition-all">← Back</button>
-        <button onClick={onNext} className="flex-1 py-3 glass-strong neon-border glow neon-text flicker">Generate Code →</button>
+        <motion.button 
+          onClick={onPrev} 
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 rounded-xl hover:border-gray-400 transition-all"
+        >
+          ← Back
+        </motion.button>
+        <motion.button 
+          onClick={onNext} 
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="flex-1 py-3 bg-white border-2 border-cyan-400 text-cyan-600 font-semibold rounded-xl hover:bg-cyan-50 transition-all shadow-lg shadow-cyan-400/20"
+        >
+          Generate Code →
+        </motion.button>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
-function GenerateStep({ state, updateState, onNext, onPrev }: any) {
+function GenerateStep({ state, updateState, onNext, onPrev }: StepProps) {
   const { startGeneration, isGenerating, files, error, reset } = useStreaming();
   const [hasStarted, setHasStarted] = useState(false);
 
@@ -664,10 +667,10 @@ function GenerateStep({ state, updateState, onNext, onPrev }: any) {
       initial={{ opacity: 0, x: 50 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}
-      className="glass p-8"
+      className="bg-white border-2 border-gray-200 rounded-xl p-8 shadow-sm"
     >
-      <h2 className="text-3xl font-bold neon-text mb-6 floaty flicker">Generating Your Code</h2>
-      <p className="text-white/70 mb-8">AI is creating your {state.projectType} with the selected features...</p>
+      <h2 className="text-3xl font-bold text-gray-900 mb-6">Generating Your Code</h2>
+      <p className="text-gray-600 mb-8">AI is creating your {state.projectType} with the selected features...</p>
       
       {/* Generation Progress Component */}
       <GenerationProgress className="mb-8" />
@@ -682,7 +685,7 @@ function GenerateStep({ state, updateState, onNext, onPrev }: any) {
             }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 glass neon-border text-white hover:glow transition-all"
+            className="px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 hover:border-cyan-400 hover:shadow-cyan-400/20 hover:shadow-lg transition-all rounded-xl"
           >
             Try Again
           </motion.button>
@@ -690,7 +693,7 @@ function GenerateStep({ state, updateState, onNext, onPrev }: any) {
             onClick={onPrev}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 glass neon-border text-white hover:glow transition-all"
+            className="px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 hover:border-cyan-400 hover:shadow-cyan-400/20 hover:shadow-lg transition-all rounded-xl"
           >
             ← Back to Configure
           </motion.button>
@@ -704,7 +707,7 @@ function GenerateStep({ state, updateState, onNext, onPrev }: any) {
             onClick={onPrev}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 glass neon-border text-white hover:glow transition-all"
+            className="px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 hover:border-cyan-400 hover:shadow-cyan-400/20 hover:shadow-lg transition-all rounded-xl"
           >
             ← Back to Configure
           </motion.button>
@@ -712,7 +715,7 @@ function GenerateStep({ state, updateState, onNext, onPrev }: any) {
             onClick={onNext}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 glass-strong neon-border glow neon-text font-semibold transition-all flicker"
+            className="px-6 py-3 bg-gradient-to-r from-cyan-400 to-pink-400 text-white font-semibold border-2 border-transparent hover:shadow-cyan-400/20 hover:shadow-lg transition-all rounded-xl"
           >
             Continue to Export →
           </motion.button>
@@ -722,7 +725,7 @@ function GenerateStep({ state, updateState, onNext, onPrev }: any) {
   );
 }
 
-function ExportStep({ state, updateState, onPrev }: any) {
+function ExportStep({ state, updateState, onPrev }: Omit<StepProps, 'onNext'>) {
   const { files } = useStreaming();
 
   // Deduplicate files and filter out empty directories  
@@ -767,10 +770,10 @@ function ExportStep({ state, updateState, onPrev }: any) {
       initial={{ opacity: 0, x: 50 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}
-      className="glass p-8"
+      className="bg-white border-2 border-gray-200 rounded-xl p-8 shadow-sm"
     >
-      <h2 className="text-3xl font-bold neon-text mb-6 floaty">Export Your Code</h2>
-      <p className="text-white/70 mb-8">
+      <h2 className="text-3xl font-bold text-gray-900 mb-6">Export Your Code</h2>
+      <p className="text-gray-600 mb-8">
         {uniqueFiles.length > 0 
           ? `Ready to download ${uniqueFiles.length} generated files`
           : 'Generate code first to enable download'
@@ -778,14 +781,14 @@ function ExportStep({ state, updateState, onPrev }: any) {
       </p>
       
       {uniqueFiles.length > 0 && (
-        <div className="mb-6 glass-strong p-4 rounded-lg">
-          <h3 className="text-lg font-semibold neon-text mb-3">Generated Files:</h3>
+        <div className="mb-6 bg-gray-50 border-2 border-gray-200 p-4 rounded-lg">
+          <h3 className="text-lg font-semibold text-gray-900 mb-3">Generated Files:</h3>
           <div className="space-y-2 max-h-48 overflow-y-auto">
             {uniqueFiles.map((file, index) => (
-              <div key={index} className="flex items-center space-x-2 text-sm">
-                <span className="text-green-400">📄</span>
-                <span className="text-white/80">{file.path}</span>
-                <span className="text-white/50 ml-auto">
+              <div key={index} className="flex items-center space-x-2 text-sm bg-white border border-gray-200 p-2 rounded">
+                <span className="text-green-500">📄</span>
+                <span className="text-gray-700">{file.path}</span>
+                <span className="text-gray-500 ml-auto">
                   {(file.content.length / 1024).toFixed(1)}kb
                 </span>
               </div>
@@ -795,14 +798,19 @@ function ExportStep({ state, updateState, onPrev }: any) {
       )}
       
       <div className="flex space-x-4">
-        <button onClick={onPrev} className="px-6 py-3 glass neon-border text-white">← Back</button>
+        <button 
+          onClick={onPrev} 
+          className="px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 hover:border-cyan-400 hover:shadow-cyan-400/20 hover:shadow-lg transition-all rounded-xl"
+        >
+          ← Back
+        </button>
         <button 
           onClick={downloadAsZip}
           disabled={uniqueFiles.length === 0}
-          className={`flex-1 py-3 glass-strong neon-border glow ${
+          className={`flex-1 py-3 border-2 rounded-xl transition-all ${
             uniqueFiles.length > 0 
-              ? 'text-green-400 hover:bg-green-400/10' 
-              : 'text-gray-500 cursor-not-allowed opacity-50'
+              ? 'bg-gradient-to-r from-cyan-400 to-pink-400 text-white border-transparent hover:shadow-cyan-400/20 hover:shadow-lg font-semibold' 
+              : 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
           }`}
         >
           {uniqueFiles.length > 0 ? '⬇️ Download Code' : 'No Files to Download'}
@@ -812,29 +820,29 @@ function ExportStep({ state, updateState, onPrev }: any) {
   );
 }
 
-function LivePreview({ state, currentStep }: { state: any; currentStep: number }) {
+function LivePreview({ state, currentStep }: { state: CodeGeneratorState; currentStep: number }) {
   const getPreviewContent = () => {
     switch (currentStep) {
       case 1:
         return (
           <div className="space-y-4">
             <div className="text-center">
-              <div className="text-4xl mb-2 floaty">
+              <div className="text-4xl mb-2">
                 {state.projectType === 'component' && '🧩'}
                 {state.projectType === 'page' && '📄'}
                 {state.projectType === 'feature' && '⚡'}
                 {state.projectType === 'fullapp' && '🚀'}
               </div>
-              <h4 className="neon-text font-bold capitalize">{state.projectType}</h4>
-              <p className="text-white/60 text-sm mt-1">{state.framework}</p>
+              <h4 className="text-gray-900 font-bold capitalize">{state.projectType}</h4>
+              <p className="text-gray-600 text-sm mt-1">{state.framework}</p>
             </div>
             {state.description && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="glass-strong p-3 rounded-lg"
+                className="bg-gray-50 border-2 border-gray-200 p-3 rounded-lg"
               >
-                <p className="text-white/80 text-sm">{state.description}</p>
+                <p className="text-gray-700 text-sm">{state.description}</p>
               </motion.div>
             )}
           </div>
@@ -844,37 +852,60 @@ function LivePreview({ state, currentStep }: { state: any; currentStep: number }
         return (
           <div className="space-y-4">
             <div className="text-center mb-4">
-              <h4 className="neon-accent font-bold">Structure Preview</h4>
+              <h4 className="text-gray-900 font-bold">Structure Preview</h4>
             </div>
-            <div className="glass-strong p-4 rounded-lg">
+            <div className="bg-gray-50 border-2 border-gray-200 p-4 rounded-lg">
               <div className="text-sm space-y-2">
-                <div className="flex items-center text-white">
-                  <span className="text-blue-400 mr-2">📁</span>
+                <div className="flex items-center text-gray-900">
+                  <span className="text-blue-500 mr-2">📁</span>
                   <span>src/</span>
                 </div>
                 <div className="ml-4 space-y-1">
-                  <div className="flex items-center text-white/80">
-                    <span className="text-green-400 mr-2">📁</span>
+                  <div className="flex items-center text-gray-700">
+                    <span className="text-green-500 mr-2">📁</span>
                     <span>{state.structure.organization}/</span>
                   </div>
-                  <div className="flex items-center text-white/60">
-                    <span className="text-yellow-400 mr-2">📄</span>
+                  <div className="flex items-center text-gray-600">
+                    <span className="text-yellow-500 mr-2">📄</span>
                     <span>layout.{state.structure.layout}</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div className={`h-20 glass rounded-lg ${
-              state.structure.layout === 'cards' ? 'grid grid-cols-3 gap-2 p-2' :
-              state.structure.layout === 'list' ? 'space-y-2 p-2' :
-              state.structure.layout === 'tabs' ? 'border-b-2 border-cyan-500 p-2' :
-              state.structure.layout === 'grid' ? 'grid grid-cols-4 gap-1 p-2' :
-              'grid grid-cols-[1fr_3fr] gap-2 p-2'
+            <div className={`h-20 bg-gray-100 border-2 border-gray-200 rounded-lg p-2 ${
+              state.structure.layout === 'cards' ? 'grid grid-cols-3 gap-1' :
+              state.structure.layout === 'list' ? 'space-y-1' :
+              state.structure.layout === 'tabs' ? 'border-b-4 border-cyan-400' :
+              'grid grid-cols-2 gap-1'
             }`}>
-              {Array.from({ length: state.structure.layout === 'sidebar' ? 2 : 
-                state.structure.layout === 'grid' ? 8 : 3 }).map((_, i) => (
-                <div key={i} className="bg-white/20 rounded"></div>
-              ))}
+              {state.structure.layout === 'cards' && (
+                <>
+                  <div className="bg-white border-2 border-cyan-200 rounded h-full"></div>
+                  <div className="bg-white border-2 border-cyan-200 rounded h-full"></div>
+                  <div className="bg-white border-2 border-cyan-200 rounded h-full"></div>
+                </>
+              )}
+              {state.structure.layout === 'list' && (
+                <div className="space-y-1">
+                  <div className="bg-white border border-gray-300 rounded p-1"></div>
+                  <div className="bg-white border border-gray-300 rounded p-1"></div>
+                  <div className="bg-white border border-gray-300 rounded p-1"></div>
+                </div>
+              )}
+              {state.structure.layout === 'tabs' && (
+                <div className="bg-white rounded-lg h-16 border-2 border-gray-200"></div>
+              )}
+              {state.structure.layout === 'grid' && (
+                Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="bg-white border border-cyan-200 rounded"></div>
+                ))
+              )}
+              {state.structure.layout === 'dashboard' && (
+                <>
+                  <div className="bg-white border-2 border-cyan-200 rounded h-full"></div>
+                  <div className="bg-white border-2 border-pink-200 rounded h-full"></div>
+                </>
+              )}
             </div>
           </div>
         );
@@ -884,7 +915,7 @@ function LivePreview({ state, currentStep }: { state: any; currentStep: number }
         return (
           <div className="space-y-4">
             <div className="text-center mb-4">
-              <h4 className="neon-accent font-bold">Features Preview</h4>
+              <h4 className="text-gray-900 font-bold">Features Enabled</h4>
             </div>
             <div className="space-y-2">
               {enabledFeatures.map(([feature]) => (
@@ -892,22 +923,22 @@ function LivePreview({ state, currentStep }: { state: any; currentStep: number }
                   key={feature}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="flex items-center glass-strong p-2 rounded"
+                  className="flex items-center bg-white border-2 border-gray-200 p-2 rounded-lg"
                 >
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span className="text-white/80 capitalize text-sm">
+                  <span className="text-green-500 mr-2">✓</span>
+                  <span className="text-gray-700 capitalize text-sm">
                     {feature === 'stateManagement' ? `State: ${state.features.stateManagement}` : feature}
                   </span>
                 </motion.div>
               ))}
-              <div className="flex items-center glass-strong p-2 rounded">
-                <span className="text-cyan-400 mr-2">🎨</span>
-                <span className="text-white/80 text-sm capitalize">{state.styling}</span>
+              <div className="flex items-center bg-white border-2 border-gray-200 p-2 rounded-lg">
+                <span className="text-cyan-500 mr-2">🎨</span>
+                <span className="text-gray-700 text-sm capitalize">{state.styling}</span>
               </div>
               {state.typescript && (
-                <div className="flex items-center glass-strong p-2 rounded">
-                  <span className="text-blue-400 mr-2">TS</span>
-                  <span className="text-white/80 text-sm">TypeScript</span>
+                <div className="flex items-center bg-white border-2 border-gray-200 p-2 rounded-lg">
+                  <span className="text-blue-500 mr-2">TS</span>
+                  <span className="text-gray-700 text-sm">TypeScript</span>
                 </div>
               )}
             </div>
@@ -918,9 +949,9 @@ function LivePreview({ state, currentStep }: { state: any; currentStep: number }
         return (
           <div className="space-y-4">
             <div className="text-center mb-4">
-              <h4 className="neon-accent font-bold flicker">Generating...</h4>
+              <h4 className="text-gray-900 font-bold">Generating...</h4>
             </div>
-            <div className="glass-strong p-4 rounded-lg">
+            <div className="bg-white border-2 border-cyan-200 p-4 rounded-lg">
               <div className="text-center">
                 <motion.div
                   animate={{ rotate: 360 }}
@@ -929,7 +960,13 @@ function LivePreview({ state, currentStep }: { state: any; currentStep: number }
                 >
                   ⚡
                 </motion.div>
-                <p className="text-white/60 text-sm">{state.generationProgress || 0}% Complete</p>
+                <p className="text-gray-600 text-sm">{state.generationProgress || 0}% Complete</p>
+                <div className="mt-3 bg-gray-200 rounded-full h-2">
+                  <div 
+                    className="bg-gradient-to-r from-cyan-400 to-pink-400 h-2 rounded-full transition-all duration-300"
+                    style={{ width: `${state.generationProgress || 0}%` }}
+                  ></div>
+                </div>
               </div>
             </div>
           </div>
@@ -939,12 +976,12 @@ function LivePreview({ state, currentStep }: { state: any; currentStep: number }
         return (
           <div className="space-y-4">
             <div className="text-center mb-4">
-              <h4 className="neon-text font-bold">Ready to Export!</h4>
+              <h4 className="text-gray-900 font-bold">Ready to Export!</h4>
             </div>
-            <div className="glass-strong p-4 rounded-lg">
+            <div className="bg-gradient-to-br from-cyan-50 to-pink-50 border-2 border-cyan-200 p-4 rounded-lg">
               <div className="text-center">
-                <div className="text-4xl mb-2 floaty">🎉</div>
-                <p className="text-white/80 text-sm">Your code is ready</p>
+                <div className="text-4xl mb-2">🎉</div>
+                <p className="text-gray-700 text-sm">Your code is ready for download</p>
               </div>
             </div>
           </div>
@@ -952,7 +989,7 @@ function LivePreview({ state, currentStep }: { state: any; currentStep: number }
       
       default:
         return (
-          <div className="text-center text-white/50">
+          <div className="text-center text-gray-500">
             Preview will appear here...
           </div>
         );
@@ -960,17 +997,33 @@ function LivePreview({ state, currentStep }: { state: any; currentStep: number }
   };
 
   return (
-    <div className="glass p-6 sticky top-8">
-      <h3 className="text-xl font-bold neon-accent mb-4 floaty">Live Preview</h3>
+    <div className="bg-white border-2 border-gray-200 rounded-xl p-4 shadow-sm">
+      <div className="text-center mb-4">
+        <h3 className="text-lg font-bold text-gray-900 mb-2">Live Preview</h3>
+        <div className="w-8 h-1 bg-gradient-to-r from-cyan-400 to-pink-400 rounded-full mx-auto"></div>
+      </div>
+      
       <motion.div
         key={currentStep}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="min-h-[400px]"
+        className="min-h-[320px]"
       >
         {getPreviewContent()}
       </motion.div>
+      
+      <div className="mt-4 bg-gray-50 border border-gray-200 p-3 rounded-lg">
+        <div className="text-xs text-gray-600 text-center mb-2">
+          Step {currentStep} of 5
+        </div>
+        <div className="bg-gray-200 rounded-full h-1.5">
+          <div 
+            className="bg-gradient-to-r from-cyan-400 to-pink-400 h-1.5 rounded-full transition-all duration-300"
+            style={{ width: `${(currentStep / 5) * 100}%` }}
+          ></div>
+        </div>
+      </div>
     </div>
   );
 }

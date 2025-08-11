@@ -1,3 +1,9 @@
+// Define a type for the service account object
+type ServiceAccount = {
+  client_email: string;
+  private_key: string;
+  private_key_id: string;
+};
 import { AIProvider, GenerationOptions } from './types';
 import jwt from 'jsonwebtoken';
 
@@ -51,7 +57,7 @@ export class VertexAIProvider implements AIProvider {
     }
   }
 
-  private async createJWT(serviceAccount: any): Promise<string> {
+  private async createJWT(serviceAccount: ServiceAccount): Promise<string> {
     const now = Math.floor(Date.now() / 1000);
     const payload = {
       iss: serviceAccount.client_email,
@@ -102,7 +108,7 @@ import {
 interface ${componentName}Props {
   title?: string;
   description?: string;
-  data?: any[];
+  data?: unknown[];
   variant?: 'primary' | 'secondary' | 'success';
 }
 

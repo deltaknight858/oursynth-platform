@@ -25,7 +25,15 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ]
+      ],
+      "@oursynth/shared-types/*": ["../../../packages/shared-types/src/*"],
+      "@oursynth/shared-utils/*": ["../../../packages/shared-utils/src/*"],
+      "@oursynth/shared-config/*": ["../../../packages/shared-config/src/*"],
+      "@oursynth/ui/*": ["../../../packages/ui/src/*"],
+      "@oursynth/ui-components/*": ["../../../packages/ui-components/*"],
+      "@oursynth/design-system/*": ["../../../packages/design-system/*"],
+      "@oursynth/analyzer/*": ["../../../packages/analyzer/*"],
+      "@oursynth/orchestrator/*": ["../../../packages/orchestrator/*"]
     }
   },
   "include": [

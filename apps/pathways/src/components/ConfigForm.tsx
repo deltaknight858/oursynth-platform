@@ -197,7 +197,7 @@ export default function ConfigForm() {
           transition={{ delay: 0.2, duration: 0.8 }}
           className="text-4xl md:text-6xl font-bold leading-tight mb-8 text-white drop-shadow-lg"
         >
-          Let's configure your{' '}
+          Let&apos;s configure your{' '}
           <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
             {state.selectedTemplate?.name}
           </span>
@@ -208,7 +208,7 @@ export default function ConfigForm() {
           transition={{ delay: 0.4, duration: 0.8 }}
           className="text-white/80 text-xl max-w-3xl mx-auto leading-relaxed"
         >
-          Fine-tune every detail to match your vision. We'll set up everything 
+          Fine-tune every detail to match your vision. We&apos;ll set up everything 
           exactly how you need it.
         </motion.p>
       </div>
@@ -554,6 +554,7 @@ export default function ConfigForm() {
                 </div>
                 <button
                   onClick={closeFeatureInfo}
+                  aria-label="Close feature information"
                   className="p-2 rounded-lg hover:bg-white/10 transition-colors"
                 >
                   <svg className="w-5 h-5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -26,7 +26,7 @@ import {
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
-import { useThemeMode } from '@/components/theme/CustomThemeProvider';
+import { useThemeMode } from '@/theme/CustomThemeProvider';
 
 export default function Header() {
   const router = useRouter();

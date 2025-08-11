@@ -91,7 +91,6 @@ const api = {
   },
   createDeployment: async (payload: CreateDeploymentPayload): Promise<Deployment> => {
     await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log('Creating deployment:', payload);
     const newDeployment: Deployment = {
       id: `site_${Date.now()}`,
       name: payload.projectName,
@@ -142,7 +141,6 @@ export const useDeployments = () => {
       setDeployments(data);
     } catch (error) {
       toast.error('Failed to fetch deployments.');
-      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -160,7 +158,6 @@ export const useDeployments = () => {
       await fetchDeployments(); // Refetch to get the new deployment
     } catch (error) {
       toast.error('Failed to create deployment.');
-      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -181,7 +178,6 @@ export const useDeployments = () => {
       setEnv(data);
     } catch (error) {
       toast.error('Failed to fetch environment variables.');
-      console.error(error);
     } finally {
       setIsEnvLoading(false);
     }
@@ -195,7 +191,6 @@ export const useDeployments = () => {
       toast.success('Environment variables updated successfully.');
     } catch (error) {
       toast.error('Failed to update environment variables.');
-      console.error(error);
     } finally {
       setIsEnvLoading(false);
     }

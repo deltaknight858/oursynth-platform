@@ -80,7 +80,7 @@ export default function Step3StylingTheme({ data, onChange, onNext }: Step3Styli
     const theme = event.target.value;
     setSelectedTheme(theme);
     
-    const updateData: any = { theme };
+  const updateData: Record<string, unknown> = { theme };
     
     // Clear custom data if not custom theme
     if (theme !== 'custom-palette') {
@@ -162,7 +162,7 @@ export default function Step3StylingTheme({ data, onChange, onNext }: Step3Styli
         color="text.secondary" 
         sx={{ textAlign: 'center', mb: 4 }}
       >
-        Choose the visual theme that best matches your project's aesthetic
+        Choose the visual theme that best matches your project&apos;s aesthetic
       </Typography>
 
       <Box sx={{ mb: 4 }}>

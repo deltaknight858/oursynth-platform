@@ -14,7 +14,7 @@ interface Component {
   category: string
   description: string
   isFavorite?: boolean
-  defaultProps?: Record<string, any>
+  defaultProps?: Record<string, unknown>
 }
 
 interface ComponentPaletteProps {
@@ -436,7 +436,7 @@ function DraggableComponentCard({
 
   return (
     <ComponentCard
-      ref={drag as any}
+      ref={drag as React.LegacyRef<HTMLDivElement>}
       $isDragging={isDragging}
       $color={component.color}
       $isFavorite={component.isFavorite || false}

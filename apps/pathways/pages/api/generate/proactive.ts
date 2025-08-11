@@ -8,7 +8,7 @@ import { OpenAIProvider } from '../../../src/lib/ai-providers/openai-provider';
 const USER_ID = 'demo-user';
 
 // Temporary in-memory cache (replace with Redis/Supabase for production)
-const cache: Record<string, any> = {};
+const cache: Record<string, unknown> = {};
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {

@@ -1,6 +1,31 @@
 import { createTheme, ThemeOptions } from '@mui/material/styles';
+import CustomThemeProvider from '../src/theme/CustomThemeProvider';
 
 // Base theme configuration shared between light and dark themes
+declare module '@mui/material/styles' {
+  interface Theme {
+    custom: {
+      neonPurple: string;
+      neonCyan: string;
+      neonBlue: string;
+      neonLime: string;
+      glassBg: string;
+      glassBorder: string;
+    };
+  }
+  // allow configuration using `createTheme`
+  interface ThemeOptions {
+    custom?: {
+      neonPurple?: string;
+      neonCyan?: string;
+      neonBlue?: string;
+      neonLime?: string;
+      glassBg?: string;
+      glassBorder?: string;
+    };
+  }
+}
+
 const baseThemeOptions: ThemeOptions = {
   typography: {
     fontFamily: [
@@ -318,7 +343,17 @@ const darkThemePaletteOverrides = {
 };
 
 // Create the main theme
-const theme = createTheme(lightThemeOptions);
+const theme = createTheme({
+  ...lightThemeOptions,
+  custom: {
+    neonPurple: '#a020f0',
+    neonCyan: '#00ffcc',
+    neonBlue: '#0080ff',
+    neonLime: '#84cc16',
+    glassBg: 'rgba(255,255,255,0.18)',
+    glassBorder: 'rgba(160,32,240,0.18)',
+  },
+});
 
 // Create the dark theme by deep-merging palette overrides
 export const darkTheme = createTheme({
@@ -327,6 +362,17 @@ export const darkTheme = createTheme({
     ...lightThemeOptions.palette,
     ...darkThemePaletteOverrides,
   },
+  custom: {
+    neonPurple: '#a020f0',
+    neonCyan: '#00ffcc',
+    neonBlue: '#0080ff',
+    neonLime: '#84cc16',
+    glassBg: 'rgba(34,34,40,0.28)',
+    glassBorder: 'rgba(160,32,240,0.28)',
+  },
 });
 
+// Usage example in a component:
+// const theme = useTheme();
+// theme.custom.neonPurple, theme.custom.glassBg, etc.
 export default theme;

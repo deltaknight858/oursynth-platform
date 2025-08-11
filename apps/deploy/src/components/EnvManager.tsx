@@ -54,8 +54,7 @@ export default function EnvManager({ siteId }: EnvManagerProps) {
   };
 
   const handleDeleteVariable = async (keyToDelete: string) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { [keyToDelete]: _, ...remainingVars } = variables;
+    const { [keyToDelete]: _deleted, ...remainingVars } = variables;
     await updateEnv(siteId, remainingVars);
   };
 

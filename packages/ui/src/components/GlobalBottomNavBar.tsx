@@ -10,8 +10,30 @@ import HomeIcon from '@mui/icons-material/Home';
 import HubIcon from '@mui/icons-material/Hub';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import PublicIcon from '@mui/icons-material/Public';
+import '@mui/material/styles';
 
-const ElectricPurple = '#a259ff';
+declare module '@mui/material/styles' {
+  interface Theme {
+    custom: {
+      neonPurple: string;
+      neonCyan: string;
+      neonBlue: string;
+      neonLime: string;
+      glassBg: string;
+      glassBorder: string;
+    };
+  }
+  interface ThemeOptions {
+    custom?: {
+      neonPurple?: string;
+      neonCyan?: string;
+      neonBlue?: string;
+      neonLime?: string;
+      glassBg?: string;
+      glassBorder?: string;
+    };
+  }
+}
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   position: 'fixed',
@@ -19,8 +41,8 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   left: 0,
   right: 0,
   zIndex: 1300,
-  background: `linear-gradient(90deg, ${ElectricPurple} 0%, #6a00f4 100%)`,
-  boxShadow: '0 -2px 8px rgba(162,89,255,0.15)',
+  background: `linear-gradient(90deg, ${theme.custom.neonPurple} 0%, #6a00f4 100%)`,
+  boxShadow: `0 -2px 8px ${theme.custom.neonPurple}26`, // 15% opacity
 }));
 
 const navLinks = [
