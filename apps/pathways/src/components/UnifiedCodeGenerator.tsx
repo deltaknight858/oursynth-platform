@@ -9,6 +9,7 @@ interface CodeGeneratorState {
   projectType: 'component' | 'page' | 'feature' | 'fullapp';
   description: string;
   framework: 'react' | 'vue' | 'angular' | 'nextjs';
+  projectName?: string; // Optional project name
   
   // Step 2: Structure  
   structure: {
@@ -291,7 +292,6 @@ function UnifiedCodeGeneratorInternal() {
                 {currentStep === 4 && (
                   <GenerateStep 
                     state={state} 
-                    updateState={updateState} 
                     onNext={nextStep}
                     onPrev={prevStep}
                   />
@@ -299,7 +299,6 @@ function UnifiedCodeGeneratorInternal() {
                 {currentStep === 5 && (
                   <ExportStep 
                     state={state} 
-                    updateState={updateState} 
                     onPrev={prevStep}
                   />
                 )}
