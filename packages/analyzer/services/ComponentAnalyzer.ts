@@ -48,11 +48,11 @@ export class ComponentAnalyzer {
       },
       // Find styled-components or Tailwind classes
       JSXAttribute(path) {
-        if (path.node.name.name === 'className' && path.node.value.type === 'StringLiteral') {
-          styles.push(path.node.value.value);
+        if (path.node.name.name === 'className' && path.node.value && path.node.value.type === 'StringLiteral') {
+          styles.push((path.node.value as any).value);
         }
-        if (path.node.name.name === 'css' && path.node.value.type === 'StringLiteral') {
-          styles.push(path.node.value.value);
+        if (path.node.name.name === 'css' && path.node.value && path.node.value.type === 'StringLiteral') {
+          styles.push((path.node.value as any).value);
         }
       },
       // Capture structure (JSX tree as string)

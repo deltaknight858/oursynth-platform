@@ -5,7 +5,12 @@
   "types": "index.ts",
   "license": "MIT",
   "scripts": {
+    "build": "tsc",
     "tsc:noEmit": "tsc --noEmit",
     "lint": "echo 'No lint configured for orchestrator package'"
+  },
+  "dependencies": {
+    "@azure/identity": "^4.0.1",
+    "@azure/arm-appservice": "^15.0.0"
   }
 }

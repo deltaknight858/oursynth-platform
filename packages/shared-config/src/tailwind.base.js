@@ -51,6 +51,13 @@ const baseConfig = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))'
         },
+        // OurSynth brand colors
+        'electric-purple': 'var(--electric-purple)',
+        'electric-light': 'var(--electric-light)',
+        'electric-dark': 'var(--electric-dark)',
+        'deployment-green': 'var(--deployment-green)',
+        'deployment-light': 'var(--deployment-light)',
+        'deployment-dark': 'var(--deployment-dark)',
         sidebar: {
           DEFAULT: 'hsl(var(--sidebar-background))',
           foreground: 'hsl(var(--sidebar-foreground))',

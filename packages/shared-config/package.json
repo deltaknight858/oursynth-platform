@@ -4,6 +4,7 @@
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
+    "build": "echo 'No build needed for shared-config (JavaScript package)'",
     "tsc:noEmit": "echo 'No TypeScript in shared-config (JavaScript package)'",
     "lint": "echo 'No lint configured for shared-config package'"
   },
