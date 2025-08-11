@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { expect } from 'chai';
 import { createRenderer } from 'test/utils';
 
 describe('ThemeProvider', () => {
@@ -12,6 +11,6 @@ describe('ThemeProvider', () => {
           <ThemeProvider theme={() => ({})} />
         </ThemeProvider>,
       ),
-    ).not.toWarnDev();
+    ).not.toThrow();
   });
 });

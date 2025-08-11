@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { darken, lighten } from '@mui/system';
 import { deepOrange, blue, purple, indigo } from '../colors';
 import createPalette, { dark, light } from './createPalette';
@@ -27,7 +26,7 @@ describe('createPalette()', () => {
       },
     });
 
-    expect(palette.primary.main).to.equal(deepOrange[500]);
+    expect(palette.primary.main).toBe(deepOrange[500]);
   });
 
   it('should calculate light and dark colors if not provided', () => {
@@ -76,22 +75,22 @@ describe('createPalette()', () => {
     expect(
       palette.primary.contrastText,
       'should use dark.text.primary as the default primary contrastText color',
-    ).to.equal(light.text.primary);
+    ).toBe(light.text.primary);
     expect(
       palette.secondary.contrastText,
       'should use dark.text.primary as the default secondary contrastText color',
-    ).to.equal(light.text.primary);
+    ).toBe(light.text.primary);
   });
 
   it('should create a dark palette', () => {
     const palette = createPalette({ mode: 'dark' });
-    expect(palette.primary.main, 'should use blue as the default primary color').to.equal(
+    expect(palette.primary.main, 'should use blue as the default primary color').toBe(
       blue[200],
     );
-    expect(palette.secondary.main, 'should use purple as the default secondary color').to.equal(
+    expect(palette.secondary.main, 'should use purple as the default secondary color').toBe(
       purple[200],
     );
-    expect(palette.text, 'should use dark theme text').to.equal(dark.text);
+    expect(palette.text, 'should use dark theme text').toBe(dark.text);
   });
 
   describe('augmentColor', () => {
@@ -137,8 +136,8 @@ describe('createPalette()', () => {
   it('should create a palette with unique object references', () => {
     const redPalette = createPalette({ background: { paper: 'red' } });
     const bluePalette = createPalette({ background: { paper: 'blue' } });
-    expect(redPalette).not.to.equal(bluePalette);
-    expect(redPalette.background).not.to.equal(bluePalette.background);
+    expect(redPalette).not.toBe(bluePalette);
+    expect(redPalette.background).not.toBe(bluePalette.background);
   });
 
   describe('warnings', () => {

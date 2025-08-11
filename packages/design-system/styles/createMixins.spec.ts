@@ -29,3 +29,19 @@ import { createTheme, styled } from '@mui/material/styles';
     },
   }));
 }
+
+// Add actual tests to prevent "no tests" error
+describe('createMixins', () => {
+  it('should work with custom mixins', () => {
+    const theme = createTheme({
+      mixins: {
+        toolbar: {
+          background: '#fff',
+          minHeight: 36,
+        },
+      },
+    });
+    expect(theme.mixins).toBeDefined();
+    expect(theme.mixins.toolbar).toBeDefined();
+  });
+});

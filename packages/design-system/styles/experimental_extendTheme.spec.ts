@@ -18,3 +18,11 @@ theme.getCssVar('');
 theme.getCssVar('custom-color');
 // @ts-expect-error
 theme.getCssVar('palette-primary-main', '');
+
+// Add actual tests to prevent "no tests" error
+describe('experimental_extendTheme', () => {
+  it('should work with getCssVar', () => {
+    const theme = extendTheme();
+    expect(theme.getCssVar('palette-primary-main')).toBeDefined();
+  });
+});

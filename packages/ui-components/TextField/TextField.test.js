@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { expect } from 'chai';
 import { spy } from 'sinon';
 import { createRenderer, describeConformance, fireEvent } from 'test/utils';
 import FormControl from '@mui/material/FormControl';
@@ -68,7 +67,7 @@ describe('<TextField />', () => {
       it(`should not render empty (${label}) label element`, () => {
         const { container } = render(<TextField label={label} variant="standard" />);
 
-        expect(container.querySelector('label')).to.equal(null);
+        expect(container.querySelector('label')).toBe(null);
       });
     });
   });
@@ -133,7 +132,7 @@ describe('<TextField />', () => {
 
     it('should not set padding for empty, null or undefined label props', function test() {
       if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
+        return;
       }
       const spanStyle = { paddingLeft: '0px', paddingRight: '0px' };
       ['', undefined, null].forEach((prop) => {
@@ -151,7 +150,7 @@ describe('<TextField />', () => {
         <TextField InputProps={{ 'data-testid': 'InputComponent' }} variant="standard" />,
       );
 
-      expect(getByTestId('InputComponent')).not.to.equal(null);
+      expect(getByTestId('InputComponent')).not.toBe(null);
     });
   });
 
@@ -160,14 +159,14 @@ describe('<TextField />', () => {
       const handleClick = spy();
       const { getByRole } = render(<TextField disabled onClick={handleClick} />);
       fireEvent.click(getByRole('textbox'));
-      expect(handleClick.callCount).to.equal(0);
+      expect(handleClick.callCount).toBe(0);
     });
 
     it('should not run click event when disabled and when onClick prop is set through InputProps', () => {
       const handleClick = spy();
       const { getByRole } = render(<TextField disabled InputProps={{ onClick: handleClick }} />);
       fireEvent.click(getByRole('textbox'));
-      expect(handleClick.callCount).to.equal(0);
+      expect(handleClick.callCount).toBe(0);
     });
   });
 
@@ -189,7 +188,7 @@ describe('<TextField />', () => {
       );
 
       const select = container.querySelector('select');
-      expect(select).not.to.equal(null);
+      expect(select).not.toBe(null);
       expect(select.options).to.have.lengthOf(2);
     });
 

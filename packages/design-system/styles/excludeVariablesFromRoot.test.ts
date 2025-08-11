@@ -1,41 +1,40 @@
-import { expect } from 'chai';
 import excludeVariablesFromRoot from './excludeVariablesFromRoot';
 
 describe('excludeVariablesFromRoot', () => {
   it('should return true', () => {
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-1`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-2`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-3`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-4`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-5`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-6`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-7`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-8`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-9`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-10`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-11`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-12`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-13`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-14`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-15`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-16`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-17`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-18`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-19`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-20`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-21`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-22`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-23`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-24`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-palette-AppBar-darkBg`)).to.equal(true);
-    expect(excludeVariablesFromRoot('mui').includes(`--mui-palette-AppBar-darkColor`)).to.equal(
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-1`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-2`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-3`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-4`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-5`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-6`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-7`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-8`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-9`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-10`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-11`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-12`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-13`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-14`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-15`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-16`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-17`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-18`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-19`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-20`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-21`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-22`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-23`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-overlays-24`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-palette-AppBar-darkBg`)).toBe(true);
+    expect(excludeVariablesFromRoot('mui').includes(`--mui-palette-AppBar-darkColor`)).toBe(
       true,
     );
   });
 
   it('should return true for custom prefix', () => {
-    expect(excludeVariablesFromRoot('').includes(`--overlays-1`)).to.equal(true);
-    expect(excludeVariablesFromRoot('').includes(`--palette-AppBar-darkBg`)).to.equal(true);
-    expect(excludeVariablesFromRoot('').includes(`--palette-AppBar-darkColor`)).to.equal(true);
+    expect(excludeVariablesFromRoot('').includes(`--overlays-1`)).toBe(true);
+    expect(excludeVariablesFromRoot('').includes(`--palette-AppBar-darkBg`)).toBe(true);
+    expect(excludeVariablesFromRoot('').includes(`--palette-AppBar-darkColor`)).toBe(true);
   });
 });
