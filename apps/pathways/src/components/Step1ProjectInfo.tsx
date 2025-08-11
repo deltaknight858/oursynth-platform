@@ -84,7 +84,7 @@ export default function Step1ProjectInfo({ data, onChange, onNext }: Step1Projec
         color="text.secondary" 
         sx={{ textAlign: 'center', mb: 4 }}
       >
-        Let's start with the basics about your project
+        Let&apos;s start with the basics about your project
       </Typography>
 
       <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
