@@ -11,6 +11,7 @@ interface ChaiAssertion {
     };
     have: {
       class: (className: string) => ChaiAssertion;
+      lengthOf: (length: number) => ChaiAssertion;
     };
     not: {
       to: {
@@ -33,6 +34,7 @@ interface ChaiAssertion {
   toWarnDev: (expectedMessages?: string[]) => ChaiAssertion;
   toErrorDev: (expectedMessage?: string) => ChaiAssertion;
   toHaveComputedStyle: (expectedStyles: Record<string, string>) => ChaiAssertion;
+  toHaveAccessibleName: (name: string) => ChaiAssertion;
 }
 
 const mockChaiExpected = (val: any): ChaiAssertion => {
@@ -54,6 +56,12 @@ const mockChaiExpected = (val: any): ChaiAssertion => {
             return assertion;
           }
           throw new Error(`Expected element to have class '${className}'`);
+        },
+        lengthOf: (length: number) => {
+          if (val && val.length === length) {
+            return assertion;
+          }
+          throw new Error(`Expected array to have length ${length}, but got ${val?.length || 0}`);
         }
       },
       not: {
@@ -111,6 +119,10 @@ const mockChaiExpected = (val: any): ChaiAssertion => {
     },
     toHaveComputedStyle: (expectedStyles: Record<string, string>) => {
       // Mock implementation for testing
+      return assertion;
+    },
+    toHaveAccessibleName: (name: string) => {
+      // Mock implementation - in a real test this would check accessibility name
       return assertion;
     }
   };
