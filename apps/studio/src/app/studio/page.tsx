@@ -70,9 +70,15 @@ const CanvasDropZoneStyled = styled.div`
 `;
 
 // CanvasDropZone functional component
+interface DropItem {
+  type: string;
+  name: string;
+  color: string;
+}
+
 interface CanvasDropZoneProps {
   droppedComponents: DroppedComponent[];
-  onDrop: (item: any, offset: { x: number; y: number }) => void;
+  onDrop: (item: DropItem, offset: { x: number; y: number }) => void;
 }
 
 const CanvasDropZone: React.FC<CanvasDropZoneProps> = ({ droppedComponents, onDrop }) => {
@@ -177,10 +183,16 @@ const StudioLayout = styled.div`
   margin: var(--spacing-xl) 0;
 `;
 
+import type { ComponentDefinition } from '@oursynth/shared-types';
+
+interface AIComponent extends Partial<ComponentDefinition> {
+  displayName?: string;
+}
+
 export default function StudioPage() {
   // State and hooks
   // Handler to insert AI-generated component from SuggestionTray
-  const handleInsertComponent = (component: any) => {
+  const handleInsertComponent = (component: AIComponent) => {
     // Insert at default position (e.g., x:100, y:100) and assign a unique id
     const newComponent = {
       id: `${component.type || 'ai'}-${Date.now()}`,
@@ -197,7 +209,7 @@ export default function StudioPage() {
   const [projectName, setProjectName] = useState('Untitled Project');
   const [isAutoSaving, setIsAutoSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<unknown>(null);
   const [components, setComponents] = useState(ENHANCED_COMPONENT_TYPES);
 
   // Projects hooks
@@ -292,7 +304,7 @@ export default function StudioPage() {
     return () => clearTimeout(saveTimeout);
   }, [droppedComponents, currentProjectId, user, saveProjectData]);
 
-  const handleDrop = useCallback((item: any, offset: { x: number; y: number }) => {
+  const handleDrop = useCallback((item: DropItem, offset: { x: number; y: number }) => {
     const newComponent: DroppedComponent = {
       id: `${item.type}-${Date.now()}`,
       type: item.type,
@@ -463,16 +475,4 @@ async function createProject({
   return data;
 }
 
-function setCurrentProjectId(arg0: any) {
-  throw new Error('Function not implemented.');
-}
 
-function setDroppedComponents(arg0: never[]) {
-  throw new Error('Function not implemented.');
-}
-
-function setLastSaved(arg0: Date) {
-  throw new Error('Function not implemented.');
-}
-// const [droppedComponents, setDroppedComponents] = useState<DroppedComponent[]>([]);
-// No need to re-declare or implement it manually.

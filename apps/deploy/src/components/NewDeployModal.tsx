@@ -81,7 +81,6 @@ export function NewDeployModal({ isOpen, onOpenChange }: NewDeployModalProps) {
       onOpenChange(false);
       form.reset();
     } catch (error) {
-      console.error("Deployment failed", error);
       // Toast notification is handled within the useDeployments hook
     }
   };

@@ -369,7 +369,7 @@ export default function Step7ReviewGenerate({ data, onEdit, onGenerate, onExport
           color="text.secondary" 
           sx={{ textAlign: 'center', mt: 3, fontStyle: 'italic' }}
         >
-          Ready to generate your application! Click "Generate Code" to create your project files.
+          Ready to generate your application! Click &quot;Generate Code&quot; to create your project files.
         </Typography>
       )}
     </Paper>

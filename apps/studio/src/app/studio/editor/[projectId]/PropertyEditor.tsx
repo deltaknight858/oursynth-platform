@@ -13,7 +13,7 @@ interface PropertyEditorProps {
 
 export default function PropertyEditor({ selectedNode }: PropertyEditorProps) {
   const { updateNode } = useProjectContext();
-  const [localProps, setLocalProps] = useState<Record<string, any>>({});
+  const [localProps, setLocalProps] = useState<Record<string, unknown>>({});
 
   // Update local props when selected node changes
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function PropertyEditor({ selectedNode }: PropertyEditorProps) {
     }
   }, [selectedNode]);
 
-  const handlePropChange = (key: string, value: any) => {
+  const handlePropChange = (key: string, value: unknown) => {
     const newProps = { ...localProps, [key]: value };
     setLocalProps(newProps);
     
@@ -189,8 +189,8 @@ function PropertySection({ title, children }: PropertySectionProps) {
 interface PropertyFieldProps {
   label: string;
   type: 'text' | 'number' | 'select' | 'color' | 'checkbox';
-  value: any;
-  onChange: (value: any) => void;
+  value: unknown;
+  onChange: (value: unknown) => void;
   options?: { label: string; value: string }[];
   placeholder?: string;
 }
@@ -249,8 +249,8 @@ function PropertyField({ label, type, value, onChange, options, placeholder }: P
 
 function renderComponentProperties(
   componentType: string,
-  props: Record<string, any>,
-  onChange: (key: string, value: any) => void
+  props: Record<string, unknown>,
+  onChange: (key: string, value: unknown) => void
 ) {
   switch (componentType) {
     case 'Button':

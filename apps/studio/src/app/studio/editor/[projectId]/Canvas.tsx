@@ -45,11 +45,11 @@ const renderComponent = (node: Node) => {
     case 'Button':
       return (
         <div style={finalProps.style}>
-          {(finalProps as { text?: string; style: any }).text || 'Text content'}
+          {(finalProps as { text?: string; style: React.CSSProperties }).text || 'Text content'}
         </div>
       );
     case 'Image':
-      const imageProps = finalProps as { src?: string; alt?: string; style: any };
+      const imageProps = finalProps as { src?: string; alt?: string; style: React.CSSProperties };
       return (
         <img 
           src={imageProps.src || 'https://via.placeholder.com/300x200'} 
@@ -63,9 +63,9 @@ const renderComponent = (node: Node) => {
       return <div style={finalProps.style}>{node.type}</div>;
     case 'DataTable':
       const tableProps = finalProps as { 
-        style: any;
+        style: React.CSSProperties;
         columns: Array<{ field: string; header: string }>;
-        data: Array<Record<string, any>>;
+        data: Array<Record<string, unknown>>;
       };
       return (
         <div style={tableProps.style}>
@@ -80,7 +80,7 @@ const renderComponent = (node: Node) => {
               </tr>
             </thead>
             <tbody>
-              {tableProps.data?.map((row: Record<string, any>, i: number) => (
+              {tableProps.data?.map((row: Record<string, unknown>, i: number) => (
                 <tr key={i}>
                   {tableProps.columns?.map((col: { field: string; header: string }, j: number) => (
                     <td key={j} style={{ padding: '8px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
@@ -154,7 +154,7 @@ export default function Canvas({ onSelectNode }: CanvasProps) {
   // Handle dropping components from palette
   const handleDropComponent = useCallback(async (
     componentType: string,
-    defaultProps: Record<string, any>,
+    defaultProps: Record<string, unknown>,
     x: number,
     y: number,
     targetContainerId?: number
@@ -187,7 +187,7 @@ export default function Canvas({ onSelectNode }: CanvasProps) {
     console.log(`Adding ${componentType} component at position (${snappedX}, ${snappedY})`);
     
     const newNode: Partial<Node> = {
-      id: generateId() as any,
+      id: Number(generateId()),
       project_id: project?.id || 1,
       type: componentType,
       x: snappedX,
@@ -246,7 +246,7 @@ export default function Canvas({ onSelectNode }: CanvasProps) {
   // React DnD drop target
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: 'component',
-    drop: (item: { type: string; defaultProps: Record<string, any> }, monitor) => {
+    drop: (item: { type: string; defaultProps: Record<string, unknown> }, monitor) => {
       const offset = monitor.getClientOffset();
       if (!offset) return;
 
@@ -275,7 +275,7 @@ export default function Canvas({ onSelectNode }: CanvasProps) {
 
   return (
     <div 
-      ref={drop as any}
+      ref={drop as React.LegacyRef<HTMLDivElement>}
       data-canvas="true"
       className={`flex-1 overflow-hidden relative ${
         isOver && canDrop ? 'bg-blue-50' : 'bg-gray-50'
