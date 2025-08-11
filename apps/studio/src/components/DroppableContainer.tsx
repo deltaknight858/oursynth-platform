@@ -6,7 +6,7 @@ import type { Node } from '@/types/projects';
 interface ContainerProps {
   node: Node;
   children?: React.ReactNode;
-  onDrop: (item: any, x: number, y: number) => void;
+  onDrop: (item: unknown, x: number, y: number) => void;
 }
 
 const StyledContainer = styled.div<{ $isOver: boolean }>`
@@ -23,7 +23,7 @@ const StyledContainer = styled.div<{ $isOver: boolean }>`
 export function DroppableContainer({ node, children, onDrop }: ContainerProps) {
   const [{ isOver }, dropRef] = useDrop(() => ({
     accept: 'COMPONENT',
-    drop: (item: any, monitor) => {
+    drop: (item: unknown, monitor) => {
       const offset = monitor.getClientOffset();
       if (offset) {
         // Convert coordinates to container space
@@ -44,7 +44,7 @@ export function DroppableContainer({ node, children, onDrop }: ContainerProps) {
 
   return (
     <StyledContainer
-      ref={dropRef as any}
+      ref={dropRef as React.LegacyRef<HTMLDivElement>}
       id={`container-${node.id}`}
       $isOver={isOver}
       style={{

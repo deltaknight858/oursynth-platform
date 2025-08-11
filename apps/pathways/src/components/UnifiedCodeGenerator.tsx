@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
@@ -266,7 +265,7 @@ function DefineStep({ state, updateState, onNext }: StepProps) {
             key={type.id}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => updateState({ projectType: type.id as any })}
+            onClick={() => updateState({ projectType: type.id as CodeGeneratorState['projectType'] })}
             className={`
               bg-slate-800 bg-opacity-50 backdrop-blur-md border border-slate-700 shadow-2xl rounded-2xl
               p-6 cursor-pointer text-center transition-all duration-300
@@ -376,7 +375,7 @@ function StructureStep({ state, updateState, onNext, onPrev }: StepProps) {
               onClick={() => updateState({ 
                 structure: { 
                   ...state.structure, 
-                  layout: layout.id as any 
+                  layout: layout.id as CodeGeneratorState['structure']['layout'] 
                 } 
               })}
               className={`
@@ -406,7 +405,7 @@ function StructureStep({ state, updateState, onNext, onPrev }: StepProps) {
               onClick={() => updateState({ 
                 structure: { 
                   ...state.structure, 
-                  organization: org.id as any 
+                  organization: org.id as CodeGeneratorState['structure']['organization'] 
                 } 
               })}
               className={`
@@ -562,7 +561,7 @@ function ConfigureStep({ state, updateState, onNext, onPrev }: StepProps) {
               { value: 'redux', label: 'Redux Toolkit' }
             ]}
             onChange={(value: string) => updateState({ 
-              features: { ...state.features, stateManagement: value as any } 
+              features: { ...state.features, stateManagement: value as CodeGeneratorState['features']['stateManagement'] } 
             })}
           />
           <Dropdown
@@ -575,7 +574,7 @@ function ConfigureStep({ state, updateState, onNext, onPrev }: StepProps) {
               { value: 'css', label: 'CSS Modules' },
               { value: 'scss', label: 'SCSS/SASS' }
             ]}
-            onChange={(value: string) => updateState({ styling: value as any })}
+            onChange={(value: string) => updateState({ styling: value as CodeGeneratorState['styling'] })}
           />
         </div>
       </div>
