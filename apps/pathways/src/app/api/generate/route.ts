@@ -109,25 +109,31 @@ The component should be production-ready and follow React best practices.`;
       timestamp: new Date().toISOString(),
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error in generate endpoint:', error);
 
     // Handle specific OpenAI errors
-    if (error?.error?.type === 'insufficient_quota') {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    const errorObject = error as { 
+      error?: { type?: string }; 
+      code?: string; 
+    };
+    
+    if (errorObject?.error?.type === 'insufficient_quota') {
       return NextResponse.json(
         { error: 'OpenAI API quota exceeded. Please try again later.' },
         { status: 429 }
       );
     }
 
-    if (error?.error?.type === 'invalid_request_error') {
+    if (errorObject?.error?.type === 'invalid_request_error') {
       return NextResponse.json(
         { error: 'Invalid request to OpenAI API. Please check your prompt.' },
         { status: 400 }
       );
     }
 
-    if (error?.code === 'ENOTFOUND' || error?.code === 'ECONNREFUSED') {
+    if (errorObject?.code === 'ENOTFOUND' || errorObject?.code === 'ECONNREFUSED') {
       return NextResponse.json(
         { error: 'Unable to connect to OpenAI API. Please check your internet connection.' },
         { status: 503 }

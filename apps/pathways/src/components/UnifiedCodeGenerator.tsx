@@ -9,6 +9,7 @@ interface CodeGeneratorState {
   projectType: 'component' | 'page' | 'feature' | 'fullapp';
   description: string;
   framework: 'react' | 'vue' | 'angular' | 'nextjs';
+  projectName?: string; // Optional project name
   
   // Step 2: Structure  
   structure: {
@@ -37,6 +38,50 @@ interface CodeGeneratorState {
   
   // Step 5: Export
   exportFormat: 'zip' | 'github' | 'codesandbox' | 'copy';
+}
+
+// Step component prop interfaces
+interface StepProps {
+  state: CodeGeneratorState;
+  updateState: (newState: Partial<CodeGeneratorState>) => void;
+}
+
+interface DefineStepProps extends StepProps {
+  onNext: () => void;
+}
+
+interface StructureStepProps extends StepProps {
+  onNext: () => void;
+  onPrev: () => void;
+}
+
+interface ConfigureStepProps extends StepProps {
+  onNext: () => void;
+  onPrev: () => void;
+}
+
+interface GenerateStepProps extends StepProps {
+  onNext: () => void;
+  onPrev: () => void;
+}
+
+interface ExportStepProps extends StepProps {
+  onPrev: () => void;
+}
+
+interface ToggleSwitchProps {
+  label: string;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  description?: string;
+}
+
+interface DropdownProps {
+  label: string;
+  value: string;
+  options: Array<{ label: string; value: string }>;
+  onChange: (value: string) => void;
+  description?: string;
 }
 
 const steps = [
@@ -75,7 +120,7 @@ function UnifiedCodeGeneratorInternal() {
     exportFormat: 'copy'
   });
 
-  const supabase = null; // createClientComponentClient();
+  // const supabase = null; // createClientComponentClient();
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to current step
@@ -247,7 +292,6 @@ function UnifiedCodeGeneratorInternal() {
                 {currentStep === 4 && (
                   <GenerateStep 
                     state={state} 
-                    updateState={updateState} 
                     onNext={nextStep}
                     onPrev={prevStep}
                   />
@@ -255,7 +299,6 @@ function UnifiedCodeGeneratorInternal() {
                 {currentStep === 5 && (
                   <ExportStep 
                     state={state} 
-                    updateState={updateState} 
                     onPrev={prevStep}
                   />
                 )}
@@ -280,7 +323,7 @@ function UnifiedCodeGeneratorInternal() {
 }
 
 // Individual Step Components
-function DefineStep({ state, updateState, onNext }: any) {
+function DefineStep({ state, updateState, onNext }: DefineStepProps) {
   return (
     <motion.div
       initial={{ opacity: 0, x: 50 }}
@@ -364,7 +407,7 @@ function DefineStep({ state, updateState, onNext }: any) {
 }
 
 // Placeholder components for other steps
-function StructureStep({ state, updateState, onNext, onPrev }: any) {
+function StructureStep({ state, updateState, onNext, onPrev }: StructureStepProps) {
   const layouts = [
     { id: 'cards', title: 'Card Layout', desc: 'Grid of cards with content blocks', icon: '🗃️', preview: 'grid grid-cols-3 gap-4' },
     { id: 'list', title: 'List Layout', desc: 'Vertical list with items', icon: '📋', preview: 'space-y-3' },
@@ -460,8 +503,8 @@ function StructureStep({ state, updateState, onNext, onPrev }: any) {
   );
 }
 
-function ConfigureStep({ state, updateState, onNext, onPrev }: any) {
-  const ToggleSwitch = ({ label, checked, onChange, description }: any) => (
+function ConfigureStep({ state, updateState, onNext, onPrev }: ConfigureStepProps) {
+  const ToggleSwitch = ({ label, checked, onChange, description }: ToggleSwitchProps) => (
     <div className="flex items-center justify-between p-4 glass-strong rounded-lg neon-border hover:glow transition-all">
       <div>
         <h4 className="font-semibold text-white">{label}</h4>
@@ -485,7 +528,7 @@ function ConfigureStep({ state, updateState, onNext, onPrev }: any) {
     </div>
   );
 
-  const Dropdown = ({ label, value, options, onChange, description }: any) => (
+  const Dropdown = ({ label, value, options, onChange, description }: DropdownProps) => (
     <div className="p-4 glass-strong rounded-lg neon-border">
       <h4 className="font-semibold text-white mb-1">{label}</h4>
       <p className="text-white/60 text-sm mb-3">{description}</p>
@@ -494,7 +537,7 @@ function ConfigureStep({ state, updateState, onNext, onPrev }: any) {
         onChange={(e) => onChange(e.target.value)}
         className="w-full p-3 glass rounded-lg text-white focus:focus-ring transition-all bg-transparent border-0"
       >
-        {options.map((option: any) => (
+        {options.map((option: { label: string; value: string }) => (
           <option key={option.value} value={option.value} className="bg-gray-900">
             {option.label}
           </option>
@@ -611,7 +654,7 @@ function ConfigureStep({ state, updateState, onNext, onPrev }: any) {
   );
 }
 
-function GenerateStep({ state, updateState, onNext, onPrev }: any) {
+function GenerateStep({ state, onNext, onPrev }: Omit<GenerateStepProps, 'updateState'>) {
   const { startGeneration, isGenerating, files, error, reset } = useStreaming();
   const [hasStarted, setHasStarted] = useState(false);
 
@@ -722,7 +765,7 @@ function GenerateStep({ state, updateState, onNext, onPrev }: any) {
   );
 }
 
-function ExportStep({ state, updateState, onPrev }: any) {
+function ExportStep({ state, onPrev }: Omit<ExportStepProps, 'updateState'>) {
   const { files } = useStreaming();
 
   // Deduplicate files and filter out empty directories  
@@ -812,7 +855,7 @@ function ExportStep({ state, updateState, onPrev }: any) {
   );
 }
 
-function LivePreview({ state, currentStep }: { state: any; currentStep: number }) {
+function LivePreview({ state, currentStep }: { state: CodeGeneratorState; currentStep: number }) {
   const getPreviewContent = () => {
     switch (currentStep) {
       case 1:

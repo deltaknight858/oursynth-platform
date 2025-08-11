@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DropItem, ComponentDefinition } from '@packages/shared-types/src/components';
 
 const CanvasWrapper = styled.main`
   flex: 1 1 auto;
@@ -163,7 +164,7 @@ interface DraggableSectionProps {
   onClick: () => void;
   tooltip: string;
   onContextMenu?: (e: React.MouseEvent) => void;
-  onDropComponent?: (item: any, index: number) => void;
+  onDropComponent?: (item: DropItem, index: number) => void;
   isOver: boolean;
 }
 
@@ -175,7 +176,7 @@ function DraggableSection({ id, index, moveSection, selected, label, children, o
   });
   const [, drop] = useDrop({
     accept: 'component',
-    drop: (item) => onDropComponent && onDropComponent(item, index),
+    drop: (item: DropItem) => onDropComponent && onDropComponent(item, index),
     collect: monitor => ({ isOver: monitor.isOver() })
   });
   
@@ -197,10 +198,10 @@ function DraggableSection({ id, index, moveSection, selected, label, children, o
 }
 
 interface CanvasContainerProps {
-  selectedSection: any;
-  setSelectedSection: (section: any) => void;
-  setBodyLayout: (layout: any) => void;
-  bodyLayout: any;
+  selectedSection: number;
+  setSelectedSection: (section: number) => void;
+  setBodyLayout: (layout: string | null) => void;
+  bodyLayout: string | null;
 }
 
 export default function CanvasContainer({ selectedSection, setSelectedSection, setBodyLayout, bodyLayout }: CanvasContainerProps) {
@@ -213,7 +214,7 @@ export default function CanvasContainer({ selectedSection, setSelectedSection, s
   const [hoveredLayout, setHoveredLayout] = useState<string | null>(null);
   const [contextMenuIdx, setContextMenuIdx] = useState<number | null>(null);
   const [renameValue, setRenameValue] = useState('');
-  const [sectionContents, setSectionContents] = useState<Record<string, any[]>>({});
+  const [sectionContents, setSectionContents] = useState<Record<string, ComponentDefinition[]>>({});
   const contextMenuRef = useRef<HTMLDivElement>(null);
 
   // Reorder sections
@@ -274,11 +275,22 @@ export default function CanvasContainer({ selectedSection, setSelectedSection, s
   };
 
   // Handle drop from palette
-  const handleDropComponent = (item: any, idx: number) => {
+  const handleDropComponent = (item: DropItem, idx: number) => {
     const sectionId = sections[idx].id;
+    // Convert DropItem to ComponentDefinition
+    const component: ComponentDefinition = item.component || {
+      id: item.id || `${item.type}-${Date.now()}`,
+      type: item.type,
+      name: item.type,
+      icon: '',
+      color: item.color || '#000000',
+      category: 'Default',
+      defaultProps: item.defaultProps || {}
+    };
+    
     setSectionContents(prev => ({
       ...prev,
-      [sectionId]: [...(prev[sectionId] || []), item]
+      [sectionId]: [...(prev[sectionId] || []), component]
     }));
   };
 

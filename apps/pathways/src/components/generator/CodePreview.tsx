@@ -13,7 +13,7 @@ import {
   MenuItem,
   Chip,
   Divider,
-  Tooltip,
+  // Tooltip,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -31,10 +31,10 @@ import {
   Save,
   ContentCopy,
   MoreVert,
-  PlayArrow,
+  // PlayArrow,
   Refresh,
   Settings,
-  Info,
+  // Info,
   Favorite,
   FavoriteBorder,
 } from '@mui/icons-material';
@@ -441,7 +441,7 @@ const CodePreview: React.FC<CodePreviewProps> = ({
                       key={i}
                       label={`Tag ${i + 1}`}
                       size="small"
-                      color={['primary', 'secondary', 'success', 'warning', 'error'][i] as any}
+                      color={(['primary', 'secondary', 'success', 'warning', 'error'][i] as 'primary' | 'secondary' | 'success' | 'warning' | 'error') || 'primary'}
                       variant={i % 2 === 0 ? 'filled' : 'outlined'}
                     />
                   ))}

@@ -29,7 +29,7 @@ import SmartToyIcon from '@mui/icons-material/SmartToy';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 interface Step7ReviewGenerateProps {
-  data: Record<string, any>;
+  data: Record<string, unknown>;
   onEdit: (stepIndex: number) => void;
   onGenerate: () => void;
   onExport: () => void;
@@ -99,7 +99,7 @@ export default function Step7ReviewGenerate({ data, onEdit, onGenerate, onExport
     }
   ];
 
-  const renderValue = (key: string, value: any) => {
+  const renderValue = (key: string, value: unknown) => {
     if (Array.isArray(value)) {
       return (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 0.5 }}>

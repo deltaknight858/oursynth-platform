@@ -2,11 +2,12 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
 import type { Node } from '@/types/projects';
+import { DropItem } from '@packages/shared-types/src/components';
 
 interface ContainerProps {
   node: Node;
   children?: React.ReactNode;
-  onDrop: (item: any, x: number, y: number) => void;
+  onDrop: (item: DropItem, x: number, y: number) => void;
 }
 
 const StyledContainer = styled.div<{ $isOver: boolean }>`
@@ -23,7 +24,7 @@ const StyledContainer = styled.div<{ $isOver: boolean }>`
 export function DroppableContainer({ node, children, onDrop }: ContainerProps) {
   const [{ isOver }, dropRef] = useDrop(() => ({
     accept: 'COMPONENT',
-    drop: (item: any, monitor) => {
+    drop: (item: DropItem, monitor) => {
       const offset = monitor.getClientOffset();
       if (offset) {
         // Convert coordinates to container space

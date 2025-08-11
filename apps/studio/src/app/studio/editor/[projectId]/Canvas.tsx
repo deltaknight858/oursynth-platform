@@ -13,6 +13,7 @@ import {
 } from '@/components/CanvasComponents';
 import { DroppableContainer } from '@/components/DroppableContainer';
 import { baseComponents } from '@/components/base-components';
+import { ComponentStyle } from '@packages/shared-types/src/components';
 import { interactiveComponents } from '@/components/interactive-components';
 
 // Simple UUID generator to avoid external dependency
@@ -44,12 +45,12 @@ const renderComponent = (node: Node) => {
     case 'Heading':
     case 'Button':
       return (
-        <div style={finalProps.style}>
-          {(finalProps as { text?: string; style: any }).text || 'Text content'}
+        <div style={finalProps.style as ComponentStyle}>
+          {(finalProps as { text?: string; style: ComponentStyle }).text || 'Text content'}
         </div>
       );
     case 'Image':
-      const imageProps = finalProps as { src?: string; alt?: string; style: any };
+      const imageProps = finalProps as { src?: string; alt?: string; style: ComponentStyle };
       return (
         <img 
           src={imageProps.src || 'https://via.placeholder.com/300x200'} 
@@ -63,9 +64,9 @@ const renderComponent = (node: Node) => {
       return <div style={finalProps.style}>{node.type}</div>;
     case 'DataTable':
       const tableProps = finalProps as { 
-        style: any;
+        style: ComponentStyle;
         columns: Array<{ field: string; header: string }>;
-        data: Array<Record<string, any>>;
+        data: Array<Record<string, unknown>>;
       };
       return (
         <div style={tableProps.style}>
@@ -123,7 +124,7 @@ export default function Canvas({ onSelectNode }: CanvasProps) {
         <DroppableContainer
           key={node.id}
           node={node}
-          onDrop={(item, x, y) => handleDropComponent(item.type, item.defaultProps, x, y, Number(node.id))}
+          onDrop={(item, x, y) => handleDropComponent(item.type, item.defaultProps || {}, x, y, Number(node.id))}
         >
           {childNodes.map(renderNode)}
         </DroppableContainer>

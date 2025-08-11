@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { useProjectContext } from '@/contexts/ProjectProvider';
 import type { Node } from '@/types/projects';
+import { PropertyChangeHandler } from '@packages/shared-types/src/components';
 
 interface PropertyEditorProps {
   selectedNode: Node | null;
@@ -13,7 +14,7 @@ interface PropertyEditorProps {
 
 export default function PropertyEditor({ selectedNode }: PropertyEditorProps) {
   const { updateNode } = useProjectContext();
-  const [localProps, setLocalProps] = useState<Record<string, any>>({});
+  const [localProps, setLocalProps] = useState<Record<string, unknown>>({});
 
   // Update local props when selected node changes
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function PropertyEditor({ selectedNode }: PropertyEditorProps) {
     }
   }, [selectedNode]);
 
-  const handlePropChange = (key: string, value: any) => {
+  const handlePropChange = (key: string, value: unknown) => {
     const newProps = { ...localProps, [key]: value };
     setLocalProps(newProps);
     
@@ -189,8 +190,8 @@ function PropertySection({ title, children }: PropertySectionProps) {
 interface PropertyFieldProps {
   label: string;
   type: 'text' | 'number' | 'select' | 'color' | 'checkbox';
-  value: any;
-  onChange: (value: any) => void;
+  value: unknown;
+  onChange: (value: unknown) => void;
   options?: { label: string; value: string }[];
   placeholder?: string;
 }
@@ -201,7 +202,7 @@ function PropertyField({ label, type, value, onChange, options, placeholder }: P
       <div>
         <label className="block text-xs font-medium text-gray-700 mb-1">{label}</label>
         <select
-          value={value || ''}
+          value={String(value || '')}
           onChange={(e) => onChange(e.target.value)}
           className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
         >
@@ -234,7 +235,7 @@ function PropertyField({ label, type, value, onChange, options, placeholder }: P
       <label className="block text-xs font-medium text-gray-700 mb-1">{label}</label>
       <input
         type={type}
-        value={value || ''}
+        value={String(value || '')}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -249,8 +250,8 @@ function PropertyField({ label, type, value, onChange, options, placeholder }: P
 
 function renderComponentProperties(
   componentType: string,
-  props: Record<string, any>,
-  onChange: (key: string, value: any) => void
+  props: Record<string, unknown>,
+  onChange: PropertyChangeHandler
 ) {
   switch (componentType) {
     case 'Button':

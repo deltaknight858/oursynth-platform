@@ -11,6 +11,7 @@ import { ComponentPalette } from '@/components/ComponentPalette';
 import Logo from '@/components/Logo';
 import { Title } from '@mui/icons-material';
 import { SuggestionTray } from '@/components/SuggestionTray';
+import { ComponentDefinition, DropItem, DropOffset, DropHandler } from '@packages/shared-types/src/components';
 
 // Component types for the palette with enhanced data
 const ENHANCED_COMPONENT_TYPES = [
@@ -72,7 +73,7 @@ const CanvasDropZoneStyled = styled.div`
 // CanvasDropZone functional component
 interface CanvasDropZoneProps {
   droppedComponents: DroppedComponent[];
-  onDrop: (item: any, offset: { x: number; y: number }) => void;
+  onDrop: DropHandler;
 }
 
 const CanvasDropZone: React.FC<CanvasDropZoneProps> = ({ droppedComponents, onDrop }) => {
@@ -180,7 +181,7 @@ const StudioLayout = styled.div`
 export default function StudioPage() {
   // State and hooks
   // Handler to insert AI-generated component from SuggestionTray
-  const handleInsertComponent = (component: any) => {
+  const handleInsertComponent = (component: ComponentDefinition) => {
     // Insert at default position (e.g., x:100, y:100) and assign a unique id
     const newComponent = {
       id: `${component.type || 'ai'}-${Date.now()}`,
@@ -292,14 +293,14 @@ export default function StudioPage() {
     return () => clearTimeout(saveTimeout);
   }, [droppedComponents, currentProjectId, user, saveProjectData]);
 
-  const handleDrop = useCallback((item: any, offset: { x: number; y: number }) => {
+  const handleDrop = useCallback((item: DropItem, offset: DropOffset) => {
     const newComponent: DroppedComponent = {
       id: `${item.type}-${Date.now()}`,
       type: item.type,
-      name: item.name,
+      name: item.component?.name || item.type,
       x: offset.x - 60,
       y: offset.y - 20,
-      color: item.color
+      color: item.color || '#000000'
     };
     setDroppedComponents(prev => [...prev, newComponent]);
   }, []);
@@ -463,7 +464,7 @@ async function createProject({
   return data;
 }
 
-function setCurrentProjectId(arg0: any) {
+function setCurrentProjectId(arg0: string | null) {
   throw new Error('Function not implemented.');
 }
 

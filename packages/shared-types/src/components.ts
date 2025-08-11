@@ -1,3 +1,5 @@
+import React from 'react';
+
 // Component-related types
 export interface ComponentStyle {
   width?: number | string;
@@ -16,7 +18,7 @@ export interface ComponentDefinition {
   type: string;
   name: string;
   displayName?: string;
-  icon: any; // Can be IconType from react-icons or React.ComponentType
+  icon: React.ComponentType | string; // React component or string emoji/icon
   color: string;
   category: string;
   description?: string;
@@ -25,7 +27,7 @@ export interface ComponentDefinition {
   width?: number;
   height?: number;
   style?: ComponentStyle;
-  configSchema?: Record<string, any>; // JSON Schema for props validation
+  configSchema?: Record<string, unknown>; // JSON Schema for props validation
 }
 
 export interface DraggableComponentProps {
@@ -45,6 +47,35 @@ export interface ComponentInstance extends ComponentDefinition {
 export interface ComponentCategory {
   name: string;
   color: string;
-  icon: any;
+  icon: React.ComponentType | string;
   description?: string;
+}
+
+// Drag and drop related types
+export interface DropItem {
+  type: string;
+  id?: string;
+  component?: ComponentDefinition;
+  // Include common properties that are used during drop
+  color?: string;
+  defaultProps?: Record<string, unknown>;
+}
+
+export interface DropOffset {
+  x: number;
+  y: number;
+}
+
+export interface DropHandler {
+  (item: DropItem, offset: DropOffset): void;
+}
+
+// Property editor types
+export interface PropertyValue {
+  value: unknown;
+  onChange: (value: unknown) => void;
+}
+
+export interface PropertyChangeHandler {
+  (key: string, value: unknown): void;
 }
