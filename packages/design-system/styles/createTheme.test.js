@@ -224,13 +224,7 @@ describe('createTheme', () => {
     expect(container.firstChild).toHaveComputedStyle({ fontFamily: 'cursive' });
   });
 
-  it('should apply the correct borderRadius styles via sx prop if theme values are 0', function test() {
-    const isJSDOM = /jsdom/.test(window.navigator.userAgent);
-
-    if (isJSDOM) {
-      this.skip();
-    }
-
+  (/jsdom/.test(window.navigator.userAgent) ? it.skip : it)('should apply the correct borderRadius styles via sx prop if theme values are 0', () => {
     const theme = createTheme({
       shape: {
         borderRadius: 0,

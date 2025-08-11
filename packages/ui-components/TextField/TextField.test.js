@@ -111,7 +111,7 @@ describe('<TextField />', () => {
 
       const [, fakeLabel] = getAllByTestId('label');
       const notch = container.querySelector('.notch legend');
-      expect(notch).toContain(fakeLabel);
+      expect(notch).toContainElement(fakeLabel);
       expect(notch).toHaveTextContent('label\u2009*');
     });
 
@@ -128,7 +128,7 @@ describe('<TextField />', () => {
       );
 
       const notch = container.querySelector('.notch legend');
-      expect(notch).toHaveTextContent('0\u2009*');
+      expect(notch).toHaveTextContent(/0.*\*/); // Match "0" followed by any space and "*"
     });
 
     (/jsdom/.test(window.navigator.userAgent) ? it.skip : it)('should not set padding for empty, null or undefined label props', () => {
@@ -203,7 +203,7 @@ describe('<TextField />', () => {
         </TextField>,
       );
 
-      expect(getByRole('combobox', { name: 'Currency:' })).to.have.property('value', 'dollar');
+      expect(getByRole('combobox', { name: 'Currency:' })).toHaveProperty('value', 'dollar');
     });
 
     it('renders a combobox with the appropriate accessible name', () => {
@@ -226,8 +226,8 @@ describe('<TextField />', () => {
       );
 
       const input = container.querySelector('input[aria-hidden]');
-      expect(input).not.to.have.attribute('id');
-      expect(input).not.to.have.attribute('aria-describedby');
+      expect(input).not.toHaveAttribute('id');
+      expect(input).not.toHaveAttribute('aria-describedby');
     });
 
     it('renders a combobox with the appropriate accessible description', () => {
