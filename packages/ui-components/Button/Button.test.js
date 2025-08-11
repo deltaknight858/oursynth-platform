@@ -511,7 +511,7 @@ describe('<Button />', () => {
     );
     const button = getByRole('button');
 
-    expect(button.querySelector('.touch-ripple')).not.to.equal(null);
+    expect(button.querySelector('.touch-ripple')).not.toBe(null);
   });
 
   it('can disable the ripple', () => {
@@ -522,7 +522,7 @@ describe('<Button />', () => {
     );
     const button = getByRole('button');
 
-    expect(button.querySelector('.touch-ripple')).to.equal(null);
+    expect(button.querySelector('.touch-ripple')).toBe(null);
   });
 
   it('can disable the elevation', () => {
@@ -545,7 +545,7 @@ describe('<Button />', () => {
       button.focus();
     });
 
-    expect(button.querySelector('.pulsate-focus-visible')).not.to.equal(null);
+    expect(button.querySelector('.pulsate-focus-visible')).not.toBe(null);
   });
 
   it('can disable the focusRipple', () => {
@@ -564,7 +564,7 @@ describe('<Button />', () => {
       button.focus();
     });
 
-    expect(button.querySelector('.pulsate-focus-visible')).to.equal(null);
+    expect(button.querySelector('.pulsate-focus-visible')).toBe(null);
   });
 
   describe('server-side', () => {
@@ -613,7 +613,7 @@ describe('<Button />', () => {
         <Button>Disabled ripple</Button>
       </ThemeProvider>,
     );
-    expect(container.firstChild.querySelector(`.${touchRippleClasses.root}`)).to.equal(null);
+    expect(container.firstChild.querySelector(`.${touchRippleClasses.root}`)).toBe(null);
   });
 
   it("should disable ripple when MuiButtonBase has disableRipple in theme's defaultProps but override on the individual Buttons if provided", () => {
@@ -633,7 +633,7 @@ describe('<Button />', () => {
         <Button>Disabled ripple 2</Button>
       </ThemeProvider>,
     );
-    expect(container.querySelectorAll(`.${touchRippleClasses.root}`)).to.have.length(1);
+    expect(container.querySelectorAll(`.${touchRippleClasses.root}`)).toHaveLength(1);
   });
 
   describe('Emotion compatibility', () => {
@@ -652,7 +652,7 @@ describe('<Button />', () => {
       );
       const button = getByRole('button');
 
-      expect(getComputedStyle(button).color).to.equal(color);
+      expect(getComputedStyle(button).color).toBe(color);
     });
 
     it('className should overwrite classes.root and builtin styles.', () => {
@@ -674,7 +674,7 @@ describe('<Button />', () => {
       );
       const button = getByRole('button');
 
-      expect(getComputedStyle(button).color).to.equal(colorRed);
+      expect(getComputedStyle(button).color).toBe(colorRed);
     });
 
     it('classes.* should overwrite builtin styles.', () => {
@@ -692,7 +692,7 @@ describe('<Button />', () => {
       );
       const button = getByRole('button');
 
-      expect(getComputedStyle(button).color).to.equal(color);
+      expect(getComputedStyle(button).color).toBe(color);
     });
   });
 });

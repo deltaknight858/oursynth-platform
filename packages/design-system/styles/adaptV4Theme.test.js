@@ -275,7 +275,7 @@ describe('adaptV4Theme', () => {
         transformedTheme = adaptV4Theme(theme);
       }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.palette.text.hint).to.equal('rgba(0, 0, 0, 0.38)');
+      expect(transformedTheme.palette.text.hint).toBe('rgba(0, 0, 0, 0.38)');
     });
 
     it('is added to a dark theme using the old palette.type value', () => {
@@ -287,7 +287,7 @@ describe('adaptV4Theme', () => {
         transformedTheme = adaptV4Theme(theme);
       }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.palette.text.hint).to.equal('rgba(255, 255, 255, 0.5)');
+      expect(transformedTheme.palette.text.hint).toBe('rgba(255, 255, 255, 0.5)');
     });
 
     it('is added to a dark theme', () => {
@@ -299,7 +299,7 @@ describe('adaptV4Theme', () => {
         transformedTheme = adaptV4Theme(theme);
       }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.palette.text.hint).to.equal('rgba(255, 255, 255, 0.5)');
+      expect(transformedTheme.palette.text.hint).toBe('rgba(255, 255, 255, 0.5)');
     });
   });
 
@@ -313,7 +313,7 @@ describe('adaptV4Theme', () => {
         transformedTheme = adaptV4Theme(theme);
       }).not.toThrow(['adaptV4Theme() is deprecated']);
 
-      expect(transformedTheme.palette.mode).to.equal('dark');
+      expect(transformedTheme.palette.mode).toBe('dark');
     });
   });
 });

@@ -20,6 +20,7 @@ declare global {
       toWarnDev(expectedMessages?: string[] | string): R;
       toErrorDev(expectedMessage?: string): R;
       toHaveComputedStyle(expectedStyle: Record<string, string>): R;
+      toThrowMinified(expectedMessage?: string | string[]): R;
     }
   }
 }
@@ -43,19 +44,30 @@ expect.extend({
   },
   
   toErrorDev(received: () => void, expectedMessage?: string) {
-    // In test environment, we just check that the function doesn't throw
+    // In test environment, we capture console.error calls
+    const originalError = console.error;
+    let errorCalled = false;
+    let errorMessage = '';
+    
+    console.error = (message: string) => {
+      errorCalled = true;
+      errorMessage = message;
+    };
+    
     try {
       received();
-      return {
-        pass: true,
-        message: () => `Expected error message: ${expectedMessage || 'any'}`
-      };
-    } catch (error) {
-      return {
-        pass: false,
-        message: () => `Function threw error: ${error}`
-      };
+    } finally {
+      console.error = originalError;
     }
+    
+    const pass = errorCalled && (!expectedMessage || errorMessage.includes(expectedMessage));
+    
+    return {
+      pass,
+      message: () => errorCalled 
+        ? `Expected error message: ${expectedMessage || 'any'}, got: ${errorMessage}`
+        : `Expected function to call console.error, but it didn't`
+    };
   },
 
   toHaveComputedStyle(received: Element, expectedStyle: Record<string, string>) {
@@ -64,6 +76,40 @@ expect.extend({
     return {
       pass,
       message: () => `Expected element to have computed style: ${JSON.stringify(expectedStyle)}`
+    };
+  },
+
+  toThrowMinified(received: () => void, expectedMessage?: string | string[]) {
+    // Custom matcher to check for minified errors (similar to MUI's internal testing)
+    let thrown = false;
+    let error: any = null;
+    
+    try {
+      received();
+    } catch (e) {
+      thrown = true;
+      error = e;
+    }
+    
+    let pass = thrown;
+    
+    if (thrown && expectedMessage) {
+      const errorMessage = error?.message || '';
+      if (Array.isArray(expectedMessage)) {
+        // Join array messages into single string and check if error contains it
+        const fullMessage = expectedMessage.join(' ');
+        pass = errorMessage.includes(fullMessage) || 
+               expectedMessage.some(msg => errorMessage.includes(msg));
+      } else {
+        pass = errorMessage.includes(expectedMessage);
+      }
+    }
+    
+    return {
+      pass,
+      message: () => thrown 
+        ? `Expected function to throw error with message "${Array.isArray(expectedMessage) ? expectedMessage.join(' ') : expectedMessage}", but got: "${error?.message}"`
+        : `Expected function to throw an error, but it didn't throw`
     };
   }
 });

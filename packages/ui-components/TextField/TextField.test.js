@@ -25,7 +25,7 @@ describe('<TextField />', () => {
     it('should have an input as the only child', () => {
       const { getAllByRole } = render(<TextField variant="standard" />);
 
-      expect(getAllByRole('textbox')).to.have.lengthOf(1);
+      expect(getAllByRole('textbox')).toHaveLength(1);
     });
 
     it('should forward the multiline prop to Input', () => {
@@ -68,7 +68,7 @@ describe('<TextField />', () => {
       it(`should not render empty (${label}) label element`, () => {
         const { container } = render(<TextField label={label} variant="standard" />);
 
-        expect(container.querySelector('label')).to.equal(null);
+        expect(container.querySelector('label')).toBe(null);
       });
     });
   });
@@ -111,8 +111,8 @@ describe('<TextField />', () => {
 
       const [, fakeLabel] = getAllByTestId('label');
       const notch = container.querySelector('.notch legend');
-      expect(notch).to.contain(fakeLabel);
-      expect(notch).to.have.text('label\u2009*');
+      expect(notch).toContain(fakeLabel);
+      expect(notch).toHaveTextContent('label\u2009*');
     });
 
     it('should set shrink prop on outline from label', () => {
@@ -128,13 +128,10 @@ describe('<TextField />', () => {
       );
 
       const notch = container.querySelector('.notch legend');
-      expect(notch).to.have.text('0\u2009*');
+      expect(notch).toHaveTextContent('0\u2009*');
     });
 
-    it('should not set padding for empty, null or undefined label props', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
+    (/jsdom/.test(window.navigator.userAgent) ? it.skip : it)('should not set padding for empty, null or undefined label props', () => {
       const spanStyle = { paddingLeft: '0px', paddingRight: '0px' };
       ['', undefined, null].forEach((prop) => {
         const { container: container1 } = render(
@@ -151,7 +148,7 @@ describe('<TextField />', () => {
         <TextField InputProps={{ 'data-testid': 'InputComponent' }} variant="standard" />,
       );
 
-      expect(getByTestId('InputComponent')).not.to.equal(null);
+      expect(getByTestId('InputComponent')).not.toBe(null);
     });
   });
 
@@ -160,14 +157,14 @@ describe('<TextField />', () => {
       const handleClick = spy();
       const { getByRole } = render(<TextField disabled onClick={handleClick} />);
       fireEvent.click(getByRole('textbox'));
-      expect(handleClick.callCount).to.equal(0);
+      expect(handleClick.callCount).toBe(0);
     });
 
     it('should not run click event when disabled and when onClick prop is set through InputProps', () => {
       const handleClick = spy();
       const { getByRole } = render(<TextField disabled InputProps={{ onClick: handleClick }} />);
       fireEvent.click(getByRole('textbox'));
-      expect(handleClick.callCount).to.equal(0);
+      expect(handleClick.callCount).toBe(0);
     });
   });
 
@@ -189,8 +186,8 @@ describe('<TextField />', () => {
       );
 
       const select = container.querySelector('select');
-      expect(select).not.to.equal(null);
-      expect(select.options).to.have.lengthOf(2);
+      expect(select).not.toBe(null);
+      expect(select.options).toHaveLength(2);
     });
 
     it('associates the label with the <select /> when `native={true}`', () => {

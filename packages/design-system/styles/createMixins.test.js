@@ -7,7 +7,7 @@ describe('createMixins', () => {
     const theme = createTheme();
     const mixins = createMixins(theme.breakpoints, { test: { display: 'block' } });
 
-    expect(mixins.test).to.deep.equal({
+    expect(mixins.test).toEqual({
       display: 'block',
     });
   });

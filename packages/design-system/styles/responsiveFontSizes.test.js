@@ -19,7 +19,7 @@ describe('responsiveFontSizes', () => {
       },
     });
     const { typography } = responsiveFontSizes(theme);
-    expect(typography.h1).to.deep.equal({
+    expect(typography.h1).toEqual({
       ...defaultVariant,
       fontSize: '3.5rem',
       [`@media (min-width:${defaultTheme.breakpoints.values.sm}px)`]: { fontSize: '4.75rem' },
@@ -48,7 +48,7 @@ describe('responsiveFontSizes', () => {
       disableAlign: true,
     });
 
-    expect(typography.h1).to.deep.equal({
+    expect(typography.h1).toEqual({
       ...defaultVariant,
       fontSize: '3.5rem',
       [`@media (min-width:${defaultTheme.breakpoints.values.sm}px)`]: { fontSize: '4.75rem' },
